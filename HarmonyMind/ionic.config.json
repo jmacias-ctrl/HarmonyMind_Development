@@ -1,0 +1,7 @@
+{
+  "name": "HarmonyMind",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react-vite"
+}
