@@ -2,11 +2,11 @@
     position: fixed;
     top: 0%;
     right: 0;
-    height: 20%;
+    height: 25%;
     width: 50%;
     border-bottom-left-radius: 100%;
-    background-color: aquamarine;
-    background-image: linear-gradient(43deg, rgb(78, 131, 192), rgb(46, 90, 139), rgb(8, 20, 34) 100%);
+    background-color: rgb(106, 216, 179);
+    background-image: linear-gradient(43deg, rgb(78, 192, 164), rgb(46, 139, 116), rgb(8, 34, 20) 100%);
 }
 
 .nose{
