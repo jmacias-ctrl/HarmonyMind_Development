@@ -1,20 +1,21 @@
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
-import './Home.css';
+import React from 'react';
+import { IonPage, IonContent, IonButton } from '@ionic/react';
+import { useHistory } from 'react-router-dom';
 
-const Home: React.FC= () =>{
-    return(
+const Home: React.FC = () => {
+  const history = useHistory();
+
+  const handleGoToLogin = () => {
+    history.push('/login');
+  };
+
+  return (
     <IonPage>
-        <IonHeader>
-            Hello
-        </IonHeader>
-        <IonContent className='ion-padding'>
-            <div className='circle1'>
-            </div>
-            ionic is cool 
-        </IonContent>
+      <IonContent>
+        <IonButton onClick={handleGoToLogin}>Login</IonButton>
+      </IonContent>
     </IonPage>
-    
-    )
-}
+  );
+};
 
 export default Home;
