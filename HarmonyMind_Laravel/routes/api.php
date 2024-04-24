@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\LoginController;
 use App\Http\Controllers\Api\PostController;
+use App\Http\Controllers\Api\PublicacionEstadoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,11 +17,9 @@ use App\Http\Controllers\Api\PostController;
 |
 */
 
+Route::post('publicacion/create', [PublicacionEstadoController::class, 'crear_publicacion'])->name('crear.publicacion');
+Route::get('publicacion/get', [PublicacionEstadoController::class, 'ver_publicaciones'])->name('ver.publicaciones');
 
-
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
 
 Route::prefix('v1')->group(function () {
     Route::post('login', [LoginController::class, 'login']);
@@ -30,3 +29,4 @@ Route::prefix('v1')->group(function () {
         Route::resource('posts', PostController::class);
     });
 });
+
