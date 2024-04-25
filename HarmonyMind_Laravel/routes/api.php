@@ -16,17 +16,15 @@ use App\Http\Controllers\Api\PublicacionEstadoController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
-Route::post('publicacion/create', [PublicacionEstadoController::class, 'crear_publicacion'])->name('crear.publicacion');
-Route::get('publicacion/get', [PublicacionEstadoController::class, 'ver_publicaciones'])->name('ver.publicaciones');
-
-
-Route::prefix('v1')->group(function () {
-    Route::post('login', [LoginController::class, 'login']);
-    Route::post('register', [LoginController::class, 'register']);
-
+Route::prefix('publicacion')->group(function () {
     Route::middleware('auth:api')->group(function () {
-        Route::resource('posts', PostController::class);
+        Route::post('create', [PublicacionEstadoController::class, 'crear_publicacion'])->name('crear.publicacion');
+        Route::get('get', [PublicacionEstadoController::class, 'ver_publicaciones'])->name('ver.publicaciones');
+        Route::post('modify', [PublicacionEstadoController::class, 'modificar_publicacion'])->name('modify.publicaciones');
+        Route::post('delete', [PublicacionEstadoController::class, 'eliminar_publicacion'])->name('delete.publicaciones');
     });
 });
+
+Route::post('login', [LoginController::class, 'login']);
+Route::post('register', [LoginController::class, 'register']);
 
