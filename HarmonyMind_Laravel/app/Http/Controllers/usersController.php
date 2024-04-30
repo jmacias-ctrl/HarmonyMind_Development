@@ -4,11 +4,24 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 
 class usersController extends Controller
 {
     public function index(){
         $users = user::all();
+        foreach($users as $user){
+            $events = DB::table('relations')
+            ->join('events', 'relations.event_fk', '=', 'events.id')
+            ->select('events.nombre')
+            ->where('user_fk', '=', $user->id)
+            ->get();
+
+            //->value('nombre');
+
+            $user->events = $events;
+        }
+        error_log($user->events);
         return view('users', ['users' => $users]);
     }
 
