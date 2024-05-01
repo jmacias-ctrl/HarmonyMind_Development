@@ -36,6 +36,8 @@
                     <button id="eventsButton" type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#eventsModal" data-events-list="{{json_encode($user->events)}}">
                       Ver eventos
                   </button>
+                  <a class="btn btn-info" href="{{ route('users-assign-event', ['id'=> $user->id]) }}">Asignar evento</a>
+                  <a class="btn btn-info" href="{{ route('users-remove-event', ['id'=> $user->id]) }}">Remover evento</a>
                 </th>
                 <tr>
     
