@@ -15,6 +15,7 @@ import Tab1 from './pages/Tab1';
 import Tab2 from './pages/Tab2';
 import Tab3 from './pages/Tab3';
 import crear_estado from './pages/estados/crear_estado';
+import ver_estados from './pages/estados/ver_estados';
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
 
@@ -42,6 +43,7 @@ const App: React.FC = () => (
       <IonTabs>
         <IonRouterOutlet>
           <Route path="/estado/crear" component={crear_estado} />
+          <Route path="/estado/ver" component={ver_estados} />
           <Route exact path="/tab1">
             <Tab1 />
           </Route>
