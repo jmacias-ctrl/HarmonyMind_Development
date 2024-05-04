@@ -30,6 +30,8 @@ Route::prefix('evento')->group(function () {
     Route::middleware('auth:api')->group(function () {
         Route::get('get', [eventController::class, 'index'])->name('ver.eventos');
         Route::post('assign', [eventController::class, 'assign'])->name('asignar.evento');
+        Route::get('getassist', [eventController::class, 'index_assist'])->name('ver.eventos.registrados');
+        Route::post('remove', [eventController::class, 'relation_remove'])->name('revomer.evento');
         
     });
 });

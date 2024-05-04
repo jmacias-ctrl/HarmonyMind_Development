@@ -40,17 +40,6 @@ class eventController extends Controller
     }
 
 
-    /**
-     * Modificar una publicacion del usuario
-     *
-     * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function modificar_publicacion(Request $request)
-    {  
-        
-    }
-
      /**
      * Ver eventos disponibles al usuario
      *
@@ -84,12 +73,59 @@ class eventController extends Controller
     }
 
     /**
-     * Elminar publicacion del usuario
+     * Ver eventos registrados del usuario
      *
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function eliminar_publicaciones(Request $request){
-        
+    public function index_assist(Request $request){
+        $rules = [
+            'id_user' => 'required',
+        ];
+        $attribute = [
+            'id_publicacion' => 'Publicación',
+        ];
+        $message = [
+            'required' => ':attribute es obligatorio'
+        ];
+        $validator = Validator::make($request->all(), $rules, $message, $attribute);
+        if ($validator->passes()) {
+            $events = DB::table('relations')
+            ->join('events', 'relations.event_fk', '=', 'events.id')
+            ->select('events.id', 'events.nombre')
+            ->where('user_fk', '=', $request->id_user)
+            ->get();
+            return response()->json(['success' => true, 'data'=>$events], 200);
+        }
+        return response()->json(['success' => false, 'validator'=>$validator->errors()], 200);
+    }
+
+    /**
+     * Remover asistencia del usuario al evento
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function relation_remove(Request $request)
+    {  
+        $rules = [
+            'id_user' => 'required',
+            'id_evento' => 'required',
+        ];
+        $attribute = [
+            'id_user' => 'Id de usuario',
+        ];
+        $message = [
+            'required' => ':attribute es obligatorio'
+        ];
+        $validator = Validator::make($request->all(), $rules, $message, $attribute);
+        if ($validator->passes()) {
+            $relation = DB::table('relations')
+            ->where('user_fk', '=', $request->id_user)
+            ->where('event_fk', '=', $request->id_evento)
+            ->delete();
+            return response()->json(['success' => true], 200);
+        }
+        return response()->json(['success' => false, 'validator'=>$validator->errors()], 200);
     }
 }
