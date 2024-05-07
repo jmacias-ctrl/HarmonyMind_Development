@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
+use App\Models\User;
 
 class adminSeeder extends Seeder
 {
@@ -17,17 +18,18 @@ class adminSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('users')->insert([
-            'name' => 'test',
-            'email' => 'test@gmail.com',
-            'password' => 'asdf1234',
-        ]);
+        $user = new User();
+            $user->name = 'test';
+            $user->email = 'test@test.cl';
+            $user->password = bcrypt('asdf1234');
+        $user->save();
 
-        DB::table('users')->insert([
-            'name' => 'test2',
-            'email' => 'test2@gmail.com',
-            'password' => 'asdf1234',
-        ]);
+        $user = new User();
+            $user->name = 'test2';
+            $user->email = 'test2@test.cl';
+            $user->password = bcrypt('asdf1234');
+        $user->save();
+        
 
         DB::table('categories')->insert([
             'id' => '1',
