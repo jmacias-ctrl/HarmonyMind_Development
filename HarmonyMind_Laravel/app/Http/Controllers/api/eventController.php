@@ -22,18 +22,18 @@ class eventController extends Controller
     public function assign(Request $request)
     {  
         $rules = [
-            'id_user' => 'required',
+            
             'id_evento' => 'required',
         ];
         $attribute = [
-            'id_user' => 'Id de usuario',
+            'id_evento' => 'Id de evento',
         ];
         $message = [
             'required' => ':attribute es obligatorio'
         ];
         $validator = Validator::make($request->all(), $rules, $message, $attribute);
         if ($validator->passes()) {
-            DB::insert('insert into relations ( user_fk, event_fk) values ( ?, ?)', [$request->id_user, $request->id_evento]);
+            DB::insert('insert into relations ( user_fk, event_fk) values ( ?, ?)', [Auth::user()->id, $request->id_evento]);
             return response()->json(['success' => true], 200);
         }
         return response()->json(['success' => false, 'validator'=>$validator->errors()], 200);
@@ -47,29 +47,18 @@ class eventController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
     public function index(Request $request){
-        $rules = [
-            'id_user' => 'required',
-        ];
-        $attribute = [
-            'id_publicacion' => 'Publicación',
-        ];
-        $message = [
-            'required' => ':attribute es obligatorio'
-        ];
-        $validator = Validator::make($request->all(), $rules, $message, $attribute);
-        if ($validator->passes()) {
-            $relations = DB::table('relations')
-                ->select('relations.event_fk')
-                ->where('user_fk', '=', $request->id_user)
-                ->get()->pluck('event_fk');
+        
+        $relations = DB::table('relations')
+            ->select('relations.event_fk')
+            ->where('user_fk', '=', Auth::user()->id)
+            ->get()->pluck('event_fk');
         
            
             //dd($relations);
-            $events= DB::table('events')->join('categories', 'events.category_fk', '=', 'categories.id')
-            ->select('events.*', 'categories.nombre AS categoria')->whereNotIn('events.id', $relations)->get();
-            return response()->json(['success' => true, 'data'=>$events], 200);
-        }
-        return response()->json(['success' => false, 'validator'=>$validator->errors()], 200);
+        $events= DB::table('events')->join('categories', 'events.category_fk', '=', 'categories.id')
+        ->select('events.*', 'categories.nombre AS categoria')->whereNotIn('events.id', $relations)->get();
+        return response()->json(['success' => true, 'data'=>$events], 200);
+        
     }
 
     /**
@@ -79,25 +68,15 @@ class eventController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
     public function index_assist(Request $request){
-        $rules = [
-            'id_user' => 'required',
-        ];
-        $attribute = [
-            'id_publicacion' => 'Publicación',
-        ];
-        $message = [
-            'required' => ':attribute es obligatorio'
-        ];
-        $validator = Validator::make($request->all(), $rules, $message, $attribute);
-        if ($validator->passes()) {
-            $events = DB::table('relations')
-            ->join('events', 'relations.event_fk', '=', 'events.id')
-            ->select('events.id', 'events.nombre')
-            ->where('user_fk', '=', $request->id_user)
-            ->get();
-            return response()->json(['success' => true, 'data'=>$events], 200);
-        }
-        return response()->json(['success' => false, 'validator'=>$validator->errors()], 200);
+        
+        $events = DB::table('relations')
+        ->join('events', 'relations.event_fk', '=', 'events.id')
+        ->join('categories', 'events.category_fk', '=', 'categories.id')
+        ->select('events.*', 'categories.nombre AS categoria')
+        ->where('user_fk', '=', Auth::user()->id)
+        ->get();
+        return response()->json(['success' => true, 'data'=>$events], 200);
+        
     }
 
     /**
@@ -109,11 +88,11 @@ class eventController extends Controller
     public function relation_remove(Request $request)
     {  
         $rules = [
-            'id_user' => 'required',
+    
             'id_evento' => 'required',
         ];
         $attribute = [
-            'id_user' => 'Id de usuario',
+            'id_evento' => 'Id de evento',
         ];
         $message = [
             'required' => ':attribute es obligatorio'
@@ -121,7 +100,7 @@ class eventController extends Controller
         $validator = Validator::make($request->all(), $rules, $message, $attribute);
         if ($validator->passes()) {
             $relation = DB::table('relations')
-            ->where('user_fk', '=', $request->id_user)
+            ->where('user_fk', '=', Auth::user()->id)
             ->where('event_fk', '=', $request->id_evento)
             ->delete();
             return response()->json(['success' => true], 200);

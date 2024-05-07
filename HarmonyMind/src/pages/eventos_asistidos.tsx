@@ -5,7 +5,7 @@ import { IonText, IonActionSheet, IonIcon, useIonLoading } from '@ionic/react';
 import { IonFab, IonFabButton } from '@ionic/react';
 import { add } from 'ionicons/icons';
 import ExploreContainer from '../../components/ExploreContainer';
-const crear_estado: React.FC = () => {
+const eventos_asistidos: React.FC = () => {
     const router = useIonRouter();
     const [present, dismiss] = useIonLoading();
     const [posts, setPosts] = useState([]);
@@ -14,7 +14,7 @@ const crear_estado: React.FC = () => {
     const fetch_posts = () => {
         if (isLoaded==false) {
             console.log('hola')
-            fetch(`http://127.0.0.1:8000/api/publicacion/get`, {
+            fetch(`http://127.0.0.1:8000/api/evento/getassist`, {
                 "method": "GET",
                 "headers": {
                     'Accept': 'application/json',
@@ -33,7 +33,7 @@ const crear_estado: React.FC = () => {
 
     function actionSheet(get_detail) {
         if (get_detail['role'] != 'backdrop') {
-            fetch(`http://127.0.0.1:8000/api/publicacion/delete?id_publicacion=${get_detail['data'].id}`, {
+            fetch(`http://127.0.0.1:8000/api/evento/remove?id_evento=${get_detail['data'].id}`, {
                 "method": "POST",
                 "headers": {
                     'Accept': 'application/json',
@@ -61,26 +61,37 @@ const crear_estado: React.FC = () => {
         <IonPage>
             <IonHeader>
                 <IonToolbar>
-                    <IonTitle>Tus Estados</IonTitle>
+                    <IonTitle>Tus Eventos</IonTitle>
                 </IonToolbar>
             </IonHeader>
             <IonContent fullscreen>
                 {posts.map((post) => (
                     <IonCard class="ion-padding ion-margin-horizontal" key={post.id}>
-                        <IonCardSubtitle><IonText color="dark">Estado N°{post.numero} - {post.fecha} </IonText></IonCardSubtitle>
+                        <IonCardSubtitle><IonText color="dark">Evento N°{post.id} : {post.nombre} </IonText></IonCardSubtitle>
                         <IonText color="dark">
-                            <h3>{post.publicacion}</h3>
+                            <h3>{post.descripcion}</h3>
                         </IonText>
                         <IonText color="dark">
-                            <h5>Estado de Animo: {post.estado_de_animo}</h5>
+                            <h3>Fecha: {post.fecha}</h3>
                         </IonText>
-                        <IonButton id={"action_" + post.id}>Acciones</IonButton>
+                        <IonText color="dark">
+                            <h3>Organiza: {post.organizador}</h3>
+                        </IonText>
+                        <IonText color="dark">
+                            <h3>Tipo: {post.tipo}</h3>
+                        </IonText>
+                        <IonText color="dark">
+                            <h3>Categoría: {post.categoria}</h3>
+                        </IonText>
+                        
+            
+                        <IonButton id={"action_" + post.id}>Faltar</IonButton>
                         <IonActionSheet
                             trigger={"action_" + post.id}
-                            header={"¿Deseas hacer alguna acción en tu estado n°" + post.numero + "?"}
+                            header={"¿Seguro que ya no deseas participar en este evento?"}
                             buttons={[
                                 {
-                                    text: 'Eliminar',
+                                    text: 'Cancelar asistencia',
                                     role: 'destructive',
                                     data: {
                                         action: 'delete',
@@ -100,11 +111,7 @@ const crear_estado: React.FC = () => {
                     </IonCard>
                 ))}
 
-                <IonFab slot="fixed" vertical="bottom" horizontal="end">
-                    <IonFabButton onClick={() => { router.push('/estado/crear'); }}>
-                        <IonIcon icon={add}></IonIcon>
-                    </IonFabButton>
-                </IonFab>
+                
             </IonContent>
 
         </IonPage>
@@ -112,4 +119,4 @@ const crear_estado: React.FC = () => {
     );
 };
 
-export default crear_estado;
+export default eventos_asistidos;
