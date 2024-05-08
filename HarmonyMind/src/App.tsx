@@ -43,7 +43,7 @@ const App: React.FC = () => (
       <IonTabs>
         <IonRouterOutlet>
           <Route path="/estado/crear" component={crear_estado} />
-          <Route path="/estado/ver" component={ver_estados} />
+          <Route path="/estado/ver:status?" component={ver_estados} />
           <Route exact path="/tab1">
             <Tab1 />
           </Route>
@@ -58,6 +58,10 @@ const App: React.FC = () => (
           </Route>
         </IonRouterOutlet>
         <IonTabBar slot="bottom">
+          <IonTabButton tab="ver_estados" href="/estado/ver">
+            <IonIcon aria-hidden="true" icon={triangle} />
+            <IonLabel>Estados</IonLabel>
+          </IonTabButton>
           <IonTabButton tab="tab1" href="/tab1">
             <IonIcon aria-hidden="true" icon={triangle} />
             <IonLabel>Tab 1</IonLabel>

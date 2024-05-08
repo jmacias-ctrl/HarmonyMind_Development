@@ -1,19 +1,25 @@
 import React, { useState, useEffect } from "react";
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, useIonRouter } from '@ionic/react';
-import { IonCard, IonCardContent, IonButton, IonCardHeader, IonCardSubtitle, IonCardTitle } from '@ionic/react';
+import { IonCard, IonProgressBar, IonButton, IonCardHeader, IonCardSubtitle, IonCardTitle } from '@ionic/react';
 import { IonText, IonActionSheet, IonIcon, useIonLoading } from '@ionic/react';
-import { IonFab, IonFabButton } from '@ionic/react';
+import { IonFab, IonGrid, IonRow, IonCol, IonFabButton, useIonToast } from '@ionic/react';
 import { add } from 'ionicons/icons';
+import { useParams } from 'react-router';
+import { ellipsisVertical } from 'ionicons/icons';
+
+import './ver_estados.css';
 import ExploreContainer from '../../components/ExploreContainer';
 const crear_estado: React.FC = () => {
     const router = useIonRouter();
     const [present, dismiss] = useIonLoading();
     const [posts, setPosts] = useState([]);
-    const [isLoaded, setLoaded] = useState(false)
-    ;
+    const [isLoading, setLoading] = useState(true)
+    const [textLoading, setTextLoading] = useState('Recuperando Estados')
+    const [subtextLoading, setSubTextLoading] = useState('Esto puede tomar un tiempo')
+    const [toastCreate] = useIonToast();
+    const { status } = useParams<{ status: string }>();
     const fetch_posts = () => {
-        if (isLoaded==false) {
-            console.log('hola')
+        if (isLoading == true) {
             fetch(`http://127.0.0.1:8000/api/publicacion/get`, {
                 "method": "GET",
                 "headers": {
@@ -24,10 +30,16 @@ const crear_estado: React.FC = () => {
                 .then((res) => {
                     return res.json();
                 })
+                .catch(error => {
+                    setPosts([])
+                    setTextLoading('Error al recuperar estados')
+                    setSubTextLoading('Hubo problemas al comunicarse con el servidor, por favor intentelo denuevo más tarde.')
+                })
                 .then((posts) => {
                     setPosts(posts['data']);
-                    setLoaded(true)
-                });
+                    setLoading(false)
+                })
+
         }
     };
 
@@ -44,7 +56,6 @@ const crear_estado: React.FC = () => {
                     return res.json();
                 })
                 .then((info) => {
-                    console.log(info)
                     if (info['success'] == true) {
                         window.location.reload();
                     }
@@ -53,28 +64,67 @@ const crear_estado: React.FC = () => {
     }
 
     useEffect(() => {
+        console.log(status);
+        if (status == "true") {
+            toastCreate({
+                message: '¡Estado creado de manera correcta!',
+                duration: 1500,
+                position: 'bottom',
+            });
+        } else if (status == "false") {
+            toastCreate({
+                message: 'No se ha podido crear el estado',
+                duration: 1500,
+                position: 'bottom',
+            });
+        }
         fetch_posts();
     }, []);
-
     return (
 
         <IonPage>
             <IonHeader>
                 <IonToolbar>
                     <IonTitle>Tus Estados</IonTitle>
+                    <IonProgressBar className={`${!isLoading && 'ion-hide'}`} type="indeterminate" id="progressBar"></IonProgressBar>
                 </IonToolbar>
             </IonHeader>
             <IonContent fullscreen>
+                <div className={`${!isLoading && 'ion-hide'}`}>
+                    <div class="ion-text-center">
+                        <h3>{textLoading}</h3>
+                        {subtextLoading}
+                    </div>
+                </div>
                 {posts.map((post) => (
-                    <IonCard class="ion-padding ion-margin-horizontal" key={post.id}>
-                        <IonCardSubtitle><IonText color="dark">Estado N°{post.numero} - {post.fecha} </IonText></IonCardSubtitle>
-                        <IonText color="dark">
-                            <h3>{post.publicacion}</h3>
-                        </IonText>
-                        <IonText color="dark">
-                            <h5>Estado de Animo: {post.estado_de_animo}</h5>
-                        </IonText>
-                        <IonButton id={"action_" + post.id}>Acciones</IonButton>
+                    <IonCard class="estadosCard ion-padding ion-margin-horizontal " key={post.id}>
+                        <IonCardSubtitle>
+                            <IonRow>
+                                <IonCol size="auto">
+                                    <IonText color="dark">Estado N°{post.numero} </IonText>
+                                </IonCol>
+                                <IonCol>
+                                    <IonButton class="ion-float-right" id={"action_" + post.id} shape="round" size="small" fill="clear"><IonIcon icon={ellipsisVertical} slot="icon-only"></IonIcon></IonButton>
+                                </IonCol>
+                            </IonRow>
+                        </IonCardSubtitle>
+                        <IonGrid>
+                            <IonRow>
+                                <IonCol size="auto">
+                                    <div class="fechaDiv">
+                                        <span class="textDiaMes">{post.dia}<br />{post.mes}</span> <br />
+                                        <span class="textAnio">{post.año}</span>
+                                    </div>
+                                </IonCol>
+                                <IonCol><p class="textPub">{post.publicacion}</p></IonCol>
+                            </IonRow>
+                        </IonGrid>
+                        <div class="ion-text-center">
+                            <IonText color="dark">
+                                <h6>Estado de Animo</h6>
+                            </IonText>
+                            <IonProgressBar value={post.estado_de_animo / 10}></IonProgressBar>
+                        </div>
                         <IonActionSheet
                             trigger={"action_" + post.id}
                             header={"¿Deseas hacer alguna acción en tu estado n°" + post.numero + "?"}

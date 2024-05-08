@@ -71,7 +71,6 @@ class PublicacionEstadoController extends Controller
         }
         return response()->json(['success' => false, 'validator'=>$validator->errors()], 200);
     }
-
      /**
      * Ver publicaciones del usuario
      *
@@ -79,6 +78,7 @@ class PublicacionEstadoController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
     public function ver_publicaciones(Request $request){
+        $month_Str = array("en.", "feb.", "mar.", "abr.", "may.", "jun.", "jul.", "agto.", "sept.", "oct.", "nov.", "dic.");
         $publicaciones = publicacion_estado::where('id_user', '=', Auth::user()->id)->orderByDesc('created_at')->get();
         $i=count($publicaciones);
         foreach ($publicaciones as &$publicacion) {
@@ -86,6 +86,10 @@ class PublicacionEstadoController extends Controller
             $date = Carbon::parse($publicacion->created_at);
             $publicacion->numero = $i;
             $publicacion->fecha = $date->toDayDateTimeString(); 
+            $publicacion->dia = $date->day; 
+            $publicacion->mes = $month_Str[$date->month-1]; 
+            $publicacion->año = $date->year; 
+            $publicacion->hora = $date->toTimeString();
             $i=$i-1;
         }
         return response()->json(['success' => true, 'data'=>$publicaciones], 200);
