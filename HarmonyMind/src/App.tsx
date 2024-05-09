@@ -14,6 +14,8 @@ import { ellipse, square, triangle } from 'ionicons/icons';
 import Tab1 from './pages/Tab1';
 import Tab2 from './pages/Tab2';
 import Tab3 from './pages/Tab3';
+import eventos from './pages/eventos';
+import eventos_asistidos from './pages/eventos_asistidos';
 import crear_estado from './pages/estados/crear_estado';
 import ver_estados from './pages/estados/ver_estados';
 /* Core CSS required for Ionic components to work properly */
@@ -44,6 +46,8 @@ const App: React.FC = () => (
         <IonRouterOutlet>
           <Route path="/estado/crear" component={crear_estado} />
           <Route path="/estado/ver:status?" component={ver_estados} />
+          <Route path="/eventos/" component={eventos} />
+          <Route path="/eventos/assist" component={eventos_asistidos} />
           <Route exact path="/tab1">
             <Tab1 />
           </Route>
