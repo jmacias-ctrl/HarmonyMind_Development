@@ -4,7 +4,7 @@ import { IonCard, IonCardContent, IonButton, IonCardHeader, IonCardSubtitle, Ion
 import { IonText, IonActionSheet, IonIcon, useIonLoading } from '@ionic/react';
 import { IonFab, IonFabButton } from '@ionic/react';
 import { add } from 'ionicons/icons';
-import ExploreContainer from '../../components/ExploreContainer';
+import ExploreContainer from '../components/ExploreContainer';
 const eventos: React.FC = () => {
     const router = useIonRouter();
     const [present, dismiss] = useIonLoading();
@@ -88,9 +88,7 @@ const eventos: React.FC = () => {
                 </IonToolbar>
             </IonHeader>
             <IonContent fullscreen>
-                <IonButton size="default" onClick={() => {
-                    router.push('/eventos/assist');
-                }}>Mis Eventos</IonButton>
+                <IonButton size="default" routerLink="/eventos/assist">Mis Eventos</IonButton>
                 {posts.map((post) => (
                     <IonCard class="ion-padding ion-margin-horizontal" key={post.id}>
                         <IonThumbnail>

@@ -46,7 +46,7 @@ const App: React.FC = () => (
         <IonRouterOutlet>
           <Route path="/estado/crear" component={crear_estado} />
           <Route path="/estado/ver:status?" component={ver_estados} />
-          <Route path="/eventos/" component={eventos} />
+          <Route path="/eventos/ver" component={eventos} />
           <Route path="/eventos/assist" component={eventos_asistidos} />
           <Route exact path="/tab1">
             <Tab1 />
@@ -62,18 +62,19 @@ const App: React.FC = () => (
           </Route>
         </IonRouterOutlet>
         <IonTabBar slot="bottom">
+          <IonTabButton tab="inicio" href="/">
+            <IonIcon aria-hidden="true" icon={square} />
+            <IonLabel>Inicio</IonLabel>
+          </IonTabButton>
           <IonTabButton tab="ver_estados" href="/estado/ver">
             <IonIcon aria-hidden="true" icon={triangle} />
             <IonLabel>Estados</IonLabel>
           </IonTabButton>
-          <IonTabButton tab="ver_eventos" href="/eventos">
+          <IonTabButton tab="ver_eventos" href="/eventos/ver">
             <IonIcon aria-hidden="true" icon={ellipse} />
             <IonLabel>Eventos</IonLabel>
           </IonTabButton>
-          <IonTabButton tab="tab3" href="/tab3">
-            <IonIcon aria-hidden="true" icon={square} />
-            <IonLabel>Tab 3</IonLabel>
-          </IonTabButton>
+
         </IonTabBar>
       </IonTabs>
     </IonReactRouter>

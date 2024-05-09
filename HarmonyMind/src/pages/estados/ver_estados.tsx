@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, useIonRouter } from '@ionic/react';
-import { IonCard, IonProgressBar, IonButton, IonCardHeader, IonCardSubtitle, IonCardTitle } from '@ionic/react';
+import { IonCard, IonProgressBar, IonButton, IonCardHeader, IonCardSubtitle, useIonViewWillEnter } from '@ionic/react';
 import { IonText, IonActionSheet, IonIcon, useIonLoading } from '@ionic/react';
 import { IonFab, IonGrid, IonRow, IonCol, IonFabButton, useIonToast } from '@ionic/react';
 import { add } from 'ionicons/icons';
@@ -17,6 +17,7 @@ const crear_estado: React.FC = () => {
     const [textLoading, setTextLoading] = useState('Recuperando Estados')
     const [subtextLoading, setSubTextLoading] = useState('Esto puede tomar un tiempo')
     const [hideText, setHideText] = useState(false)
+    const [didCreate, setDidCreate] = useState(false)
     const [toastCreate] = useIonToast();
     const { status } = useParams<{ status: string }>();
     const fetch_posts = () => {
@@ -37,11 +38,10 @@ const crear_estado: React.FC = () => {
                     setSubTextLoading('Hubo problemas al comunicarse con el servidor, por favor intentelo denuevo más tarde.')
                 })
                 .then((posts) => {
-                    console.log(posts['data'].length == 0)
                     if (posts['data'].length == 0) {
                         setTextLoading('No tienes estados creados')
                         setSubTextLoading('Haz click en el boton + y crea un estado con tus pensamientos del momento')
-                    }else{
+                    } else {
                         setPosts(posts['data']);
                         setHideText(true)
                     }
@@ -50,6 +50,12 @@ const crear_estado: React.FC = () => {
 
         }
     };
+
+    useIonViewWillEnter(() => {
+        setLoading(true)
+        setHideText(false)
+        fetch_posts();
+    });
 
     function actionSheet(get_detail) {
         if (get_detail['role'] != 'backdrop') {
@@ -72,23 +78,6 @@ const crear_estado: React.FC = () => {
         }
     }
 
-    useEffect(() => {
-        console.log(status);
-        if (status == "true") {
-            toastCreate({
-                message: '¡Estado creado de manera correcta!',
-                duration: 1500,
-                position: 'bottom',
-            });
-        } else if (status == "false") {
-            toastCreate({
-                message: 'No se ha podido crear el estado',
-                duration: 1500,
-                position: 'bottom',
-            });
-        }
-        fetch_posts();
-    }, []);
     return (
 
         <IonPage>
@@ -160,7 +149,7 @@ const crear_estado: React.FC = () => {
                 ))}
 
                 <IonFab slot="fixed" vertical="bottom" horizontal="end">
-                    <IonFabButton onClick={() => { router.push('/estado/crear'); }}>
+                    <IonFabButton onClick={() => { setDidCreate(true); router.push('/estado/crear'); }}>
                         <IonIcon icon={add}></IonIcon>
                     </IonFabButton>
                 </IonFab>

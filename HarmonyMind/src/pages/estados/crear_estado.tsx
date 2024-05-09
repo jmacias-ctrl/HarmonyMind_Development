@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, useIonRouter } from '@ionic/react';
 import { IonCard, IonBackButton, IonButton, IonCardHeader, IonCardSubtitle, IonCardTitle } from '@ionic/react';
-import { IonTextarea, IonButtons, IonRange, IonItem, IonList, IonIcon } from '@ionic/react';
+import { IonTextarea, IonButtons, IonRange, IonItem, IonList, useIonToast } from '@ionic/react';
 import { snowOutline, sunnyOutline } from 'ionicons/icons';
 import { withRouter, useHistory } from "react-router";
 import { IonAlert } from '@ionic/react';
@@ -12,17 +12,14 @@ const crear_estado: React.FC = () => {
     const [estado_de_animo, setEstadodeAnimo] = useState(5);
     const history = useHistory();
     const [isTouched, setIsTouched] = useState(false);
-    const [isValid, setIsValid] = useState<boolean>();
-
+    const [isValid, setIsValid] = useState<boolean>(true);
+    const [toastCreate] = useIonToast();
 
     const markTouched = () => {
         setIsTouched(true);
     };
 
     function crear_publicacion() {
-
-        console.log('contenido: ' + contenido);
-        console.log('estado_de_animo: ' + estado_de_animo);
 
         if (contenido.length > 0) {
             setIsValid(true)
@@ -38,15 +35,26 @@ const crear_estado: React.FC = () => {
                     if (publicacion['success'] == true) {
                         setContenido("");
                         setEstadodeAnimo(5);
-                        history.push('/estado/vertrue');
+                        toastCreate({
+                            message: '¡Estado creado de manera correcta!',
+                            duration: 1500,
+                            position: 'bottom',
+                        });
+                        history.push('/estado/ver');
                     } else {
-                        console.log(publicacion)
+                        toastCreate({
+                            message: 'No se pudo crear el estado',
+                            duration: 1500,
+                            position: 'bottom',
+                        });
                     }
 
                 });
+        }else{
+            setIsValid(false)
         }
 
-        setIsValid(false)
+        
     };
     
     return (

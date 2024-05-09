@@ -4,7 +4,7 @@ import { IonCard, IonCardContent, IonButton, IonCardHeader, IonCardSubtitle, Ion
 import { IonText, IonActionSheet, IonBackButton, useIonLoading } from '@ionic/react';
 import { IonFab, IonFabButton } from '@ionic/react';
 import { add } from 'ionicons/icons';
-import ExploreContainer from '../../components/ExploreContainer';
+import ExploreContainer from '../components/ExploreContainer';
 const eventos_asistidos: React.FC = () => {
     const router = useIonRouter();
     const [present, dismiss] = useIonLoading();
