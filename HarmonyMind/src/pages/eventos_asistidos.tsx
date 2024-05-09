@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, useIonRouter } from '@ionic/react';
-import { IonCard, IonCardContent, IonButton, IonCardHeader, IonCardSubtitle, IonCardTitle } from '@ionic/react';
+import { IonCard, IonCardContent, IonButton, IonCardHeader, IonCardSubtitle, IonCardTitle, IonModal, IonButtons, IonThumbnail } from '@ionic/react';
 import { IonText, IonActionSheet, IonIcon, useIonLoading } from '@ionic/react';
 import { IonFab, IonFabButton } from '@ionic/react';
 import { add } from 'ionicons/icons';
@@ -9,8 +9,16 @@ const eventos_asistidos: React.FC = () => {
     const router = useIonRouter();
     const [present, dismiss] = useIonLoading();
     const [posts, setPosts] = useState([]);
-    const [isLoaded, setLoaded] = useState(false)
-    ;
+    const [isOpen, setIsOpen] = useState(false);
+    const [isLoaded, setLoaded] = useState(false);
+    // variables de evento
+    const [event, setEvent ] = useState('');
+    const [desc, setDesc ] = useState('');
+    const [date, setDate ] = useState('');
+    const [org, setOrg ] = useState('');
+    const [type, setType ] = useState('');
+    const [category, setCategory ] = useState('');
+
     const fetch_posts = () => {
         if (isLoaded==false) {
             console.log('hola')
@@ -52,6 +60,20 @@ const eventos_asistidos: React.FC = () => {
         }
     }
 
+    function modalControl(info){
+        if(isOpen==false){
+            setEvent(info.nombre);
+            setDesc(info.descripcion);
+            setDate(info.fecha);
+            setOrg(info.organizador);
+            setType(info.tipo);
+            setCategory(info.categoria);
+            setIsOpen(true);
+        }else{
+            setIsOpen(false);
+        }
+    }
+
     useEffect(() => {
         fetch_posts();
     }, []);
@@ -67,25 +89,16 @@ const eventos_asistidos: React.FC = () => {
             <IonContent fullscreen>
                 {posts.map((post) => (
                     <IonCard class="ion-padding ion-margin-horizontal" key={post.id}>
-                        <IonCardSubtitle><IonText color="dark">Evento N°{post.id} : {post.nombre} </IonText></IonCardSubtitle>
-                        <IonText color="dark">
-                            <h3>{post.descripcion}</h3>
-                        </IonText>
+                        <IonThumbnail>
+                            <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
+                        </IonThumbnail>
+                        <IonCardSubtitle><IonText color="dark">{post.nombre} </IonText></IonCardSubtitle>
                         <IonText color="dark">
                             <h3>Fecha: {post.fecha}</h3>
                         </IonText>
-                        <IonText color="dark">
-                            <h3>Organiza: {post.organizador}</h3>
-                        </IonText>
-                        <IonText color="dark">
-                            <h3>Tipo: {post.tipo}</h3>
-                        </IonText>
-                        <IonText color="dark">
-                            <h3>Categoría: {post.categoria}</h3>
-                        </IonText>
                         
-            
-                        <IonButton id={"action_" + post.id}>Faltar</IonButton>
+                        <IonButton onClick={() => modalControl(post)}> Detalles</IonButton>
+                        <IonButton color="danger" id={"action_" + post.id}>Faltar</IonButton>
                         <IonActionSheet
                             trigger={"action_" + post.id}
                             header={"¿Seguro que ya no deseas participar en este evento?"}
@@ -110,6 +123,27 @@ const eventos_asistidos: React.FC = () => {
 
                     </IonCard>
                 ))}
+
+                        <IonModal isOpen={isOpen}>
+                            <IonHeader>
+                                <IonToolbar>
+                                    <IonTitle>{event}</IonTitle>
+                                    <IonButtons slot="end">
+                                        <IonButton onClick={() => setIsOpen(false)}>Cerrar</IonButton>
+                                    </IonButtons>
+                                </IonToolbar>
+                            </IonHeader>
+                            <IonContent className="ion-padding">
+          
+                                <p>
+                                    {desc}
+                                </p>
+                                <h3>Fecha: {date}</h3>
+                                <h3>Organiza: {org}</h3>
+                                <h3>Tipo: {type}</h3>
+                                <h3>Categoría: {category}</h3>
+                            </IonContent>
+                        </IonModal>
 
                 
             </IonContent>
