@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, useIonRouter } from '@ionic/react';
 import { IonCard, IonCardContent, IonButton, IonCardHeader, IonCardSubtitle, IonCardTitle, IonModal, IonButtons, IonThumbnail } from '@ionic/react';
-import { IonText, IonActionSheet, IonIcon, useIonLoading } from '@ionic/react';
+import { IonText, IonActionSheet, IonBackButton, useIonLoading } from '@ionic/react';
 import { IonFab, IonFabButton } from '@ionic/react';
 import { add } from 'ionicons/icons';
 import ExploreContainer from '../../components/ExploreContainer';
@@ -12,21 +12,21 @@ const eventos_asistidos: React.FC = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [isLoaded, setLoaded] = useState(false);
     // variables de evento
-    const [event, setEvent ] = useState('');
-    const [desc, setDesc ] = useState('');
-    const [date, setDate ] = useState('');
-    const [org, setOrg ] = useState('');
-    const [type, setType ] = useState('');
-    const [category, setCategory ] = useState('');
+    const [event, setEvent] = useState('');
+    const [desc, setDesc] = useState('');
+    const [date, setDate] = useState('');
+    const [org, setOrg] = useState('');
+    const [type, setType] = useState('');
+    const [category, setCategory] = useState('');
 
     const fetch_posts = () => {
-        if (isLoaded==false) {
+        if (isLoaded == false) {
             console.log('hola')
             fetch(`http://127.0.0.1:8000/api/evento/getassist`, {
                 "method": "GET",
                 "headers": {
                     'Accept': 'application/json',
-                    'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiZjRjOTk1NTc3NzkwYzAwZjM0OGVmYzU1NDcyMTkwOWIwMGViOGZiODhjMDc3Mzg5ZWQyZDM1MDg0Y2Q1MzU4NjlkYjA3MmFlYWFkNzNhZjIiLCJpYXQiOjE3MTUxMTgxMjUuMDYzNzYxLCJuYmYiOjE3MTUxMTgxMjUuMDYzNzY2LCJleHAiOjE3NDY2NTQxMjQuODYyNjI0LCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.eLyHEpMLssrKUC2V01umMgoLMkK_XZZD8pyGRi5H8mINxVap6WwiRvxkzMGRaXIwTQByCjcD1qBvdL_dKGw-rYlc6S5aQjG2kMo0FSLc9y5_HmvbIu7QZHHxkpzx-0WTA_bbUeze9jLLixtdK5l8Pxmx5Udc8XHlnXAqCwvwOOvbE2zcU3zpjfDBOTFR8korMO2Abi6Dvdrqn0c7IW-r6jjLtyKyuVbEMI37WGWp42K1SMABojtV3CDvqHLx6_sgCI1s7nx4KiSyIa4rxPb8daVOs1yFo8SFo25pDS4AShAMPLwu8rgdzge0lvVvSQf28gKauvgmjamw9nnalnE-moyAov5iOzy0FQIuleSxcm3BFmHcGp2xEHbRF3L-_8PPXVeFJI3hcit5hWqfJVeEoYk_8C1-6TidO4TeUVYqasuyuHnc2lad4gHlBIipmmhFC-nproG4_tTn-xVrI2lO0GgFTzTMypMZik1GLVBTK0_chsDpxrRdO5mLrsCd7YSWuv8jUz9EX6IhWlU6iv0XXW_iHavkUarQkw_jWsIpEWYqURO9-S43231pySRKdy0PLdVYSfugoeZUv6uqGAX1SZjqlTpqm_an_UcUnu6QfoQJyHiaoejXZNC5NVrxPGs4FEjs2M6ayrJMRK24iMdZG_O2jutwSAXjpHotrGITzIU',
+                    'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiYWQyNGQ4MjBlMTcwMzYwNDdlMzc4NjUxZTFmNWM2M2M2Y2MwM2E1MjNkZDE1ZjQzYTFlZTZlMmNkMmUzMjg2NTBkMGI2MDI1MzI2ZWIxOGQiLCJpYXQiOjE3MTUyMjYzMTUuNzg5NDcxLCJuYmYiOjE3MTUyMjYzMTUuNzg5NDc1LCJleHAiOjE3NDY3NjIzMTUuNjczMTQ5LCJzdWIiOiIzIiwic2NvcGVzIjpbXX0.Akf3M1EiIxRmVTpMdFk4-97ogH1b-Rrmwvq1-K60k2zBzJ4A8A6g-5cyb7T3udpOOKAnxFuCtNii-l-0iMZmJFRl2gz15ha1ipYHSLqFljoH_eKg53G4T31-hy1gSvUS3SbLmLRNqFwwXPHm_qZMrCkGDxL0Gon8zw1RpI_-pKZNcPel5XO0jaG31cRK2Ga-g-7fnSTG07NyD7sYJvS8b5TVUbrDBf5fD2wJg1MbFP45L1I_lreur-KtslsaUu2GOFRy9BD92Qj17YqibXvQ_zwHwBCZFE3XWs3G3e2QnNvNCaVB4NgN6yHo0DBaT87sQvz3GD9Z0Y2GC6X--WXi6O3Tq809T3md3T03pJjrzCukMvdUAN7IpZhQ8PfBDx8NpqY15pODSiZwZwVHdygRUnha2SOvEhck-b1C6cGc-aRF3U76NdlNUR36g0Ci1p1Ls0pHZkAoWG318ucYfzF1QJVN2pQLHwsK_waoKrDWV2LM77FnEphfe6ST1q2DCpeY5TuY42bppQJwAwLUBQKeGeYlrIVbxvKfwEYgVo-gHj25BT85uZe2_eIvEFuv4eDuBFRFLnx2XKJxyZVMDlJwaBJyDQ6FJ9Q4JrJlZ19fNrx3SIOx0TfACXsfoCeBa7dUEihDGHkUWm1AzvIRrC3lZyFBTKM7SU5ko6p5EF-T_sw',
                 }
             })
                 .then((res) => {
@@ -45,7 +45,7 @@ const eventos_asistidos: React.FC = () => {
                 "method": "POST",
                 "headers": {
                     'Accept': 'application/json',
-                    'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiZjRjOTk1NTc3NzkwYzAwZjM0OGVmYzU1NDcyMTkwOWIwMGViOGZiODhjMDc3Mzg5ZWQyZDM1MDg0Y2Q1MzU4NjlkYjA3MmFlYWFkNzNhZjIiLCJpYXQiOjE3MTUxMTgxMjUuMDYzNzYxLCJuYmYiOjE3MTUxMTgxMjUuMDYzNzY2LCJleHAiOjE3NDY2NTQxMjQuODYyNjI0LCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.eLyHEpMLssrKUC2V01umMgoLMkK_XZZD8pyGRi5H8mINxVap6WwiRvxkzMGRaXIwTQByCjcD1qBvdL_dKGw-rYlc6S5aQjG2kMo0FSLc9y5_HmvbIu7QZHHxkpzx-0WTA_bbUeze9jLLixtdK5l8Pxmx5Udc8XHlnXAqCwvwOOvbE2zcU3zpjfDBOTFR8korMO2Abi6Dvdrqn0c7IW-r6jjLtyKyuVbEMI37WGWp42K1SMABojtV3CDvqHLx6_sgCI1s7nx4KiSyIa4rxPb8daVOs1yFo8SFo25pDS4AShAMPLwu8rgdzge0lvVvSQf28gKauvgmjamw9nnalnE-moyAov5iOzy0FQIuleSxcm3BFmHcGp2xEHbRF3L-_8PPXVeFJI3hcit5hWqfJVeEoYk_8C1-6TidO4TeUVYqasuyuHnc2lad4gHlBIipmmhFC-nproG4_tTn-xVrI2lO0GgFTzTMypMZik1GLVBTK0_chsDpxrRdO5mLrsCd7YSWuv8jUz9EX6IhWlU6iv0XXW_iHavkUarQkw_jWsIpEWYqURO9-S43231pySRKdy0PLdVYSfugoeZUv6uqGAX1SZjqlTpqm_an_UcUnu6QfoQJyHiaoejXZNC5NVrxPGs4FEjs2M6ayrJMRK24iMdZG_O2jutwSAXjpHotrGITzIU',
+                    'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiYWQyNGQ4MjBlMTcwMzYwNDdlMzc4NjUxZTFmNWM2M2M2Y2MwM2E1MjNkZDE1ZjQzYTFlZTZlMmNkMmUzMjg2NTBkMGI2MDI1MzI2ZWIxOGQiLCJpYXQiOjE3MTUyMjYzMTUuNzg5NDcxLCJuYmYiOjE3MTUyMjYzMTUuNzg5NDc1LCJleHAiOjE3NDY3NjIzMTUuNjczMTQ5LCJzdWIiOiIzIiwic2NvcGVzIjpbXX0.Akf3M1EiIxRmVTpMdFk4-97ogH1b-Rrmwvq1-K60k2zBzJ4A8A6g-5cyb7T3udpOOKAnxFuCtNii-l-0iMZmJFRl2gz15ha1ipYHSLqFljoH_eKg53G4T31-hy1gSvUS3SbLmLRNqFwwXPHm_qZMrCkGDxL0Gon8zw1RpI_-pKZNcPel5XO0jaG31cRK2Ga-g-7fnSTG07NyD7sYJvS8b5TVUbrDBf5fD2wJg1MbFP45L1I_lreur-KtslsaUu2GOFRy9BD92Qj17YqibXvQ_zwHwBCZFE3XWs3G3e2QnNvNCaVB4NgN6yHo0DBaT87sQvz3GD9Z0Y2GC6X--WXi6O3Tq809T3md3T03pJjrzCukMvdUAN7IpZhQ8PfBDx8NpqY15pODSiZwZwVHdygRUnha2SOvEhck-b1C6cGc-aRF3U76NdlNUR36g0Ci1p1Ls0pHZkAoWG318ucYfzF1QJVN2pQLHwsK_waoKrDWV2LM77FnEphfe6ST1q2DCpeY5TuY42bppQJwAwLUBQKeGeYlrIVbxvKfwEYgVo-gHj25BT85uZe2_eIvEFuv4eDuBFRFLnx2XKJxyZVMDlJwaBJyDQ6FJ9Q4JrJlZ19fNrx3SIOx0TfACXsfoCeBa7dUEihDGHkUWm1AzvIRrC3lZyFBTKM7SU5ko6p5EF-T_sw',
                 }
             })
                 .then((res) => {
@@ -60,8 +60,8 @@ const eventos_asistidos: React.FC = () => {
         }
     }
 
-    function modalControl(info){
-        if(isOpen==false){
+    function modalControl(info) {
+        if (isOpen == false) {
             setEvent(info.nombre);
             setDesc(info.descripcion);
             setDate(info.fecha);
@@ -69,7 +69,7 @@ const eventos_asistidos: React.FC = () => {
             setType(info.tipo);
             setCategory(info.categoria);
             setIsOpen(true);
-        }else{
+        } else {
             setIsOpen(false);
         }
     }
@@ -83,6 +83,9 @@ const eventos_asistidos: React.FC = () => {
         <IonPage>
             <IonHeader>
                 <IonToolbar>
+                    <IonButtons slot="start">
+                        <IonBackButton></IonBackButton>
+                    </IonButtons>
                     <IonTitle>Tus Eventos</IonTitle>
                 </IonToolbar>
             </IonHeader>
@@ -96,7 +99,7 @@ const eventos_asistidos: React.FC = () => {
                         <IonText color="dark">
                             <h3>Fecha: {post.fecha}</h3>
                         </IonText>
-                        
+
                         <IonButton onClick={() => modalControl(post)}> Detalles</IonButton>
                         <IonButton color="danger" id={"action_" + post.id}>Faltar</IonButton>
                         <IonActionSheet
@@ -124,28 +127,28 @@ const eventos_asistidos: React.FC = () => {
                     </IonCard>
                 ))}
 
-                        <IonModal isOpen={isOpen}>
-                            <IonHeader>
-                                <IonToolbar>
-                                    <IonTitle>{event}</IonTitle>
-                                    <IonButtons slot="end">
-                                        <IonButton onClick={() => setIsOpen(false)}>Cerrar</IonButton>
-                                    </IonButtons>
-                                </IonToolbar>
-                            </IonHeader>
-                            <IonContent className="ion-padding">
-          
-                                <p>
-                                    {desc}
-                                </p>
-                                <h3>Fecha: {date}</h3>
-                                <h3>Organiza: {org}</h3>
-                                <h3>Tipo: {type}</h3>
-                                <h3>Categoría: {category}</h3>
-                            </IonContent>
-                        </IonModal>
+                <IonModal isOpen={isOpen}>
+                    <IonHeader>
+                        <IonToolbar>
+                            <IonTitle>{event}</IonTitle>
+                            <IonButtons slot="end">
+                                <IonButton onClick={() => setIsOpen(false)}>Cerrar</IonButton>
+                            </IonButtons>
+                        </IonToolbar>
+                    </IonHeader>
+                    <IonContent className="ion-padding">
 
-                
+                        <p>
+                            {desc}
+                        </p>
+                        <h3>Fecha: {date}</h3>
+                        <h3>Organiza: {org}</h3>
+                        <h3>Tipo: {type}</h3>
+                        <h3>Categoría: {category}</h3>
+                    </IonContent>
+                </IonModal>
+
+
             </IonContent>
 
         </IonPage>

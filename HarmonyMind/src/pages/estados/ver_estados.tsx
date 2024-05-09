@@ -16,6 +16,7 @@ const crear_estado: React.FC = () => {
     const [isLoading, setLoading] = useState(true)
     const [textLoading, setTextLoading] = useState('Recuperando Estados')
     const [subtextLoading, setSubTextLoading] = useState('Esto puede tomar un tiempo')
+    const [hideText, setHideText] = useState(false)
     const [toastCreate] = useIonToast();
     const { status } = useParams<{ status: string }>();
     const fetch_posts = () => {
@@ -24,7 +25,7 @@ const crear_estado: React.FC = () => {
                 "method": "GET",
                 "headers": {
                     'Accept': 'application/json',
-                    'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiY2RhY2IzMjRmNzA2YTFmYWUzMTM2YmM1OGZlZTVkOGM0NjUwMjZiMjNjYWQwMGMxMDNjN2Y3Y2RkNmEwZjM5NTgxNzA3YWY3ZDNkZjUxZWIiLCJpYXQiOjE3MTQ1MjE3NzguODUwMjQsIm5iZiI6MTcxNDUyMTc3OC44NTAyNDMsImV4cCI6MTc0NjA1Nzc3OC43NzI0MTgsInN1YiI6IjEiLCJzY29wZXMiOltdfQ.iDenrINDElnsv6pvbZnTnIUg1MxeD-iTdpydD7ciLVZ9tm9_UGQ4Wg8IS0lAYF5sGHun2Vz6iqGu71Bm74M8bk6gNGQbvX-IMktUwu8E0KVGty6JT5vHNs3WM45klDbBSUtwY6RmrSMsn2Ep3o_Ua9QEYLz9Gtpo8dcddkCXK1kR0nlSWb8QdbyHAibFLrtwEMQk7w4lffgttjL1VQdIV7QjdkjYtemSBFJO5AElA_8pwtd4bBK-xG_Zks_JNYg0I9IHrhAnCwjudhT-bH5MDnj2b5OHL33eXhuVQEd7VlljVUK7ATUwDhrIwyzJs0YYvLLxuy09sqxfHzPIEVKfPIDZ5qQT6JoseHXvreG1gqbhzplAxXpN-PQUWgjss6OjaQJXxVWDbPzkfYaa4D4V-_L9ExJI4X4QMnbgyWvpm67qxbBrnZ2isRvVeC90W9mwZVD-u7iL88qukRlvx1zTBvVEE3ieICMmbuzZr65gCUCQSk1M8N9BKVsDCihGhrNZEsPld2aCVQ28Zh7KkXAlVqTXOvsNhWhKp71LywHIdXeNuEUMd2mn8mevZE30mSczYv3lm-jYZ709pb3tC9GVRjDvaaDEYi3LAf5HrUI_PRsImkD5aNG8WikQ2U7K4ZzTDR90WhYe8-JeDajX3Qq8HUJrxkReSGlN-tLckTR6E5k',
+                    'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiYWQyNGQ4MjBlMTcwMzYwNDdlMzc4NjUxZTFmNWM2M2M2Y2MwM2E1MjNkZDE1ZjQzYTFlZTZlMmNkMmUzMjg2NTBkMGI2MDI1MzI2ZWIxOGQiLCJpYXQiOjE3MTUyMjYzMTUuNzg5NDcxLCJuYmYiOjE3MTUyMjYzMTUuNzg5NDc1LCJleHAiOjE3NDY3NjIzMTUuNjczMTQ5LCJzdWIiOiIzIiwic2NvcGVzIjpbXX0.Akf3M1EiIxRmVTpMdFk4-97ogH1b-Rrmwvq1-K60k2zBzJ4A8A6g-5cyb7T3udpOOKAnxFuCtNii-l-0iMZmJFRl2gz15ha1ipYHSLqFljoH_eKg53G4T31-hy1gSvUS3SbLmLRNqFwwXPHm_qZMrCkGDxL0Gon8zw1RpI_-pKZNcPel5XO0jaG31cRK2Ga-g-7fnSTG07NyD7sYJvS8b5TVUbrDBf5fD2wJg1MbFP45L1I_lreur-KtslsaUu2GOFRy9BD92Qj17YqibXvQ_zwHwBCZFE3XWs3G3e2QnNvNCaVB4NgN6yHo0DBaT87sQvz3GD9Z0Y2GC6X--WXi6O3Tq809T3md3T03pJjrzCukMvdUAN7IpZhQ8PfBDx8NpqY15pODSiZwZwVHdygRUnha2SOvEhck-b1C6cGc-aRF3U76NdlNUR36g0Ci1p1Ls0pHZkAoWG318ucYfzF1QJVN2pQLHwsK_waoKrDWV2LM77FnEphfe6ST1q2DCpeY5TuY42bppQJwAwLUBQKeGeYlrIVbxvKfwEYgVo-gHj25BT85uZe2_eIvEFuv4eDuBFRFLnx2XKJxyZVMDlJwaBJyDQ6FJ9Q4JrJlZ19fNrx3SIOx0TfACXsfoCeBa7dUEihDGHkUWm1AzvIRrC3lZyFBTKM7SU5ko6p5EF-T_sw',
                 }
             })
                 .then((res) => {
@@ -36,7 +37,14 @@ const crear_estado: React.FC = () => {
                     setSubTextLoading('Hubo problemas al comunicarse con el servidor, por favor intentelo denuevo más tarde.')
                 })
                 .then((posts) => {
-                    setPosts(posts['data']);
+                    console.log(posts['data'].length == 0)
+                    if (posts['data'].length == 0) {
+                        setTextLoading('No tienes estados creados')
+                        setSubTextLoading('Haz click en el boton + y crea un estado con tus pensamientos del momento')
+                    }else{
+                        setPosts(posts['data']);
+                        setHideText(true)
+                    }
                     setLoading(false)
                 })
 
@@ -49,13 +57,14 @@ const crear_estado: React.FC = () => {
                 "method": "POST",
                 "headers": {
                     'Accept': 'application/json',
-                    'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiY2RhY2IzMjRmNzA2YTFmYWUzMTM2YmM1OGZlZTVkOGM0NjUwMjZiMjNjYWQwMGMxMDNjN2Y3Y2RkNmEwZjM5NTgxNzA3YWY3ZDNkZjUxZWIiLCJpYXQiOjE3MTQ1MjE3NzguODUwMjQsIm5iZiI6MTcxNDUyMTc3OC44NTAyNDMsImV4cCI6MTc0NjA1Nzc3OC43NzI0MTgsInN1YiI6IjEiLCJzY29wZXMiOltdfQ.iDenrINDElnsv6pvbZnTnIUg1MxeD-iTdpydD7ciLVZ9tm9_UGQ4Wg8IS0lAYF5sGHun2Vz6iqGu71Bm74M8bk6gNGQbvX-IMktUwu8E0KVGty6JT5vHNs3WM45klDbBSUtwY6RmrSMsn2Ep3o_Ua9QEYLz9Gtpo8dcddkCXK1kR0nlSWb8QdbyHAibFLrtwEMQk7w4lffgttjL1VQdIV7QjdkjYtemSBFJO5AElA_8pwtd4bBK-xG_Zks_JNYg0I9IHrhAnCwjudhT-bH5MDnj2b5OHL33eXhuVQEd7VlljVUK7ATUwDhrIwyzJs0YYvLLxuy09sqxfHzPIEVKfPIDZ5qQT6JoseHXvreG1gqbhzplAxXpN-PQUWgjss6OjaQJXxVWDbPzkfYaa4D4V-_L9ExJI4X4QMnbgyWvpm67qxbBrnZ2isRvVeC90W9mwZVD-u7iL88qukRlvx1zTBvVEE3ieICMmbuzZr65gCUCQSk1M8N9BKVsDCihGhrNZEsPld2aCVQ28Zh7KkXAlVqTXOvsNhWhKp71LywHIdXeNuEUMd2mn8mevZE30mSczYv3lm-jYZ709pb3tC9GVRjDvaaDEYi3LAf5HrUI_PRsImkD5aNG8WikQ2U7K4ZzTDR90WhYe8-JeDajX3Qq8HUJrxkReSGlN-tLckTR6E5k',
+                    'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiYWQyNGQ4MjBlMTcwMzYwNDdlMzc4NjUxZTFmNWM2M2M2Y2MwM2E1MjNkZDE1ZjQzYTFlZTZlMmNkMmUzMjg2NTBkMGI2MDI1MzI2ZWIxOGQiLCJpYXQiOjE3MTUyMjYzMTUuNzg5NDcxLCJuYmYiOjE3MTUyMjYzMTUuNzg5NDc1LCJleHAiOjE3NDY3NjIzMTUuNjczMTQ5LCJzdWIiOiIzIiwic2NvcGVzIjpbXX0.Akf3M1EiIxRmVTpMdFk4-97ogH1b-Rrmwvq1-K60k2zBzJ4A8A6g-5cyb7T3udpOOKAnxFuCtNii-l-0iMZmJFRl2gz15ha1ipYHSLqFljoH_eKg53G4T31-hy1gSvUS3SbLmLRNqFwwXPHm_qZMrCkGDxL0Gon8zw1RpI_-pKZNcPel5XO0jaG31cRK2Ga-g-7fnSTG07NyD7sYJvS8b5TVUbrDBf5fD2wJg1MbFP45L1I_lreur-KtslsaUu2GOFRy9BD92Qj17YqibXvQ_zwHwBCZFE3XWs3G3e2QnNvNCaVB4NgN6yHo0DBaT87sQvz3GD9Z0Y2GC6X--WXi6O3Tq809T3md3T03pJjrzCukMvdUAN7IpZhQ8PfBDx8NpqY15pODSiZwZwVHdygRUnha2SOvEhck-b1C6cGc-aRF3U76NdlNUR36g0Ci1p1Ls0pHZkAoWG318ucYfzF1QJVN2pQLHwsK_waoKrDWV2LM77FnEphfe6ST1q2DCpeY5TuY42bppQJwAwLUBQKeGeYlrIVbxvKfwEYgVo-gHj25BT85uZe2_eIvEFuv4eDuBFRFLnx2XKJxyZVMDlJwaBJyDQ6FJ9Q4JrJlZ19fNrx3SIOx0TfACXsfoCeBa7dUEihDGHkUWm1AzvIRrC3lZyFBTKM7SU5ko6p5EF-T_sw',
                 }
             })
                 .then((res) => {
                     return res.json();
                 })
                 .then((info) => {
+
                     if (info['success'] == true) {
                         window.location.reload();
                     }
@@ -90,7 +99,7 @@ const crear_estado: React.FC = () => {
                 </IonToolbar>
             </IonHeader>
             <IonContent fullscreen>
-                <div className={`${!isLoading && 'ion-hide'}`}>
+                <div className={`${hideText && 'ion-hide'}`}>
                     <div class="ion-text-center">
                         <h3>{textLoading}</h3>
                         {subtextLoading}
@@ -104,7 +113,7 @@ const crear_estado: React.FC = () => {
                                     <IonText color="dark">Estado N°{post.numero} </IonText>
                                 </IonCol>
                                 <IonCol>
-                                    <IonButton class="ion-float-right" id={"action_" + post.id} shape="round" size="small" fill="clear"><IonIcon icon={ellipsisVertical} slot="icon-only"></IonIcon></IonButton>
+                                    <IonButton class="ion-float-right" id={"action_es_" + post.id} shape="round" size="small" fill="clear"><IonIcon icon={ellipsisVertical} slot="icon-only"></IonIcon></IonButton>
                                 </IonCol>
                             </IonRow>
                         </IonCardSubtitle>
@@ -126,7 +135,7 @@ const crear_estado: React.FC = () => {
                             <IonProgressBar value={post.estado_de_animo / 10}></IonProgressBar>
                         </div>
                         <IonActionSheet
-                            trigger={"action_" + post.id}
+                            trigger={"action_es_" + post.id}
                             header={"¿Deseas hacer alguna acción en tu estado n°" + post.numero + "?"}
                             buttons={[
                                 {
