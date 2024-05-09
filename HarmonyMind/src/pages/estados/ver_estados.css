@@ -1,0 +1,33 @@
+.fechaDiv {
+    width: 70px;
+    height: 70px;
+    display: block;
+    margin-right: 25px;
+    justify-content: center;
+    text-align: center;
+    color: rgb(247, 247, 247);
+    background: rgb(18, 167, 25);
+    padding: 3px;
+    border-radius: 15%;
+}
+
+.estadosCard {
+    margin-left: 25px;
+    margin-right: 25px;
+    margin-bottom: 25px;
+}
+
+.fechaDiv .textDiaMes {
+    font-size: 17px;
+    font-weight: bold;
+}
+
+.fechaDiv .textAnio {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.textPub {
+    font-size: 16px;
+    color: white;
+}
