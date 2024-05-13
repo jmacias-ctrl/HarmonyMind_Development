@@ -10,7 +10,7 @@ const Tab1: React.FC = () => {
     <IonPage>
       <IonContent className='ion-padding'>
         <IonGrid className='formContainer'>
-            <h1>Registro</h1>
+            <h1>Iniciar Sesión</h1>
           <IonRow>
             <IonCol size='12' size-md='7'>
               <form action="" className='loginForm'>

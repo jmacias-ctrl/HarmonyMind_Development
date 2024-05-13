@@ -10,14 +10,16 @@ import {
   setupIonicReact
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-import { ellipse, home, square, triangle, homeOutline } from 'ionicons/icons';
-import Home from './pages/Home';
-import Login from './pages/Login';
-import Register from './pages/Register';
+import { ellipse, square, triangle } from 'ionicons/icons';
 import Tab1 from './pages/Tab1';
 import Tab2 from './pages/Tab2';
 import Tab3 from './pages/Tab3';
-
+import Login from './pages/auth/login';
+import Register from './pages/auth/register';
+import eventos from './pages/eventos';
+import eventos_asistidos from './pages/eventos_asistidos';
+import crear_estado from './pages/estados/crear_estado';
+import ver_estados from './pages/estados/ver_estados';
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
 
@@ -44,7 +46,12 @@ const App: React.FC = () => (
     <IonReactRouter>
       <IonTabs>
         <IonRouterOutlet>
-          <Route path="/home" component={Home} exact/>
+          <Route path="/estado/crear" component={crear_estado} />
+          <Route path= "/auth/login" component={Login}/>
+          <Route path= "/auth/register" component={Register}/>
+          <Route path="/estado/ver:status?" component={ver_estados} />
+          <Route path="/eventos/ver" component={eventos} />
+          <Route path="/eventos/assist" component={eventos_asistidos} />
           <Route exact path="/tab1">
             <Tab1 />
           </Route>
@@ -54,25 +61,28 @@ const App: React.FC = () => (
           <Route path="/tab3">
             <Tab3 />
           </Route>
-          <Route path="/login" component={Login} />
+          <Route exact path="/">
+            <Redirect to="/tab1" />
+          </Route>
         </IonRouterOutlet>
         <IonTabBar slot="bottom">
-          <IonTabButton tab="home" href='/home'>
-              <IonIcon aria-hidden="true" icon={homeOutline}/>
-              <IonLabel>Home</IonLabel>
-             </IonTabButton>
-          <IonTabButton tab="tab1" href="/tab1">
-            <IonIcon aria-hidden="true" icon={triangle} />
-            <IonLabel>Tab 1</IonLabel>
-          </IonTabButton>
-          <IonTabButton tab="tab2" href="/tab2">
-            <IonIcon aria-hidden="true" icon={ellipse} />
-            <IonLabel>Tab 2</IonLabel>
-          </IonTabButton>
-          <IonTabButton tab="tab3" href="/tab3">
+          <IonTabButton tab="inicio" href="/">
             <IonIcon aria-hidden="true" icon={square} />
-            <IonLabel>Tab 3</IonLabel>
+            <IonLabel>Inicio</IonLabel>
           </IonTabButton>
+          <IonTabButton tab="ver_estados" href="/estado/ver">
+            <IonIcon aria-hidden="true" icon={triangle} />
+            <IonLabel>Estados</IonLabel>
+          </IonTabButton>
+          <IonTabButton tab="login" href="/auth/login">
+            <IonIcon aria-hidden="true" icon={triangle} />
+            <IonLabel>Login</IonLabel>
+          </IonTabButton>
+          <IonTabButton tab="ver_eventos" href="/eventos/ver">
+            <IonIcon aria-hidden="true" icon={ellipse} />
+            <IonLabel>Eventos</IonLabel>
+          </IonTabButton>
+
         </IonTabBar>
       </IonTabs>
     </IonReactRouter>
