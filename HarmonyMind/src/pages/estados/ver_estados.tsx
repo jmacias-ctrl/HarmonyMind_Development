@@ -78,6 +78,7 @@ const crear_estado: React.FC = () => {
         }
     }
 
+
     return (
 
         <IonPage>
