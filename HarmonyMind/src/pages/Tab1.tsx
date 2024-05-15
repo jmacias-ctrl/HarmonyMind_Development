@@ -8,40 +8,20 @@ import './Tab1.css';
 const Tab1: React.FC = () => {
   return (
     <IonPage>
-      <IonContent className='ion-padding'>
-        <IonGrid className='formContainer'>
-            <h1>Iniciar Sesión</h1>
-          <IonRow>
-            <IonCol size='12' size-md='7'>
-              <form action="" className='loginForm'>
-                <IonInput
-                name='Username'
-                className='inputFields'
-                >
-                   <div slot='label'>
-                    <IonIcon icon={personOutline}></IonIcon>
-                    </div> 
-                </IonInput>
-                <IonInput
-                name='Nombre' 
-                type='password'
-                className='inputFields'
-                > 
-                <div slot='label'>
-                  <IonIcon icon={lockClosedOutline}></IonIcon>
-                </div>
-                </IonInput>
-                  <IonButton shape='round'className='button' expand='full'>
-                      Iniciar Sesión
-                  </IonButton>
-              </form>
-            </IonCol>
-          </IonRow>
-        </IonGrid>
-    </IonContent>
-  </IonPage>
-
-
+      <IonHeader>
+        <IonToolbar>
+          <IonTitle>Inicio</IonTitle>
+        </IonToolbar>
+      </IonHeader>
+      <IonContent fullscreen>
+        <IonHeader collapse="condense">
+          <IonToolbar>
+            <IonTitle size="large">Bienvenido a HarmonyMind</IonTitle>
+          </IonToolbar>
+        </IonHeader>
+        <ExploreContainer name="Bienvenido" />
+      </IonContent>
+    </IonPage>
   );
 };
 
