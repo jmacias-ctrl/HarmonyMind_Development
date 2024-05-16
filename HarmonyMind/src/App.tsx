@@ -14,10 +14,9 @@ import { ellipse, square, triangle } from 'ionicons/icons';
 import Tab1 from './pages/Tab1';
 import Tab2 from './pages/Tab2';
 import Tab3 from './pages/Tab3';
-import eventos from './pages/eventos';
-import eventos_asistidos from './pages/eventos_asistidos';
-import crear_estado from './pages/estados/crear_estado';
-import ver_estados from './pages/estados/ver_estados';
+import Login from './pages/auth/login'; 
+import Register from './pages/auth/register';
+import { useState } from 'react'; // Importar useState
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
 
@@ -38,39 +37,60 @@ import '@ionic/react/css/display.css';
 import './theme/variables.css';
 
 setupIonicReact();
+const App: React.FC = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-const App: React.FC = () => (
-  <IonApp>
-    <IonReactRouter>
-      <IonTabs>
+  const handleLogin = () => {
+    setIsLoggedIn(true);
+  };
+
+  return (
+    <IonApp>
+      <IonReactRouter>
         <IonRouterOutlet>
-          <Route exact path="/tab1">
-            <Tab1 />
+          <Route exact path="/login">
+            <Login onLogin={handleLogin} />
           </Route>
-          <Route exact path="/tab2">
-            <Tab2 />
+          <Route exact path="/register">
+            <Register />
           </Route>
-          <Route path="/tab3">
-            <Tab3 />
-          </Route>
-          <Route exact path="/">
-            <Redirect to="/tab1" />
+          <Route>
+            {isLoggedIn ? (
+              <IonTabs>
+                <IonRouterOutlet>
+                  <Route exact path="/tab1">
+                    <Tab1 />
+                  </Route>
+                  <Route exact path="/tab2">
+                    <Tab2 />
+                  </Route>
+                  <Route path="/tab3">
+                    <Tab3 />
+                  </Route>
+                  <Route exact path="/">
+                    <Redirect to="/tab1" />
+                  </Route>
+                </IonRouterOutlet>
+                <IonTabBar slot="bottom">
+                  <IonTabButton tab="tab1" href="/tab1">
+                    <IonIcon aria-hidden="true" icon={triangle} />
+                    <IonLabel>Tab 1</IonLabel>
+                  </IonTabButton>
+                  <IonTabButton tab="ver_eventos" href="/eventos/ver">
+                    <IonIcon aria-hidden="true" icon={ellipse} />
+                    <IonLabel>Eventos</IonLabel>
+                  </IonTabButton>
+                </IonTabBar>
+              </IonTabs>
+            ) : (
+              <Redirect to="/login" />
+            )}
           </Route>
         </IonRouterOutlet>
-        <IonTabBar slot="bottom">
-          <IonTabButton tab="tab1" href="/tab1">
-            <IonIcon aria-hidden="true" icon={triangle} />
-            <IonLabel>Tab 1</IonLabel>
-          </IonTabButton>
-          <IonTabButton tab="ver_eventos" href="/eventos/ver">
-            <IonIcon aria-hidden="true" icon={ellipse} />
-            <IonLabel>Eventos</IonLabel>
-          </IonTabButton>
-
-        </IonTabBar>
-      </IonTabs>
-    </IonReactRouter>
-  </IonApp>
-);
+      </IonReactRouter>
+    </IonApp>
+  );
+};
 
 export default App;
+

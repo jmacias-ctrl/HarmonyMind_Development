@@ -20,8 +20,8 @@ class LoginController extends Controller
     public function login(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'email'    => 'required|email',
-            'password' => 'required'
+            'email'    => 'required|string|email',
+            'password' => 'required|string'
         ]);
 
         if ($validator->fails()) return sendError('Validation Error.', $validator->errors(), 422);
@@ -33,7 +33,7 @@ class LoginController extends Controller
             $success['name']  = $user->name;
             $success['token'] = $user->createToken('accessToken')->accessToken;
 
-            return sendResponse($success, 'You are successfully logged in.');
+            return response()->json(['success' => $success], 200);
         } else {
             return sendError('Unauthorised', ['error' => 'Unauthorised'], 401);
         }

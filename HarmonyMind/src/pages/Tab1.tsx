@@ -1,6 +1,6 @@
 import { IonContent, IonGrid, IonPage, IonRow, IonCol,IonButton, 
   IonHeader, IonInput, IonItem, IonList,  
-  IonIcon} from '@ionic/react';
+  IonIcon,IonToolbar, IonTitle} from '@ionic/react';
   import { personOutline,lockClosedOutline } from 'ionicons/icons';
 import ExploreContainer from '../components/ExploreContainer';
 import './Tab1.css';
