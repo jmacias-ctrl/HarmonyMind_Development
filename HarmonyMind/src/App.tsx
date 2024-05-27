@@ -10,7 +10,7 @@ import {
   setupIonicReact
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-import { ellipse, square, triangle } from 'ionicons/icons';
+import { ellipse, square, triangle, call } from 'ionicons/icons';
 import Tab1 from './pages/Tab1';
 import Tab2 from './pages/Tab2';
 import Tab3 from './pages/Tab3';
@@ -18,6 +18,7 @@ import eventos from './pages/eventos';
 import eventos_asistidos from './pages/eventos_asistidos';
 import crear_estado from './pages/estados/crear_estado';
 import ver_estados from './pages/estados/ver_estados';
+import boton_panico from './pages/boton_panico';
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
 
@@ -48,6 +49,7 @@ const App: React.FC = () => (
           <Route path="/estado/ver:status?" component={ver_estados} />
           <Route path="/eventos/ver" component={eventos} />
           <Route path="/eventos/assist" component={eventos_asistidos} />
+          <Route path="/button" component={boton_panico} />
           <Route exact path="/tab1">
             <Tab1 />
           </Route>
@@ -73,6 +75,10 @@ const App: React.FC = () => (
           <IonTabButton tab="ver_eventos" href="/eventos/ver">
             <IonIcon aria-hidden="true" icon={ellipse} />
             <IonLabel>Eventos</IonLabel>
+          </IonTabButton>
+          <IonTabButton tab="boton_panico" href="/button">
+            <IonIcon aria-hidden="true" icon={call} />
+            <IonLabel>SOS</IonLabel>
           </IonTabButton>
 
         </IonTabBar>
