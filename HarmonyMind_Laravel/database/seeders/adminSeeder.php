@@ -22,14 +22,12 @@ class adminSeeder extends Seeder
             $user->name = 'test';
             $user->email = 'test@test.cl';
             $user->password = bcrypt('asdf1234');
-            $user->emergency_contact = 1;
         $user->save();
 
         $user = new User();
             $user->name = 'test2';
             $user->email = 'test2@test.cl';
             $user->password = bcrypt('asdf1234');
-            $user->emergency_contact = 2;
         $user->save();
         
 

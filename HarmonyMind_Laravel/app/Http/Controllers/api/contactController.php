@@ -9,6 +9,7 @@ use App\Models\Event;
 use App\Models\Category;
 use Illuminate\Support\Facades\DB;
 use App\Models\User;
+use App\Models\contact;
 use Auth;   
 
 
@@ -23,7 +24,11 @@ class contactController extends Controller
     public function get(Request $request){
         
         $user = Auth::user();
-        return response()->json(['success' => true, 'data'=>$user], 200);
+        $contacts = DB::table('contacts')
+        ->select('contacts.*')
+        ->where('user_fk', '=', Auth::user()->id)
+        ->get();
+        return response()->json(['success' => true, 'data'=>$user, 'data2'=>$contacts], 200);
         
     }
 
@@ -33,27 +38,61 @@ class contactController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function update(Request $request){
+    public function add(Request $request){
         
         $rules = [
     
-            'contact' => 'required',
+            'number' => 'required',
         ];
         $attribute = [
-            'contact' => 'Contacto de Emergencia',
+            'number' => 'Contacto de Emergencia',
         ];
         $message = [
             'required' => ':attribute es obligatorio'
         ];
         $validator = Validator::make($request->all(), $rules, $message, $attribute);
         if ($validator->passes()) {
-            $user = user::find(Auth::id());
-                $user->emergency_contact = $request->contact;
-            $user->save();
+            //$user = user::find(Auth::id());
+
+            $contact = new contact;
+                $contact->number= $request->number;
+                $contact->user_fk= Auth::id();
+            $contact->save();
+
             return response()->json(['success' => true], 200);
         }
         return response()->json(['success' => false, 'validator'=>$validator->errors()], 200);
         
+    }
+
+    
+    /**
+     * Actualizar información de contacto
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function delete(Request $request){
+
+        $rules = [
+    
+            'number' => 'required',
+        ];
+        $attribute = [
+            'number' => 'Contacto de Emergencia',
+        ];
+        $message = [
+            'required' => ':attribute es obligatorio'
+        ];
+        $validator = Validator::make($request->all(), $rules, $message, $attribute);
+        if ($validator->passes()) {
+            $contact = DB::table('contacts')
+            ->where('user_fk', '=', Auth::user()->id)
+            ->where('number', '=', $request->number)
+            ->delete();
+            return response()->json(['success' => true], 200);
+        }
+        return response()->json(['success' => false, 'validator'=>$validator->errors()], 200);
     }
 
 

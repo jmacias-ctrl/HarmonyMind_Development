@@ -19,6 +19,7 @@ import eventos_asistidos from './pages/eventos_asistidos';
 import crear_estado from './pages/estados/crear_estado';
 import ver_estados from './pages/estados/ver_estados';
 import boton_panico from './pages/boton_panico';
+import perfil from './pages/perfil';
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
 
@@ -46,10 +47,11 @@ const App: React.FC = () => (
       <IonTabs>
         <IonRouterOutlet>
           <Route path="/estado/crear" component={crear_estado} />
-          <Route path="/estado/ver:status?" component={ver_estados} />
+          <Route path="/estado/ver:status?" component={ver_estados} exact={true}  />
           <Route path="/eventos/ver" component={eventos} />
           <Route path="/eventos/assist" component={eventos_asistidos} />
           <Route path="/button" component={boton_panico} />
+          <Route path="/perfil" component={perfil} />
           <Route exact path="/tab1">
             <Tab1 />
           </Route>
@@ -68,7 +70,7 @@ const App: React.FC = () => (
             <IonIcon aria-hidden="true" icon={square} />
             <IonLabel>Inicio</IonLabel>
           </IonTabButton>
-          <IonTabButton tab="" href="">
+          <IonTabButton tab="perfil" href="/perfil">
             <IonIcon aria-hidden="true" icon={person} />
             <IonLabel>Perfil</IonLabel>
           </IonTabButton>

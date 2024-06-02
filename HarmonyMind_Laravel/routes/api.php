@@ -40,7 +40,8 @@ Route::prefix('evento')->group(function () {
 Route::prefix('emergency_contact')->group(function () {
     Route::middleware('auth:api')->group(function () {
         Route::get('get', [contactController::class, 'get'])->name('ver.contacto');
-        Route::patch('update', [contactController::class, 'update'])->name('actualizar.contacto');
+        Route::post('add', [contactController::class, 'add'])->name('agregar.contacto');
+        Route::post('delete', [contactController::class, 'delete'])->name('eliminar.contacto');
         
         
     });
