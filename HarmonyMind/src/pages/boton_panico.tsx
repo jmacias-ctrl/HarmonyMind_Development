@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, useIonRouter } from '@ionic/react';
 import { IonCard, IonCardContent, IonButton, IonCardHeader, IonCardSubtitle, IonCardTitle, IonModal, IonButtons, IonThumbnail } from '@ionic/react';
-import { IonText, IonActionSheet, IonIcon, useIonLoading, IonList, IonItem, IonSelect, IonSelectOption, IonRow } from '@ionic/react';
+import { IonText, IonActionSheet, IonIcon, useIonLoading, IonList, IonItem, IonSelect, IonSelectOption, IonRow, IonImg } from '@ionic/react';
 import { IonFab, IonFabButton } from '@ionic/react';
 import { add } from 'ionicons/icons';
 import ExploreContainer from '../components/ExploreContainer';
@@ -12,6 +12,7 @@ const boton_panico: React.FC = () => {
   const [isLoaded, setLoaded] = useState(false);
   const [name, setName]= useState("");
   const [email, setEmail]= useState("");
+  const [contacts, setContacts] = useState([]);
 
     const fetch_posts = () => {
       if (isLoaded == false) {
@@ -20,7 +21,7 @@ const boton_panico: React.FC = () => {
             "method": "GET",
             "headers": {
                 'Accept': 'application/json',
-                'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIzIiwianRpIjoiNDllZWJhOTIzYTc4OGE5ZTNhYjBjYjYxZDk1YTM3YjEzOTAzZTk0ZjAyYmExZjhkYTA2NGQyOTk4MDc0YWRiYTdhYjUxNDY4NTEzMDhiOWQiLCJpYXQiOjE3MTcyNzkzMDIuOTI1OTI5LCJuYmYiOjE3MTcyNzkzMDIuOTI1OTMzLCJleHAiOjE3NDg4MTUzMDIuMTk3NDIzLCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.bMcf1nLtELb4fCRPWIBHHh6Dma0zJfnywb1WFpI70HI6xG5lITwxMNvSjRh2Tz5EBnruQJ_TXoLaneMYz2xZrz_MuRksJCQOPS8Uhra2_uvbp_SHENeJDjcW39Vqg4F9N8ixxyFIdg5Y0ovWjIrez0TxnGwam5GrQ59i9NT8MMH5ZizdDaEWSpplJmkFl3h1goKfu6Kak5UD3CVl1a4hRcsT4uQ0GSQZrlgSDQGI-EwZrD48HO9lyUsGlo2Tqt8JVbxipCNL22XqtN1EaPYuNIvS91_GMHrCZQCaAoCVU4Xu3WAz2vHJANZSO3ZOlOo8qEtQDHthfzMMh7pUIgd_aOICQLsLebbO4u8LYJ4ysgzhg7W3htXXjh8qWJTm2QY12LBOVdbpqGI1DuBddvRZ0sPCBO1wWvdRJc1x4jMhRmnh8nl9Szv-NkO84jZu1wTStuLp7uOCFMH_BIeJrPRAUwSTNVp19G9UdRDgWk1i9za6a_no_AQs2lj8WYaPMAmEoWC5rXYLJ6QPNGzzDNtPltX7JMAORGzDQ7IHrT7BnI1qn0-cL04LcX_4dBmjCntIj2uLEVIOezzkN4p7hGLKqXCM4TyBx-njfc1scg-5ghynIY8WWJHRUUEZTTtqVmBMm7xRhpmOA3S31-BJTGjWIbL-QxB_odEXijeGn6v2L34',
+                'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI1IiwianRpIjoiOTNhZjlkNjAyNjY2OTYxNDU0NWUyNGU3MDA4NGFmYTVlMzA1MWNjMDAwNDJhNTgxOTZiOWQwYWJkYjBkMjM1YmI4MTE3MTRiYzY2MGZjMzkiLCJpYXQiOjE3MTczNjMxOTUuNjc0NjkxLCJuYmYiOjE3MTczNjMxOTUuNjc0NywiZXhwIjoxNzQ4ODk5MTk0LjI1NDg4NSwic3ViIjoiMSIsInNjb3BlcyI6W119.UACc5zfN9gjSzgEtcqyDoc2H_-2pp41ElWMdXfLBRonqOxw4KIipiUKsTBjKigonKfFxhHHaTcgW6q0Sgl6SHOrdk2JFm0_3kOqOa0KwSd_-q0Pz90shDDqgXLU0z3Gdr7xZDTGPhGyhasoTwrV8QCTe4cC3DS0b8F5bGqWXyVfzfh6Weu2ulb98vomHrtuFDx0lOJYZ-leA1t2rG-cEEj5bHPWPPWFPKzZcvXGfZezOGzseNxJoYYIpKwwWrTtkmHVCD-9anrnfE9oMOKgwDbxd-BcOZT-I1y_KnVOwE5VsUMD6P7Ceb3UEObozggztnqXcdU-2pwUmBk3FR_lTWg8GGipWDfAmtQ84h-RrV1B81UJyNZp-qrRiAUNKwOE2-hkCmATK8EGQt5_er5St5LeQeJU3BuUY7t9-zgpLeDDWf8H-PSKrES8cQJRgau60kROTNpinPsshfwi9-ZLxNbNoaKh0CF30xcIqD2rcbttciKRRxC-RbQZpKQP8HzsRnncVyLBYd9158dl21_wqmv7KAGC9fvgho4vNvV-PKeEjVPaJ0EZMKPAwqI2vtNz_6i3HKsNyjA0a0xIL6yEPjRtJlY_yOdlmHUr1mhKLLr3Txw10ab0jqvZNiZ5al0V4vXd6ejKo7hwDwHsGzChmtYEKMeOMzbzg3spRjmvoUCA',
             }
         })
             .then((res) => {
@@ -33,6 +34,7 @@ const boton_panico: React.FC = () => {
                 console.log(posts.data.name)
                 setName(posts.data.name)
                 setEmail(posts.data.email)
+                setContacts(posts["data2"])
             });
 
     }
@@ -41,19 +43,11 @@ const boton_panico: React.FC = () => {
     function emergency_call(){
       console.log('start');
       
-      switch(contact){
-        case 1:
-          console.log("Línea de Prevención de Suicidio");
-          break;
-        
-        case 2:
-          console.log("Carabineros");
-          break;
-
-        case 3:
-          console.log("Otro");
-          break;
-      }
+      if (contacts.length == 0) {
+        console.log("Linea de Prevención de Suicidio")
+      } else {
+        console.log("Contactos")
+    }
       
     }
 
@@ -97,8 +91,10 @@ const boton_panico: React.FC = () => {
             <IonContent fullscreen>
 
             <IonRow class="ion-justify-content-center">
-              <IonButton size="large" onClick={() => emergency_call()}>Llamar</IonButton>
-              <a href="tel:+1-1800-555-5555" className="button button-positive">Call me</a>
+              <IonImg onClick={() => emergency_call()}
+                src="https://play-lh.googleusercontent.com/ibGrsOSIungUGH69-cD0PAxoOi2rdYGKd8LDhanme4iGyh2aAXukKXpdpSFbehEk38M"
+                alt="boton de pánico"
+              ></IonImg>
             </IonRow>
 
               

@@ -23,7 +23,7 @@ const perfil: React.FC = () => {
             "method": "GET",
             "headers": {
                 'Accept': 'application/json',
-                'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIzIiwianRpIjoiNDllZWJhOTIzYTc4OGE5ZTNhYjBjYjYxZDk1YTM3YjEzOTAzZTk0ZjAyYmExZjhkYTA2NGQyOTk4MDc0YWRiYTdhYjUxNDY4NTEzMDhiOWQiLCJpYXQiOjE3MTcyNzkzMDIuOTI1OTI5LCJuYmYiOjE3MTcyNzkzMDIuOTI1OTMzLCJleHAiOjE3NDg4MTUzMDIuMTk3NDIzLCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.bMcf1nLtELb4fCRPWIBHHh6Dma0zJfnywb1WFpI70HI6xG5lITwxMNvSjRh2Tz5EBnruQJ_TXoLaneMYz2xZrz_MuRksJCQOPS8Uhra2_uvbp_SHENeJDjcW39Vqg4F9N8ixxyFIdg5Y0ovWjIrez0TxnGwam5GrQ59i9NT8MMH5ZizdDaEWSpplJmkFl3h1goKfu6Kak5UD3CVl1a4hRcsT4uQ0GSQZrlgSDQGI-EwZrD48HO9lyUsGlo2Tqt8JVbxipCNL22XqtN1EaPYuNIvS91_GMHrCZQCaAoCVU4Xu3WAz2vHJANZSO3ZOlOo8qEtQDHthfzMMh7pUIgd_aOICQLsLebbO4u8LYJ4ysgzhg7W3htXXjh8qWJTm2QY12LBOVdbpqGI1DuBddvRZ0sPCBO1wWvdRJc1x4jMhRmnh8nl9Szv-NkO84jZu1wTStuLp7uOCFMH_BIeJrPRAUwSTNVp19G9UdRDgWk1i9za6a_no_AQs2lj8WYaPMAmEoWC5rXYLJ6QPNGzzDNtPltX7JMAORGzDQ7IHrT7BnI1qn0-cL04LcX_4dBmjCntIj2uLEVIOezzkN4p7hGLKqXCM4TyBx-njfc1scg-5ghynIY8WWJHRUUEZTTtqVmBMm7xRhpmOA3S31-BJTGjWIbL-QxB_odEXijeGn6v2L34',
+                'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI1IiwianRpIjoiOTNhZjlkNjAyNjY2OTYxNDU0NWUyNGU3MDA4NGFmYTVlMzA1MWNjMDAwNDJhNTgxOTZiOWQwYWJkYjBkMjM1YmI4MTE3MTRiYzY2MGZjMzkiLCJpYXQiOjE3MTczNjMxOTUuNjc0NjkxLCJuYmYiOjE3MTczNjMxOTUuNjc0NywiZXhwIjoxNzQ4ODk5MTk0LjI1NDg4NSwic3ViIjoiMSIsInNjb3BlcyI6W119.UACc5zfN9gjSzgEtcqyDoc2H_-2pp41ElWMdXfLBRonqOxw4KIipiUKsTBjKigonKfFxhHHaTcgW6q0Sgl6SHOrdk2JFm0_3kOqOa0KwSd_-q0Pz90shDDqgXLU0z3Gdr7xZDTGPhGyhasoTwrV8QCTe4cC3DS0b8F5bGqWXyVfzfh6Weu2ulb98vomHrtuFDx0lOJYZ-leA1t2rG-cEEj5bHPWPPWFPKzZcvXGfZezOGzseNxJoYYIpKwwWrTtkmHVCD-9anrnfE9oMOKgwDbxd-BcOZT-I1y_KnVOwE5VsUMD6P7Ceb3UEObozggztnqXcdU-2pwUmBk3FR_lTWg8GGipWDfAmtQ84h-RrV1B81UJyNZp-qrRiAUNKwOE2-hkCmATK8EGQt5_er5St5LeQeJU3BuUY7t9-zgpLeDDWf8H-PSKrES8cQJRgau60kROTNpinPsshfwi9-ZLxNbNoaKh0CF30xcIqD2rcbttciKRRxC-RbQZpKQP8HzsRnncVyLBYd9158dl21_wqmv7KAGC9fvgho4vNvV-PKeEjVPaJ0EZMKPAwqI2vtNz_6i3HKsNyjA0a0xIL6yEPjRtJlY_yOdlmHUr1mhKLLr3Txw10ab0jqvZNiZ5al0V4vXd6ejKo7hwDwHsGzChmtYEKMeOMzbzg3spRjmvoUCA',
             }
         })
             .then((res) => {
@@ -32,12 +32,10 @@ const perfil: React.FC = () => {
             .then((posts) => {
                 setPosts(posts["data"]);
                 setLoaded(true);
-                console.log("nombre usuario:")
-                console.log(posts.data.name)
                 setContacts(posts["data2"])
-                console.log(posts.data2)
                 setName(posts.data.name)
                 setEmail(posts.data.email)
+                
                 
             });
 
@@ -56,7 +54,7 @@ const perfil: React.FC = () => {
                 "method": "POST",
                 "headers": {
                     'Accept': 'application/json',
-                    'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIzIiwianRpIjoiNDllZWJhOTIzYTc4OGE5ZTNhYjBjYjYxZDk1YTM3YjEzOTAzZTk0ZjAyYmExZjhkYTA2NGQyOTk4MDc0YWRiYTdhYjUxNDY4NTEzMDhiOWQiLCJpYXQiOjE3MTcyNzkzMDIuOTI1OTI5LCJuYmYiOjE3MTcyNzkzMDIuOTI1OTMzLCJleHAiOjE3NDg4MTUzMDIuMTk3NDIzLCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.bMcf1nLtELb4fCRPWIBHHh6Dma0zJfnywb1WFpI70HI6xG5lITwxMNvSjRh2Tz5EBnruQJ_TXoLaneMYz2xZrz_MuRksJCQOPS8Uhra2_uvbp_SHENeJDjcW39Vqg4F9N8ixxyFIdg5Y0ovWjIrez0TxnGwam5GrQ59i9NT8MMH5ZizdDaEWSpplJmkFl3h1goKfu6Kak5UD3CVl1a4hRcsT4uQ0GSQZrlgSDQGI-EwZrD48HO9lyUsGlo2Tqt8JVbxipCNL22XqtN1EaPYuNIvS91_GMHrCZQCaAoCVU4Xu3WAz2vHJANZSO3ZOlOo8qEtQDHthfzMMh7pUIgd_aOICQLsLebbO4u8LYJ4ysgzhg7W3htXXjh8qWJTm2QY12LBOVdbpqGI1DuBddvRZ0sPCBO1wWvdRJc1x4jMhRmnh8nl9Szv-NkO84jZu1wTStuLp7uOCFMH_BIeJrPRAUwSTNVp19G9UdRDgWk1i9za6a_no_AQs2lj8WYaPMAmEoWC5rXYLJ6QPNGzzDNtPltX7JMAORGzDQ7IHrT7BnI1qn0-cL04LcX_4dBmjCntIj2uLEVIOezzkN4p7hGLKqXCM4TyBx-njfc1scg-5ghynIY8WWJHRUUEZTTtqVmBMm7xRhpmOA3S31-BJTGjWIbL-QxB_odEXijeGn6v2L34',
+                    'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI1IiwianRpIjoiOTNhZjlkNjAyNjY2OTYxNDU0NWUyNGU3MDA4NGFmYTVlMzA1MWNjMDAwNDJhNTgxOTZiOWQwYWJkYjBkMjM1YmI4MTE3MTRiYzY2MGZjMzkiLCJpYXQiOjE3MTczNjMxOTUuNjc0NjkxLCJuYmYiOjE3MTczNjMxOTUuNjc0NywiZXhwIjoxNzQ4ODk5MTk0LjI1NDg4NSwic3ViIjoiMSIsInNjb3BlcyI6W119.UACc5zfN9gjSzgEtcqyDoc2H_-2pp41ElWMdXfLBRonqOxw4KIipiUKsTBjKigonKfFxhHHaTcgW6q0Sgl6SHOrdk2JFm0_3kOqOa0KwSd_-q0Pz90shDDqgXLU0z3Gdr7xZDTGPhGyhasoTwrV8QCTe4cC3DS0b8F5bGqWXyVfzfh6Weu2ulb98vomHrtuFDx0lOJYZ-leA1t2rG-cEEj5bHPWPPWFPKzZcvXGfZezOGzseNxJoYYIpKwwWrTtkmHVCD-9anrnfE9oMOKgwDbxd-BcOZT-I1y_KnVOwE5VsUMD6P7Ceb3UEObozggztnqXcdU-2pwUmBk3FR_lTWg8GGipWDfAmtQ84h-RrV1B81UJyNZp-qrRiAUNKwOE2-hkCmATK8EGQt5_er5St5LeQeJU3BuUY7t9-zgpLeDDWf8H-PSKrES8cQJRgau60kROTNpinPsshfwi9-ZLxNbNoaKh0CF30xcIqD2rcbttciKRRxC-RbQZpKQP8HzsRnncVyLBYd9158dl21_wqmv7KAGC9fvgho4vNvV-PKeEjVPaJ0EZMKPAwqI2vtNz_6i3HKsNyjA0a0xIL6yEPjRtJlY_yOdlmHUr1mhKLLr3Txw10ab0jqvZNiZ5al0V4vXd6ejKo7hwDwHsGzChmtYEKMeOMzbzg3spRjmvoUCA',
                 }
             })
                 .then((res) => {
@@ -78,7 +76,7 @@ const perfil: React.FC = () => {
                 "method": "POST",
                 "headers": {
                     'Accept': 'application/json',
-                    'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIzIiwianRpIjoiNDllZWJhOTIzYTc4OGE5ZTNhYjBjYjYxZDk1YTM3YjEzOTAzZTk0ZjAyYmExZjhkYTA2NGQyOTk4MDc0YWRiYTdhYjUxNDY4NTEzMDhiOWQiLCJpYXQiOjE3MTcyNzkzMDIuOTI1OTI5LCJuYmYiOjE3MTcyNzkzMDIuOTI1OTMzLCJleHAiOjE3NDg4MTUzMDIuMTk3NDIzLCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.bMcf1nLtELb4fCRPWIBHHh6Dma0zJfnywb1WFpI70HI6xG5lITwxMNvSjRh2Tz5EBnruQJ_TXoLaneMYz2xZrz_MuRksJCQOPS8Uhra2_uvbp_SHENeJDjcW39Vqg4F9N8ixxyFIdg5Y0ovWjIrez0TxnGwam5GrQ59i9NT8MMH5ZizdDaEWSpplJmkFl3h1goKfu6Kak5UD3CVl1a4hRcsT4uQ0GSQZrlgSDQGI-EwZrD48HO9lyUsGlo2Tqt8JVbxipCNL22XqtN1EaPYuNIvS91_GMHrCZQCaAoCVU4Xu3WAz2vHJANZSO3ZOlOo8qEtQDHthfzMMh7pUIgd_aOICQLsLebbO4u8LYJ4ysgzhg7W3htXXjh8qWJTm2QY12LBOVdbpqGI1DuBddvRZ0sPCBO1wWvdRJc1x4jMhRmnh8nl9Szv-NkO84jZu1wTStuLp7uOCFMH_BIeJrPRAUwSTNVp19G9UdRDgWk1i9za6a_no_AQs2lj8WYaPMAmEoWC5rXYLJ6QPNGzzDNtPltX7JMAORGzDQ7IHrT7BnI1qn0-cL04LcX_4dBmjCntIj2uLEVIOezzkN4p7hGLKqXCM4TyBx-njfc1scg-5ghynIY8WWJHRUUEZTTtqVmBMm7xRhpmOA3S31-BJTGjWIbL-QxB_odEXijeGn6v2L34',
+                    'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI1IiwianRpIjoiOTNhZjlkNjAyNjY2OTYxNDU0NWUyNGU3MDA4NGFmYTVlMzA1MWNjMDAwNDJhNTgxOTZiOWQwYWJkYjBkMjM1YmI4MTE3MTRiYzY2MGZjMzkiLCJpYXQiOjE3MTczNjMxOTUuNjc0NjkxLCJuYmYiOjE3MTczNjMxOTUuNjc0NywiZXhwIjoxNzQ4ODk5MTk0LjI1NDg4NSwic3ViIjoiMSIsInNjb3BlcyI6W119.UACc5zfN9gjSzgEtcqyDoc2H_-2pp41ElWMdXfLBRonqOxw4KIipiUKsTBjKigonKfFxhHHaTcgW6q0Sgl6SHOrdk2JFm0_3kOqOa0KwSd_-q0Pz90shDDqgXLU0z3Gdr7xZDTGPhGyhasoTwrV8QCTe4cC3DS0b8F5bGqWXyVfzfh6Weu2ulb98vomHrtuFDx0lOJYZ-leA1t2rG-cEEj5bHPWPPWFPKzZcvXGfZezOGzseNxJoYYIpKwwWrTtkmHVCD-9anrnfE9oMOKgwDbxd-BcOZT-I1y_KnVOwE5VsUMD6P7Ceb3UEObozggztnqXcdU-2pwUmBk3FR_lTWg8GGipWDfAmtQ84h-RrV1B81UJyNZp-qrRiAUNKwOE2-hkCmATK8EGQt5_er5St5LeQeJU3BuUY7t9-zgpLeDDWf8H-PSKrES8cQJRgau60kROTNpinPsshfwi9-ZLxNbNoaKh0CF30xcIqD2rcbttciKRRxC-RbQZpKQP8HzsRnncVyLBYd9158dl21_wqmv7KAGC9fvgho4vNvV-PKeEjVPaJ0EZMKPAwqI2vtNz_6i3HKsNyjA0a0xIL6yEPjRtJlY_yOdlmHUr1mhKLLr3Txw10ab0jqvZNiZ5al0V4vXd6ejKo7hwDwHsGzChmtYEKMeOMzbzg3spRjmvoUCA',
                 }
             })
                 .then((res) => {
@@ -113,8 +111,8 @@ const perfil: React.FC = () => {
               </IonItem>
 
               <IonItem>
-                <IonInput label="Nuevo contacto" placeholder="Ingrese aquí" onIonChange={(e: any) => setNumber(e.target.value)}></IonInput>
-                <IonButton onClick={() => contactAdd(number)}>Agregar contacto</IonButton>
+                <IonInput slot="start" label="Nuevo contacto" placeholder="Ingrese aquí" onIonChange={(e: any) => setNumber(e.target.value)}></IonInput>
+                <IonButton slot="start" color="success" onClick={() => contactAdd(number)}><IonIcon icon={add}></IonIcon></IonButton>
               </IonItem>
 
               <IonItem>
