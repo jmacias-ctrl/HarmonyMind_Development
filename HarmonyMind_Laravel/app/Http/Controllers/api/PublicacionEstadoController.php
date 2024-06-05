@@ -20,21 +20,40 @@ class PublicacionEstadoController extends Controller
     {  
         $rules = [
             'publicacion' => 'required|string',
-            'estado_de_animo' => 'required',
+            'tristeza' => 'required',
+            'felicidad' => 'required',
+            'disgusto' => 'required',
+            'ira' => 'required',
+            'miedo' => 'required',
+            'sorpresa' => 'required',
         ];
         $attribute = [
             'publicacion' => 'Publicacion',
-            'estado_de_animo' => 'Estado de Animo',
+            'tristeza' => 'Tristeza',
+            'felicidad' => 'Felicidad',
+            'disgusto' => 'Disgusto',
+            'ira' => 'Ira',
+            'miedo' => 'Miedo',
+            'sorpresa' => 'Sorpresa',
         ];
         $message = [
             'required' => ':attribute es obligatorio'
         ];
         $validator = Validator::make($request->all(), $rules, $message, $attribute);
         if ($validator->passes()) {
+            
             $publicacion = new publicacion_estado;
             $publicacion->id_user = Auth::user()->id;
             $publicacion->publicacion = $request->publicacion;
-            $publicacion->estado_de_animo = $request->estado_de_animo;
+            $publicacion->tristeza = $request->tristeza;
+            $publicacion->felicidad = $request->felicidad;
+            $publicacion->disgusto = $request->disgusto;
+            $publicacion->ira = $request->ira;
+            $publicacion->miedo = $request->miedo;
+            $publicacion->sorpresa = $request->sorpresa;
+            
+            $emociones = array(intval($request->tristeza)=>'tristeza' , intval($request->felicidad)=>'alegria', intval($request->disgusto)=>'disgusto', intval($request->ira)=>'ira', intval($request->miedo)=>'miedo', intval($request->sorpresa)=>'sorpresa');
+            $publicacion->estado_de_animo = $emociones[max(array_keys($emociones))];
             $publicacion->save();
             return response()->json(['success' => true], 200);
         }
@@ -78,9 +97,13 @@ class PublicacionEstadoController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
     public function ver_publicaciones(Request $request){
+        $date_yesterday = Carbon::yesterday();
+        $date_today = Carbon::today();
         $month_Str = array("en.", "feb.", "mar.", "abr.", "may.", "jun.", "jul.", "agto.", "sept.", "oct.", "nov.", "dic.");
         $publicaciones = publicacion_estado::where('id_user', '=', Auth::user()->id)->orderByDesc('created_at')->get();
         $i=count($publicaciones);
+        $emotions = array("felicidad"=>0, "tristeza"=>0, "miedo"=>0, "disgusto"=>0, "ira"=>0, "sorpresa"=>0);
+        $count_total_emotions = 0;
         foreach ($publicaciones as &$publicacion) {
             Carbon::setLocale(LC_TIME, config('app.locale'));
             $date = Carbon::parse($publicacion->created_at);
@@ -91,8 +114,12 @@ class PublicacionEstadoController extends Controller
             $publicacion->año = $date->year; 
             $publicacion->hora = $date->toTimeString();
             $i=$i-1;
+            if($date->greaterThanOrEqualTo($date_yesterday)){
+                $emotions[$publicacion->estado_de_animo]=$emotions[$publicacion->estado_de_animo]+1;
+                $count_total_emotions+=1;
+            }
         }
-        return response()->json(['success' => true, 'data'=>$publicaciones], 200);
+        return response()->json(['success' => true, 'data'=>$publicaciones, 'emociones'=>$emotions, 'count'=>$count_total_emotions], 200);
     }
 
     /**
