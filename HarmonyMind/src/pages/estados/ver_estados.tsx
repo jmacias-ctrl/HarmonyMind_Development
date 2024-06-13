@@ -8,6 +8,7 @@ import { useParams } from 'react-router';
 import { ellipsisVertical } from 'ionicons/icons';
 
 import './ver_estados.css';
+import './boxColor_Emotion.css';
 import ExploreContainer from '../../components/ExploreContainer';
 const crear_estado: React.FC = () => {
     const router = useIonRouter();
@@ -106,23 +107,22 @@ const crear_estado: React.FC = () => {
                 </div>
                 <IonCard className={`${isLoading && 'ion-hide'} ion-padding`}>
                     {noDiary && (
-                        <IonCardContent>No has publicado estados en estos últimos días</IonCardContent>
+                        <IonCardContent>No has publicado estados en los ultimos 7 días
+                            <IonButton color="tertiary" onClick={() => {router.push('/estado/analisis'); }}>Ver Análisis</IonButton>
+                        </IonCardContent>
                     )}
                     {!noDiary && (
                         <IonCardContent>
                             <IonGrid>
                                 <IonRow>
-                                    <IonCol><h4>Has publicado {numEstados} estado en estos últimos días.</h4></IonCol>
+                                    <IonCol><h3>Has publicado {numEstados} estados en los ultimos 7 días</h3></IonCol>
                                 </IonRow>
                                 <IonRow>
                                     <IonCol size="auto"><h4>Color Predominante:</h4></IonCol>
                                     <IonCol><div className={`colorPredominante ${estado_de_animo == "ira" && "anger"} ${estado_de_animo == "sorpresa" && "surprise"} ${estado_de_animo == "disgusto" && "disgust"} ${estado_de_animo == "felicidad" && "happiness"} ${estado_de_animo == "tristeza" && "sadness"} ${estado_de_animo == "miedo" && "fear"}`}></div></IonCol>
                                 </IonRow>
-                                <IonRow>
-                                    <IonCol>Lorem ipsum dolor sit amet consectetur adipisicing elit. Id dolor officiis suscipit molestias iste, dolorum voluptas sapiente? Quas labore veritatis est debitis totam animi tempora mollitia facere tenetur! Nobis, ratione.</IonCol>
-                                </IonRow>
                             </IonGrid>
-
+                            <IonButton color="tertiary" onClick={() => {router.push('/estado/analisis'); }}>Ver Análisis</IonButton>
                         </IonCardContent>
                     )}
                 </IonCard>

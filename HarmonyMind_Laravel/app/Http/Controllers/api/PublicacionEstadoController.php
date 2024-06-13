@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\publicacion_estado;
@@ -97,8 +98,7 @@ class PublicacionEstadoController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
     public function ver_publicaciones(Request $request){
-        $date_yesterday = Carbon::yesterday();
-        $date_today = Carbon::today();
+        $date_yesterday = Carbon::today();
         $month_Str = array("en.", "feb.", "mar.", "abr.", "may.", "jun.", "jul.", "agto.", "sept.", "oct.", "nov.", "dic.");
         $publicaciones = publicacion_estado::where('id_user', '=', Auth::user()->id)->orderByDesc('created_at')->get();
         $i=count($publicaciones);
@@ -120,6 +120,13 @@ class PublicacionEstadoController extends Controller
             }
         }
         return response()->json(['success' => true, 'data'=>$publicaciones, 'emociones'=>$emotions, 'count'=>$count_total_emotions], 200);
+    }
+    
+    public function analisis_estados(Request $request){
+        $date_diff = Carbon::now()->subDays(intval($request->dias));
+        $stats = publicacion_estado::select(DB::raw('sum(tristeza) as tristeza, sum(felicidad) as felicidad, sum(sorpresa) as sorpresa, sum(disgusto) as disgusto, sum(ira) as ira, sum(miedo) as miedo, created_at'))->where('id_user', '=', Auth::user()->id)->whereDate('created_at', '>',$date_diff)->groupBy('created_at')->orderBy('created_at', 'ASC')->get();
+        $countEstados = publicacion_estado::select(DB::raw('count(*) as count_estados'))->where('id_user', '=', Auth::user()->id)->whereDate('created_at', '>',$date_diff)->first();
+        return response()->json(['success' => true, 'data'=>$stats, 'countEstados'=>$countEstados]);
     }
 
     /**

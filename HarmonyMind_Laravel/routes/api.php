@@ -23,6 +23,7 @@ Route::prefix('publicacion')->group(function () {
         Route::get('get', [PublicacionEstadoController::class, 'ver_publicaciones'])->name('ver.publicaciones');
         Route::post('modify', [PublicacionEstadoController::class, 'modificar_publicacion'])->name('modify.publicaciones');
         Route::post('delete', [PublicacionEstadoController::class, 'eliminar_publicacion'])->name('delete.publicaciones');
+        Route::get('analisis', [PublicacionEstadoController::class, 'analisis_estados'])->name('analisis.publicaciones');
     });
 });
 
