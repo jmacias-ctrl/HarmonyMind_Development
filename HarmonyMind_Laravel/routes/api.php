@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\LoginController;
 use App\Http\Controllers\Api\PostController;
 use App\Http\Controllers\Api\PublicacionEstadoController;
+use App\Http\Controllers\Api\RecomendacionesController;
 use App\Http\Controllers\Api\eventController;
 
 /*
@@ -24,6 +25,7 @@ Route::prefix('publicacion')->group(function () {
         Route::post('modify', [PublicacionEstadoController::class, 'modificar_publicacion'])->name('modify.publicaciones');
         Route::post('delete', [PublicacionEstadoController::class, 'eliminar_publicacion'])->name('delete.publicaciones');
         Route::get('analisis', [PublicacionEstadoController::class, 'analisis_estados'])->name('analisis.publicaciones');
+        Route::get('recomendacion', [RecomendacionesController::class, 'analisis_ultimo_estado'])->name('analisis_recomendacion');
     });
 });
 

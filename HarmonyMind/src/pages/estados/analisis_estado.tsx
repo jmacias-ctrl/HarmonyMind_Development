@@ -25,16 +25,68 @@ const analisis_estado: React.FC = () => {
     const [value, setValue] = useState<string | number | undefined>('javascript');
     const [textLoading, setTextLoading] = useState('Recuperando Estados')
     const [subtextLoading, setSubTextLoading] = useState('Esto puede tomar un tiempo')
-    const [stats, setStats] = useState([])
     const [countEstados, setCountEstados] = useState(0);
-    const [lastXDays, setLastXDays] = useState([1,2,3,4,5,6,7])
+    const [lastXDays, setLastXDays] = useState(LastXDays())
     const [isLoading, setLoading] = useState(true);
-    const [dataTristeza, setDataTristeza] = useState([0,0,0,0,0,0,0])
-    const [dataFelicidad, setDataFelicidad] = useState([0,0,0,0,0,0,0])
-    const [dataIra, setDataIra] = useState([0,0,0,0,0,0,0])
-    const [dataSorpresa, setDataSorpresa] = useState([0,0,0,0,0,0,0])
-    const [dataDisgusto, setDataDisgusto] = useState([0,0,0,0,0,0,0])
-    const [dataMiedo, setDataMiedo] = useState([0,0,0,0,0,0,0])
+    const [data, setData] = useState({
+        labels: lastXDays,
+        datasets: [
+            {
+                label: 'Tristeza',
+                backgroundColor: "#2771BF",
+                borderColor: "#2771BF",
+                borderWidth: 1,
+                hoverBackgroundColor: "rgba(255,99,132,0.4)",
+                hoverBorderColor: "rgba(255,99,132,1)",
+                data: [0,0,0,0,0,0,0],
+            },
+            {
+                label: 'Felicidad',
+                backgroundColor: "#F79C21",
+                borderColor: "#F79C21",
+                borderWidth: 1,
+                hoverBackgroundColor: "rgba(255,99,132,0.4)",
+                hoverBorderColor: "rgba(255,99,132,1)",
+                data: [0,0,0,0,0,0,0],
+            },
+            {
+                label: 'Ira',
+                backgroundColor: "#FF0202",
+                borderColor: "#FF0202",
+                borderWidth: 1,
+                hoverBackgroundColor: "rgba(255,99,132,0.4)",
+                hoverBorderColor: "rgba(255,99,132,1)",
+                data: [0,0,0,0,0,0,0],
+            },
+            {
+                label: 'Sorpresa',
+                backgroundColor: "#02FFDD",
+                borderColor: "#02FFDD",
+                borderWidth: 1,
+                hoverBackgroundColor: "rgba(255,99,132,0.4)",
+                hoverBorderColor: "rgba(255,99,132,1)",
+                data: [0,0,0,0,0,0,0],
+            },
+            {
+                label: 'Miedo',
+                backgroundColor: "#5E2DCE",
+                borderColor: "#5E2DCE",
+                borderWidth: 1,
+                hoverBackgroundColor: "rgba(255,99,132,0.4)",
+                hoverBorderColor: "rgba(255,99,132,1)",
+                data: [0,0,0,0,0,0,0],
+            },
+            {
+                label: 'Asco',
+                backgroundColor: "#64B726",
+                borderColor: "#64B726",
+                borderWidth: 1,
+                hoverBackgroundColor: "rgba(255,99,132,0.4)",
+                hoverBorderColor: "rgba(255,99,132,1)",
+                data: [0,0,0,0,0,0,0],
+            },
+        ],
+    })
     const fetch_posts = () => {
         if (isLoading == true) {
             fetch(`http://127.0.0.1:8000/api/publicacion/analisis?dias=${daysAnalysis}`, {
@@ -48,11 +100,11 @@ const analisis_estado: React.FC = () => {
                     return res.json();
                 })
                 .catch(error => {
-                    setStats([])
                     setTextLoading('Error al recuperar estados')
                     setSubTextLoading('Hubo problemas al comunicarse con el servidor, por favor intentelo denuevo más tarde.')
                 })
                 .then((posts) => {
+                    console.log(posts['data'])
                     dataGraph(posts['data'])
                     setCountEstados(posts['countEstados'].count_estados)
                     setLoading(false)
@@ -64,7 +116,6 @@ const analisis_estado: React.FC = () => {
     useIonViewWillEnter(() => {
         setLoading(true)
         fetch_posts();
-        setLastXDays(LastXDays());
         ChartJS.register(CategoryScale);
     }, []);
     function dataGraph(data) {
@@ -73,21 +124,77 @@ const analisis_estado: React.FC = () => {
         var ira = new Array(daysAnalysis).fill(0);;
         var sorpresa = new Array(daysAnalysis).fill(0);;
         var disgusto = new Array(daysAnalysis).fill(0);;
-        var miedo = new Array(daysAnalysis).fill(0);;
+        var miedo = new Array(daysAnalysis).fill(0);
+        var i=daysAnalysis-1
         for(var j=0; j<data['length']; j++){
-            tristeza[j] = tristeza[j] + parseInt(data[j].tristeza);
-            felicidad[j] = felicidad[j] + parseInt(data[j].felicidad);
-            ira[j] = ira[j] + parseInt(data[j].ira);
-            sorpresa[j] = sorpresa[j] + parseInt(data[j].sorpresa);
-            disgusto[j] = disgusto[j] + parseInt(data[j].disgusto);
-            miedo[j] = miedo[j] + parseInt(data[j].miedo);
+            tristeza[i] = tristeza[i] + parseInt(data[j].tristeza);
+            felicidad[i] = felicidad[i] + parseInt(data[j].felicidad);
+            ira[i] = ira[i] + parseInt(data[j].ira);
+            sorpresa[i] = sorpresa[i] + parseInt(data[j].sorpresa);
+            disgusto[i] = disgusto[i] + parseInt(data[j].disgusto);
+            miedo[i] = miedo[i] + parseInt(data[j].miedo);
+            i-=1;
         }
-        setDataDisgusto(disgusto)
-        setDataFelicidad(felicidad)
-        setDataIra(ira)
-        setDataMiedo(miedo)
-        setDataSorpresa(sorpresa)
-        setDataTristeza(tristeza)
+        setLastXDays(LastXDays());
+        setData({
+            labels: lastXDays,
+            datasets: [
+                {
+                    label: 'Tristeza',
+                    backgroundColor: "#2771BF",
+                    borderColor: "#2771BF",
+                    borderWidth: 1,
+                    hoverBackgroundColor: "rgba(255,99,132,0.4)",
+                    hoverBorderColor: "rgba(255,99,132,1)",
+                    data: tristeza,
+                },
+                {
+                    label: 'Felicidad',
+                    backgroundColor: "#F79C21",
+                    borderColor: "#F79C21",
+                    borderWidth: 1,
+                    hoverBackgroundColor: "rgba(255,99,132,0.4)",
+                    hoverBorderColor: "rgba(255,99,132,1)",
+                    data: felicidad,
+                },
+                {
+                    label: 'Ira',
+                    backgroundColor: "#FF0202",
+                    borderColor: "#FF0202",
+                    borderWidth: 1,
+                    hoverBackgroundColor: "rgba(255,99,132,0.4)",
+                    hoverBorderColor: "rgba(255,99,132,1)",
+                    data: ira,
+                },
+                {
+                    label: 'Sorpresa',
+                    backgroundColor: "#02FFDD",
+                    borderColor: "#02FFDD",
+                    borderWidth: 1,
+                    hoverBackgroundColor: "rgba(255,99,132,0.4)",
+                    hoverBorderColor: "rgba(255,99,132,1)",
+                    data: sorpresa,
+                },
+                {
+                    label: 'Miedo',
+                    backgroundColor: "#5E2DCE",
+                    borderColor: "#5E2DCE",
+                    borderWidth: 1,
+                    hoverBackgroundColor: "rgba(255,99,132,0.4)",
+                    hoverBorderColor: "rgba(255,99,132,1)",
+                    data: miedo,
+                },
+                {
+                    label: 'Asco',
+                    backgroundColor: "#64B726",
+                    borderColor: "#64B726",
+                    borderWidth: 1,
+                    hoverBackgroundColor: "rgba(255,99,132,0.4)",
+                    hoverBorderColor: "rgba(255,99,132,1)",
+                    data: disgusto,
+                },
+            ],
+        })
     }
     useIonViewWillLeave(() => {
         ChartJS.unregister(CategoryScale);
@@ -106,7 +213,7 @@ const analisis_estado: React.FC = () => {
 
     function LastXDays () {
         var result = [];
-        for (var i=0; i<daysAnalysis; i++) {
+        for (var i=daysAnalysis; i>=0; i--) {
             var d = new Date();
             d.setDate(d.getDate() - i);
             result.push( formatDate(d) )
@@ -114,74 +221,12 @@ const analisis_estado: React.FC = () => {
     
         return(result);
     }
-
-    const DATA_COUNT = 6;
-    const NUMBER_CFG = { count: DATA_COUNT, min: 1, max: 100 };
-    const data = {
-        labels: lastXDays,
-        datasets: [
-            {
-                label: 'Tristeza',
-                backgroundColor: "#2771BF",
-                borderColor: "#2771BF",
-                borderWidth: 1,
-                hoverBackgroundColor: "rgba(255,99,132,0.4)",
-                hoverBorderColor: "rgba(255,99,132,1)",
-                data: dataTristeza,
-            },
-            {
-                label: 'Felicidad',
-                backgroundColor: "#F79C21",
-                borderColor: "#F79C21",
-                borderWidth: 1,
-                hoverBackgroundColor: "rgba(255,99,132,0.4)",
-                hoverBorderColor: "rgba(255,99,132,1)",
-                data: dataFelicidad,
-            },
-            {
-                label: 'Ira',
-                backgroundColor: "#FF0202",
-                borderColor: "#FF0202",
-                borderWidth: 1,
-                hoverBackgroundColor: "rgba(255,99,132,0.4)",
-                hoverBorderColor: "rgba(255,99,132,1)",
-                data: dataIra,
-            },
-            {
-                label: 'Sorpresa',
-                backgroundColor: "#02FFDD",
-                borderColor: "#02FFDD",
-                borderWidth: 1,
-                hoverBackgroundColor: "rgba(255,99,132,0.4)",
-                hoverBorderColor: "rgba(255,99,132,1)",
-                data: dataSorpresa,
-            },
-            {
-                label: 'Miedo',
-                backgroundColor: "#5E2DCE",
-                borderColor: "#5E2DCE",
-                borderWidth: 1,
-                hoverBackgroundColor: "rgba(255,99,132,0.4)",
-                hoverBorderColor: "rgba(255,99,132,1)",
-                data: dataMiedo,
-            },
-            {
-                label: 'Asco',
-                backgroundColor: "#64B726",
-                borderColor: "#64B726",
-                borderWidth: 1,
-                hoverBackgroundColor: "rgba(255,99,132,0.4)",
-                hoverBorderColor: "rgba(255,99,132,1)",
-                data: dataDisgusto,
-            },
-        ],
-    };
+    
     function changeDays(days){
         ChartJS.unregister(CategoryScale);
-        setDaysAnalysis(days);
+        setDaysAnalysis(parseInt(days));
         setLoading(true)
         fetch_posts();
-        setLastXDays(LastXDays());
         ChartJS.register(CategoryScale);
     }
     return (
@@ -251,7 +296,7 @@ const analisis_estado: React.FC = () => {
                         <IonText>
                             <h3>Gráfico de Emociones</h3>
                         </IonText>
-                        <Line data={data} />
+                        <Line id="chart_emociones" data={data} height={250} />
                     </IonCardContent>
                 </IonCard>
             </IonContent>

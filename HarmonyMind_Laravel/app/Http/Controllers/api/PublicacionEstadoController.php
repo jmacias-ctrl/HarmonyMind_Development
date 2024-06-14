@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\publicacion_estado;
 use Auth;
+use App\Http\Controllers\Api\RecomendacionesController;
 use Carbon\Carbon;
 class PublicacionEstadoController extends Controller
 {
@@ -119,7 +120,8 @@ class PublicacionEstadoController extends Controller
                 $count_total_emotions+=1;
             }
         }
-        return response()->json(['success' => true, 'data'=>$publicaciones, 'emociones'=>$emotions, 'count'=>$count_total_emotions], 200);
+        $recomendacion = RecomendacionesController::analisis_ultimo_estado();
+        return response()->json(['success' => true, 'data'=>$publicaciones, 'emociones'=>$emotions, 'count'=>$count_total_emotions, 'recomendacion'=>$recomendacion], 200);
     }
     
     public function analisis_estados(Request $request){

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, useIonRouter } from '@ionic/react';
-import { IonCard, IonProgressBar, IonButton, IonSkeletonText, IonCardTitle, IonCardContent, IonCardSubtitle, useIonViewWillEnter } from '@ionic/react';
+import { IonCard, IonProgressBar, IonButton, IonSkeletonText, IonCardTitle, IonCardHeader, IonCardContent, IonCardSubtitle, useIonViewWillEnter } from '@ionic/react';
 import { IonText, IonActionSheet, IonIcon, useIonLoading } from '@ionic/react';
 import { IonFab, IonGrid, IonRow, IonCol, IonFabButton, useIonToast } from '@ionic/react';
 import { add } from 'ionicons/icons';
@@ -19,6 +19,7 @@ const crear_estado: React.FC = () => {
     const [subtextLoading, setSubTextLoading] = useState('Esto puede tomar un tiempo')
     const [hideText, setHideText] = useState(false)
     const [didCreate, setDidCreate] = useState(false)
+    const [recomendacion, setRecomendacion] = useState('none')
     const [toastCreate] = useIonToast();
     const [estado_de_animo, setEstadoDeAnimo] = useState("")
     const [noDiary, setNoDiary] = useState(true);
@@ -47,6 +48,7 @@ const crear_estado: React.FC = () => {
                         var max_emotion = Object.keys(posts['emociones']).reduce(function (a, b) { return posts['emociones'][a] > posts['emociones'][b] ? a : b })
                         setNoDiary(false)
                         setEstadoDeAnimo(max_emotion)
+                        setRecomendacion(posts['recomendacion'])
                     }
                     if (posts['data'].length == 0) {
                         setTextLoading('No tienes estados creados')
@@ -107,8 +109,16 @@ const crear_estado: React.FC = () => {
                 </div>
                 <IonCard className={`${isLoading && 'ion-hide'} ion-padding`}>
                     {noDiary && (
-                        <IonCardContent>No has publicado estados en los ultimos 7 días
-                            <IonButton color="tertiary" onClick={() => {router.push('/estado/analisis'); }}>Ver Análisis</IonButton>
+                        <IonCardContent>
+
+                            <IonGrid>
+                                <IonRow>
+                                    <IonCol><h3>No has publicado estados en los ultimos 7 días</h3></IonCol>
+                                </IonRow>
+                                <IonRow>
+                                    <IonCol size="auto"><IonButton color="tertiary" onClick={() => { router.push('/estado/analisis'); }}>Ver Análisis</IonButton></IonCol>
+                                </IonRow>
+                            </IonGrid>
                         </IonCardContent>
                     )}
                     {!noDiary && (
@@ -122,10 +132,24 @@ const crear_estado: React.FC = () => {
                                     <IonCol><div className={`colorPredominante ${estado_de_animo == "ira" && "anger"} ${estado_de_animo == "sorpresa" && "surprise"} ${estado_de_animo == "disgusto" && "disgust"} ${estado_de_animo == "felicidad" && "happiness"} ${estado_de_animo == "tristeza" && "sadness"} ${estado_de_animo == "miedo" && "fear"}`}></div></IonCol>
                                 </IonRow>
                             </IonGrid>
-                            <IonButton color="tertiary" onClick={() => {router.push('/estado/analisis'); }}>Ver Análisis</IonButton>
+                            <IonButton color="tertiary" onClick={() => { router.push('/estado/analisis'); }}>Ver Análisis</IonButton>
                         </IonCardContent>
+
                     )}
                 </IonCard>
+                {
+                    !noDiary && (
+                        <IonCard>
+                            <IonCardHeader>
+                                <h4>Consejos y Motivaciones</h4>
+                            </IonCardHeader>
+                            <IonCardContent>
+                                <h5>{recomendacion}</h5>
+                            </IonCardContent>
+                        </IonCard>
+
+                    )
+                }
                 {posts.map((post) => (
                     <IonCard className="estadosCard ion-padding ion-margin-horizontal " key={post.id}>
                         <IonCardSubtitle>
