@@ -53,6 +53,7 @@ class contactController extends Controller
         $validator = Validator::make($request->all(), $rules, $message, $attribute);
         if ($validator->passes()) {
             //$user = user::find(Auth::id());
+            error_log($request->number);
 
             $contact = new contact;
                 $contact->number= $request->number;
@@ -76,19 +77,20 @@ class contactController extends Controller
 
         $rules = [
     
-            'number' => 'required',
+            'id' => 'required',
         ];
         $attribute = [
-            'number' => 'Contacto de Emergencia',
+            'id' => 'id del contacto',
         ];
         $message = [
             'required' => ':attribute es obligatorio'
         ];
         $validator = Validator::make($request->all(), $rules, $message, $attribute);
         if ($validator->passes()) {
+            error_log($request->number);
             $contact = DB::table('contacts')
             ->where('user_fk', '=', Auth::user()->id)
-            ->where('number', '=', $request->number)
+            ->where('id', '=', $request->id)
             ->delete();
             return response()->json(['success' => true], 200);
         }

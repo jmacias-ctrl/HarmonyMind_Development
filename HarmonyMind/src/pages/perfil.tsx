@@ -14,6 +14,7 @@ const perfil: React.FC = () => {
   const [name, setName]= useState("");
   const [email, setEmail]= useState("");
   const [number, setNumber]= useState("");
+  const [buttonState, setButtonState]= useState(true);
 
     const fetch_posts = () => {
       if (isLoaded == false) {
@@ -23,7 +24,7 @@ const perfil: React.FC = () => {
             "method": "GET",
             "headers": {
                 'Accept': 'application/json',
-                'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI1IiwianRpIjoiOTNhZjlkNjAyNjY2OTYxNDU0NWUyNGU3MDA4NGFmYTVlMzA1MWNjMDAwNDJhNTgxOTZiOWQwYWJkYjBkMjM1YmI4MTE3MTRiYzY2MGZjMzkiLCJpYXQiOjE3MTczNjMxOTUuNjc0NjkxLCJuYmYiOjE3MTczNjMxOTUuNjc0NywiZXhwIjoxNzQ4ODk5MTk0LjI1NDg4NSwic3ViIjoiMSIsInNjb3BlcyI6W119.UACc5zfN9gjSzgEtcqyDoc2H_-2pp41ElWMdXfLBRonqOxw4KIipiUKsTBjKigonKfFxhHHaTcgW6q0Sgl6SHOrdk2JFm0_3kOqOa0KwSd_-q0Pz90shDDqgXLU0z3Gdr7xZDTGPhGyhasoTwrV8QCTe4cC3DS0b8F5bGqWXyVfzfh6Weu2ulb98vomHrtuFDx0lOJYZ-leA1t2rG-cEEj5bHPWPPWFPKzZcvXGfZezOGzseNxJoYYIpKwwWrTtkmHVCD-9anrnfE9oMOKgwDbxd-BcOZT-I1y_KnVOwE5VsUMD6P7Ceb3UEObozggztnqXcdU-2pwUmBk3FR_lTWg8GGipWDfAmtQ84h-RrV1B81UJyNZp-qrRiAUNKwOE2-hkCmATK8EGQt5_er5St5LeQeJU3BuUY7t9-zgpLeDDWf8H-PSKrES8cQJRgau60kROTNpinPsshfwi9-ZLxNbNoaKh0CF30xcIqD2rcbttciKRRxC-RbQZpKQP8HzsRnncVyLBYd9158dl21_wqmv7KAGC9fvgho4vNvV-PKeEjVPaJ0EZMKPAwqI2vtNz_6i3HKsNyjA0a0xIL6yEPjRtJlY_yOdlmHUr1mhKLLr3Txw10ab0jqvZNiZ5al0V4vXd6ejKo7hwDwHsGzChmtYEKMeOMzbzg3spRjmvoUCA',
+                'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxMyIsImp0aSI6ImY2ZGY4NGIyMGQ1OGNmNTZmMjRjYWFiMTY3YmQxOTliOGZlMjFmYTNiYTc2ZTFhYWVkY2E3NDBhNTAxN2I5MTViMDE0NzFjYTYyNjE3M2U5IiwiaWF0IjoxNzE4MjMyMzA0LjMwNTMzLCJuYmYiOjE3MTgyMzIzMDQuMzA1MzM0LCJleHAiOjE3NDk3NjgzMDMuNDA5NDA4LCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.Mbg32oi0E4kpwprmcDY0Rx7PlHwEXS8vPThf1Q7TlfK2W8uPWmEChGiNlvRkwXBOlyXuAAwvXA4kOO1phYAvFoBWbA3RwX7AK-B8nb0_6wp79jJ3n2BaI-JMw909uDR0fgRr5uerTYBbn5ZQ0aXrYTuDQcQDce9wFa4702iGrczwbgt9Lnn4mLMHD8-OeuAbch5foV3Hp3TdbVc2bzfl5BP84u6KGUaJFLZPJkAcQRftq4zGnhea_mIlHZjvyGUOlo1c5o3to-avN0gAgjrYztNgy1BJkEWDXzl6FwS05cNGJyHSmKWPI0XWc-vYcmK0ErUqLg6ysflV7pcXfdh61EpSXcD60oj7njNF15G82KAc6S0pkV89nYDBy7Ld62kEZPXJZC8H-IaiOB4odNRNLhaH0giMu5vVH-kT-pqZJcC1ULjyF_x5JY6CRlN6h30wZaA4cnoAGLs0kuduE6tKXvnT9-GRKt_RVGtU1mB1NIAIV3bWQwsGU5Z1CBzBS__tWBZEX05s66Pk1N8esWj5xK4W-tMYb9CfFGVaSxFIYPuuDzNdufKQPxaPnm8B0SvThm0veoyKcTWlhbFJsbBr85lW_0wkgH9KCQ6_j6pHuF0a_OdcP4TGRD9m7SHwnnKyrf9dTs-Pou5fPtfzL4IeJmbcx7Y2Y8VZ0UGLj3G7Pi4',
             }
         })
             .then((res) => {
@@ -50,11 +51,11 @@ const perfil: React.FC = () => {
 
     function contactAdd(new_contact){
       console.log('start');
-      fetch(`http://127.0.0.1:8000/api/emergency_contact/add?number=${new_contact}`, {
+      fetch(`http://127.0.0.1:8000/api/emergency_contact/add?number=%2b56${new_contact}`, {
                 "method": "POST",
                 "headers": {
                     'Accept': 'application/json',
-                    'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI1IiwianRpIjoiOTNhZjlkNjAyNjY2OTYxNDU0NWUyNGU3MDA4NGFmYTVlMzA1MWNjMDAwNDJhNTgxOTZiOWQwYWJkYjBkMjM1YmI4MTE3MTRiYzY2MGZjMzkiLCJpYXQiOjE3MTczNjMxOTUuNjc0NjkxLCJuYmYiOjE3MTczNjMxOTUuNjc0NywiZXhwIjoxNzQ4ODk5MTk0LjI1NDg4NSwic3ViIjoiMSIsInNjb3BlcyI6W119.UACc5zfN9gjSzgEtcqyDoc2H_-2pp41ElWMdXfLBRonqOxw4KIipiUKsTBjKigonKfFxhHHaTcgW6q0Sgl6SHOrdk2JFm0_3kOqOa0KwSd_-q0Pz90shDDqgXLU0z3Gdr7xZDTGPhGyhasoTwrV8QCTe4cC3DS0b8F5bGqWXyVfzfh6Weu2ulb98vomHrtuFDx0lOJYZ-leA1t2rG-cEEj5bHPWPPWFPKzZcvXGfZezOGzseNxJoYYIpKwwWrTtkmHVCD-9anrnfE9oMOKgwDbxd-BcOZT-I1y_KnVOwE5VsUMD6P7Ceb3UEObozggztnqXcdU-2pwUmBk3FR_lTWg8GGipWDfAmtQ84h-RrV1B81UJyNZp-qrRiAUNKwOE2-hkCmATK8EGQt5_er5St5LeQeJU3BuUY7t9-zgpLeDDWf8H-PSKrES8cQJRgau60kROTNpinPsshfwi9-ZLxNbNoaKh0CF30xcIqD2rcbttciKRRxC-RbQZpKQP8HzsRnncVyLBYd9158dl21_wqmv7KAGC9fvgho4vNvV-PKeEjVPaJ0EZMKPAwqI2vtNz_6i3HKsNyjA0a0xIL6yEPjRtJlY_yOdlmHUr1mhKLLr3Txw10ab0jqvZNiZ5al0V4vXd6ejKo7hwDwHsGzChmtYEKMeOMzbzg3spRjmvoUCA',
+                    'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxMyIsImp0aSI6ImY2ZGY4NGIyMGQ1OGNmNTZmMjRjYWFiMTY3YmQxOTliOGZlMjFmYTNiYTc2ZTFhYWVkY2E3NDBhNTAxN2I5MTViMDE0NzFjYTYyNjE3M2U5IiwiaWF0IjoxNzE4MjMyMzA0LjMwNTMzLCJuYmYiOjE3MTgyMzIzMDQuMzA1MzM0LCJleHAiOjE3NDk3NjgzMDMuNDA5NDA4LCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.Mbg32oi0E4kpwprmcDY0Rx7PlHwEXS8vPThf1Q7TlfK2W8uPWmEChGiNlvRkwXBOlyXuAAwvXA4kOO1phYAvFoBWbA3RwX7AK-B8nb0_6wp79jJ3n2BaI-JMw909uDR0fgRr5uerTYBbn5ZQ0aXrYTuDQcQDce9wFa4702iGrczwbgt9Lnn4mLMHD8-OeuAbch5foV3Hp3TdbVc2bzfl5BP84u6KGUaJFLZPJkAcQRftq4zGnhea_mIlHZjvyGUOlo1c5o3to-avN0gAgjrYztNgy1BJkEWDXzl6FwS05cNGJyHSmKWPI0XWc-vYcmK0ErUqLg6ysflV7pcXfdh61EpSXcD60oj7njNF15G82KAc6S0pkV89nYDBy7Ld62kEZPXJZC8H-IaiOB4odNRNLhaH0giMu5vVH-kT-pqZJcC1ULjyF_x5JY6CRlN6h30wZaA4cnoAGLs0kuduE6tKXvnT9-GRKt_RVGtU1mB1NIAIV3bWQwsGU5Z1CBzBS__tWBZEX05s66Pk1N8esWj5xK4W-tMYb9CfFGVaSxFIYPuuDzNdufKQPxaPnm8B0SvThm0veoyKcTWlhbFJsbBr85lW_0wkgH9KCQ6_j6pHuF0a_OdcP4TGRD9m7SHwnnKyrf9dTs-Pou5fPtfzL4IeJmbcx7Y2Y8VZ0UGLj3G7Pi4',
                 }
             })
                 .then((res) => {
@@ -71,12 +72,12 @@ const perfil: React.FC = () => {
     };
 
     function contactDelete(new_contact){
-      console.log('start');
-      fetch(`http://127.0.0.1:8000/api/emergency_contact/delete?number=${new_contact}`, {
+      console.log(new_contact);
+      fetch(`http://127.0.0.1:8000/api/emergency_contact/delete?id=${new_contact}`, {
                 "method": "POST",
                 "headers": {
                     'Accept': 'application/json',
-                    'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI1IiwianRpIjoiOTNhZjlkNjAyNjY2OTYxNDU0NWUyNGU3MDA4NGFmYTVlMzA1MWNjMDAwNDJhNTgxOTZiOWQwYWJkYjBkMjM1YmI4MTE3MTRiYzY2MGZjMzkiLCJpYXQiOjE3MTczNjMxOTUuNjc0NjkxLCJuYmYiOjE3MTczNjMxOTUuNjc0NywiZXhwIjoxNzQ4ODk5MTk0LjI1NDg4NSwic3ViIjoiMSIsInNjb3BlcyI6W119.UACc5zfN9gjSzgEtcqyDoc2H_-2pp41ElWMdXfLBRonqOxw4KIipiUKsTBjKigonKfFxhHHaTcgW6q0Sgl6SHOrdk2JFm0_3kOqOa0KwSd_-q0Pz90shDDqgXLU0z3Gdr7xZDTGPhGyhasoTwrV8QCTe4cC3DS0b8F5bGqWXyVfzfh6Weu2ulb98vomHrtuFDx0lOJYZ-leA1t2rG-cEEj5bHPWPPWFPKzZcvXGfZezOGzseNxJoYYIpKwwWrTtkmHVCD-9anrnfE9oMOKgwDbxd-BcOZT-I1y_KnVOwE5VsUMD6P7Ceb3UEObozggztnqXcdU-2pwUmBk3FR_lTWg8GGipWDfAmtQ84h-RrV1B81UJyNZp-qrRiAUNKwOE2-hkCmATK8EGQt5_er5St5LeQeJU3BuUY7t9-zgpLeDDWf8H-PSKrES8cQJRgau60kROTNpinPsshfwi9-ZLxNbNoaKh0CF30xcIqD2rcbttciKRRxC-RbQZpKQP8HzsRnncVyLBYd9158dl21_wqmv7KAGC9fvgho4vNvV-PKeEjVPaJ0EZMKPAwqI2vtNz_6i3HKsNyjA0a0xIL6yEPjRtJlY_yOdlmHUr1mhKLLr3Txw10ab0jqvZNiZ5al0V4vXd6ejKo7hwDwHsGzChmtYEKMeOMzbzg3spRjmvoUCA',
+                    'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxMyIsImp0aSI6ImY2ZGY4NGIyMGQ1OGNmNTZmMjRjYWFiMTY3YmQxOTliOGZlMjFmYTNiYTc2ZTFhYWVkY2E3NDBhNTAxN2I5MTViMDE0NzFjYTYyNjE3M2U5IiwiaWF0IjoxNzE4MjMyMzA0LjMwNTMzLCJuYmYiOjE3MTgyMzIzMDQuMzA1MzM0LCJleHAiOjE3NDk3NjgzMDMuNDA5NDA4LCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.Mbg32oi0E4kpwprmcDY0Rx7PlHwEXS8vPThf1Q7TlfK2W8uPWmEChGiNlvRkwXBOlyXuAAwvXA4kOO1phYAvFoBWbA3RwX7AK-B8nb0_6wp79jJ3n2BaI-JMw909uDR0fgRr5uerTYBbn5ZQ0aXrYTuDQcQDce9wFa4702iGrczwbgt9Lnn4mLMHD8-OeuAbch5foV3Hp3TdbVc2bzfl5BP84u6KGUaJFLZPJkAcQRftq4zGnhea_mIlHZjvyGUOlo1c5o3to-avN0gAgjrYztNgy1BJkEWDXzl6FwS05cNGJyHSmKWPI0XWc-vYcmK0ErUqLg6ysflV7pcXfdh61EpSXcD60oj7njNF15G82KAc6S0pkV89nYDBy7Ld62kEZPXJZC8H-IaiOB4odNRNLhaH0giMu5vVH-kT-pqZJcC1ULjyF_x5JY6CRlN6h30wZaA4cnoAGLs0kuduE6tKXvnT9-GRKt_RVGtU1mB1NIAIV3bWQwsGU5Z1CBzBS__tWBZEX05s66Pk1N8esWj5xK4W-tMYb9CfFGVaSxFIYPuuDzNdufKQPxaPnm8B0SvThm0veoyKcTWlhbFJsbBr85lW_0wkgH9KCQ6_j6pHuF0a_OdcP4TGRD9m7SHwnnKyrf9dTs-Pou5fPtfzL4IeJmbcx7Y2Y8VZ0UGLj3G7Pi4',
                 }
             })
                 .then((res) => {
@@ -91,6 +92,14 @@ const perfil: React.FC = () => {
       
       
     };
+
+    useEffect(() => {
+      if (number.length == 9) {
+        setButtonState(false);
+      }else {
+        setButtonState(true);
+      }
+   }, [number]);
 
     return (
 
@@ -111,17 +120,21 @@ const perfil: React.FC = () => {
               </IonItem>
 
               <IonItem>
-                <IonInput slot="start" label="Nuevo contacto" placeholder="Ingrese aquí" onIonChange={(e: any) => setNumber(e.target.value)}></IonInput>
-                <IonButton slot="start" color="success" onClick={() => contactAdd(number)}><IonIcon icon={add}></IonIcon></IonButton>
+              <IonLabel>Contactos:</IonLabel>
+    
               </IonItem>
 
               <IonItem>
 
                 <IonList lines="full">
+                <IonItem>
+                <IonInput slot="start" label="Nuevo contacto: (+56)"  type="tel" minlength={9} maxlength={9} placeholder="Ingrese aquí" onIonChange={(e: any) => setNumber(e.target.value)}></IonInput>
+                <IonButton slot="start" color="success" disabled={buttonState} onClick={() => contactAdd(number)}><IonIcon icon={add}></IonIcon></IonButton>
+              </IonItem>
                 {contacts.map((contact) => (
                     <IonItem>
                     <IonLabel>{contact.number}</IonLabel>
-                    <IonButton slot="end" color="danger" onClick={() => contactDelete(contact.number)}><IonIcon icon={trash}></IonIcon></IonButton>
+                    <IonButton slot="end" color="danger" onClick={() => contactDelete(contact.id)}><IonIcon icon={trash}></IonIcon></IonButton>
                   </IonItem>
                 ))}
 
