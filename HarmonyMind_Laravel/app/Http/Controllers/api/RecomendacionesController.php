@@ -20,6 +20,11 @@ class RecomendacionesController extends Controller
         $recomendacion = Recomendaciones::where('emocion', $max_emocion)->where('nivel', '<=', $value)->select('recomendacion')->orderByDesc('nivel')->first();
         //return response()->json(['success'=>true, 'recomendacion'=>$recomendacion, 'value'=>$value, 'max_emocion'=>$max_emocion]);
         //return response()->json(['success'=>true]);
-        return $recomendacion->recomendacion;
+        if($recomendacion){
+            return $recomendacion->recomendacion;
+        }else{
+            return "None";
+        }
+        
     }
 }

@@ -113,7 +113,7 @@ const crear_estado: React.FC = () => {
 
                             <IonGrid>
                                 <IonRow>
-                                    <IonCol><h3>No has publicado estados en los ultimos 7 días</h3></IonCol>
+                                    <IonCol><h3>No has publicado estados en los ultimos 24 horas</h3></IonCol>
                                 </IonRow>
                                 <IonRow>
                                     <IonCol size="auto"><IonButton color="tertiary" onClick={() => { router.push('/estado/analisis'); }}>Ver Análisis</IonButton></IonCol>
@@ -125,7 +125,7 @@ const crear_estado: React.FC = () => {
                         <IonCardContent>
                             <IonGrid>
                                 <IonRow>
-                                    <IonCol><h3>Has publicado {numEstados} estados en los ultimos 7 días</h3></IonCol>
+                                    <IonCol><h3>Has publicado {numEstados} estados en los ultimos 24 horas</h3></IonCol>
                                 </IonRow>
                                 <IonRow>
                                     <IonCol size="auto"><h4>Color Predominante:</h4></IonCol>
