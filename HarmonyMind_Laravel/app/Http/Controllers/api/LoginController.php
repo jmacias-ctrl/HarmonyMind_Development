@@ -30,10 +30,11 @@ class LoginController extends Controller
 
         if (Auth::attempt($credentials)) {
             $user             = Auth::user();
-            $success['name']  = $user->name;
-            $success['token'] = $user->createToken('accessToken')->accessToken;
+            $success          = true;
+            $data['name']  = $user->name;
+            $data['token'] = $user->createToken('accessToken')->accessToken;
 
-            return response()->json(['success' => $success], 200);
+            return response()->json(['success' => $success, 'data' => $data], 200);
         } else {
             return sendError('Unauthorised', ['error' => 'Unauthorised'], 401);
         }

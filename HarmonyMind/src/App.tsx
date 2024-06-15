@@ -14,7 +14,7 @@ import { ellipse, square, triangle } from 'ionicons/icons';
 import Tab1 from './pages/Tab1';
 import Tab2 from './pages/Tab2';
 import Tab3 from './pages/Tab3';
-import Login from './pages/auth/login'; 
+import Login from './pages/auth/login';
 import Register from './pages/auth/register';
 import { useState } from 'react'; // Importar useState
 /* Core CSS required for Ionic components to work properly */
@@ -35,31 +35,31 @@ import '@ionic/react/css/display.css';
 
 /* Theme variables */
 import './theme/variables.css';
+import { useAuth } from './pages/auth/useAuth';
+import EventosComponents from './pages/eventos';
 
 setupIonicReact();
 const App: React.FC = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  const handleLogin = () => {
-    setIsLoggedIn(true);
-  };
-
+  const { isLogged } = useAuth()
   return (
     <IonApp>
       <IonReactRouter>
         <IonRouterOutlet>
           <Route exact path="/login">
-            <Login onLogin={handleLogin} />
+            <Login />
           </Route>
           <Route exact path="/register">
             <Register />
           </Route>
           <Route>
-            {isLoggedIn ? (
+            {isLogged ? (
               <IonTabs>
                 <IonRouterOutlet>
                   <Route exact path="/tab1">
                     <Tab1 />
+                  </Route>
+                  <Route exact path="/eventos">
+                    <EventosComponents/>
                   </Route>
                   <Route exact path="/tab2">
                     <Tab2 />
@@ -76,7 +76,7 @@ const App: React.FC = () => {
                     <IonIcon aria-hidden="true" icon={triangle} />
                     <IonLabel>Tab 1</IonLabel>
                   </IonTabButton>
-                  <IonTabButton tab="ver_eventos" href="/eventos/ver">
+                  <IonTabButton tab="ver_eventos" href="/eventos">
                     <IonIcon aria-hidden="true" icon={ellipse} />
                     <IonLabel>Eventos</IonLabel>
                   </IonTabButton>

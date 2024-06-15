@@ -2,26 +2,37 @@ import React, { useState, useEffect } from "react";
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, useIonRouter } from '@ionic/react';
 import { IonCard, IonCardContent, IonButton, IonCardHeader, IonCardSubtitle, IonCardTitle, IonModal, IonButtons, IonThumbnail } from '@ionic/react';
 import { IonText, IonActionSheet, IonIcon, useIonLoading } from '@ionic/react';
-import { IonFab, IonFabButton } from '@ionic/react';
-import { add } from 'ionicons/icons';
-import ExploreContainer from '../components/ExploreContainer';
-const eventos: React.FC = () => {
-    const router = useIonRouter();
-    const [present, dismiss] = useIonLoading();
-    const [posts, setPosts] = useState([]);
+
+interface Evento {
+    id: string;
+    nombre: string;
+    descripcion: string;
+    fecha: string;
+    organizador: string;
+    tipo: 'Charla' | 'Junta Amigable' | 'Reunión Psicológica';
+    categoria: string;
+}
+
+const eventosMock: Evento[] = [{
+    id: "1",
+    nombre: "soy un evento",
+    descripcion: "el david es seco",
+    fecha: new Date().toLocaleDateString(),
+    organizador: "dame calses",
+    tipo: 'Reunión Psicológica',
+    categoria: "7"
+}]
+
+// APRENDE TYPESCRIPT
+
+const EventosComponents: React.FC = () => {
+    const [eventos, setEventos] = useState<Evento[]>(eventosMock)
+    const [selectedEvento, setSelectedEvento] = useState<Evento | null>(null)
     const [isOpen, setIsOpen] = useState(false);
     const [isLoaded, setLoaded] = useState(false);
-    // variables de evento
-    const [event, setEvent] = useState('');
-    const [desc, setDesc] = useState('');
-    const [date, setDate] = useState('');
-    const [org, setOrg] = useState('');
-    const [type, setType] = useState('');
-    const [category, setCategory] = useState('');
 
     const fetch_posts = () => {
         if (isLoaded == false) {
-            console.log('hola')
             fetch(`http://127.0.0.1:8000/api/evento/get`, {
                 "method": "GET",
                 "headers": {
@@ -32,8 +43,8 @@ const eventos: React.FC = () => {
                 .then((res) => {
                     return res.json();
                 })
-                .then((posts) => {
-                    setPosts(posts['data']);
+                .then((posts: { success: boolean, data: Evento[] }) => {
+                    console.log(posts)
                     setLoaded(true)
                 });
         }
@@ -61,14 +72,9 @@ const eventos: React.FC = () => {
 
     }
 
-    function modalControl(info) {
+    function modalControl(evento: Evento) {
         if (isOpen == false) {
-            setEvent(info.nombre);
-            setDesc(info.descripcion);
-            setDate(info.fecha);
-            setOrg(info.organizador);
-            setType(info.tipo);
-            setCategory(info.categoria);
+            setSelectedEvento(evento)
             setIsOpen(true);
         } else {
             setIsOpen(false);
@@ -88,9 +94,10 @@ const eventos: React.FC = () => {
                 </IonToolbar>
             </IonHeader>
             <IonContent fullscreen>
+                <div>hola</div>
                 <IonButton size="default" routerLink="/eventos/assist">Mis Eventos</IonButton>
-                {posts.map((post) => (
-                    <IonCard class="ion-padding ion-margin-horizontal" key={post.id}>
+                {eventos.map((post) => (
+                    <IonCard className="ion-padding ion-margin-horizontal" key={post.id}>
                         <IonThumbnail>
                             <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
                         </IonThumbnail>
@@ -130,7 +137,7 @@ const eventos: React.FC = () => {
                 <IonModal isOpen={isOpen}>
                     <IonHeader>
                         <IonToolbar>
-                            <IonTitle>{event}</IonTitle>
+                            <IonTitle>{selectedEvento?.nombre}</IonTitle>
                             <IonButtons slot="end">
                                 <IonButton onClick={() => setIsOpen(false)}>Cerrar</IonButton>
                             </IonButtons>
@@ -138,13 +145,11 @@ const eventos: React.FC = () => {
                     </IonHeader>
                     <IonContent className="ion-padding">
 
-                        <p>
-                            {desc}
-                        </p>
-                        <h3>Fecha: {date}</h3>
-                        <h3>Organiza: {org}</h3>
-                        <h3>Tipo: {type}</h3>
-                        <h3>Categoría: {category}</h3>
+                        <p>{selectedEvento?.descripcion}</p>
+                        <h3>Fecha: {selectedEvento?.fecha}</h3>
+                        <h3>Organiza: {selectedEvento?.organizador}</h3>
+                        <h3>Tipo: {selectedEvento?.tipo}</h3>
+                        <h3>Categoría: {selectedEvento?.categoria}</h3>
                     </IonContent>
                 </IonModal>
 
@@ -156,4 +161,4 @@ const eventos: React.FC = () => {
     );
 };
 
-export default eventos;
+export default EventosComponents;
