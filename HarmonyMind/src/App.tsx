@@ -7,10 +7,11 @@ import {
   IonTabBar,
   IonTabButton,
   IonTabs,
-  setupIonicReact
+  setupIonicReact,
+  IonButton
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-import { ellipse, square, triangle } from 'ionicons/icons';
+import { ellipse, logOut, triangle } from 'ionicons/icons';
 import Tab1 from './pages/Tab1';
 import Tab2 from './pages/Tab2';
 import Tab3 from './pages/Tab3';
@@ -40,7 +41,8 @@ import EventosComponents from './pages/eventos';
 
 setupIonicReact();
 const App: React.FC = () => {
-  const { isLogged } = useAuth()
+  const { isLogged, logout } = useAuth();
+
   return (
     <IonApp>
       <IonReactRouter>
@@ -59,7 +61,7 @@ const App: React.FC = () => {
                     <Tab1 />
                   </Route>
                   <Route exact path="/eventos">
-                    <EventosComponents/>
+                    <EventosComponents />
                   </Route>
                   <Route exact path="/tab2">
                     <Tab2 />
@@ -80,10 +82,14 @@ const App: React.FC = () => {
                     <IonIcon aria-hidden="true" icon={ellipse} />
                     <IonLabel>Eventos</IonLabel>
                   </IonTabButton>
+                  <IonTabButton onClick={logout}>
+                    <IonIcon aria-hidden="true" icon={logOut} />
+                    <IonLabel>Cerrar Sesión</IonLabel>
+                  </IonTabButton>
                 </IonTabBar>
               </IonTabs>
             ) : (
-              <Redirect to="/login" />
+              <Redirect to="/login"/>
             )}
           </Route>
         </IonRouterOutlet>
@@ -93,4 +99,5 @@ const App: React.FC = () => {
 };
 
 export default App;
+
 

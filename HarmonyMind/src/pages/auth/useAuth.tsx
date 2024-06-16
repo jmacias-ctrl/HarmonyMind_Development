@@ -30,13 +30,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         setIsLogged(true);
     }
 
-    const validateToken = async () => {
-        const validateResponse = await fetch('')
-        const response = validateResponse.json();
-        const timestamp: Date = new Date();
-        const isExpired = timestamp > new Date();
-        logout()
-    }
+   
 
     const logout = () => {
         localStorage.removeItem(TOKEN_LOCALSTORAGE_VARIABLE);
