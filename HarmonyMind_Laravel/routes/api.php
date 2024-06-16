@@ -18,6 +18,7 @@ use App\Http\Controllers\Api\eventController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+Route::get('inicio', [PublicacionEstadoController::class, 'inicio'])->middleware('auth:api')->name('inicio');
 Route::prefix('publicacion')->group(function () {
     Route::middleware('auth:api')->group(function () {
         Route::post('create', [PublicacionEstadoController::class, 'crear_publicacion'])->name('crear.publicacion');

@@ -18,6 +18,14 @@ class PublicacionEstadoController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
+
+    public function inicio(){
+        $username = Auth::user()->name;
+        $date_now = Carbon::now()->toDateString();
+        $countEstados = publicacion_estado::select(DB::raw('count(*) as count_estados'))->where('id_user', '=', Auth::user()->id)->whereDate('created_at', '=',$date_now)->first();
+        return response()->json(["success"=>true, "username"=>$username, "countEstados"=>$countEstados]);
+    }
+
     public function crear_publicacion(Request $request)
     {  
         $rules = [
