@@ -12,7 +12,7 @@ const AuthContext = createContext<IAuthProvider | undefined>(undefined);
 
 export const useAuth = () => {
     const context = useContext(AuthContext);
-    if (context === undefined) {
+    if (!context) {
         throw new Error('useAuth must be used within an AuthProvider');
     }
     return context;
@@ -28,18 +28,16 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     const login = (token: string) => {
         localStorage.setItem(TOKEN_LOCALSTORAGE_VARIABLE, token);
         setIsLogged(true);
-    }
-
-   
+    };
 
     const logout = () => {
         localStorage.removeItem(TOKEN_LOCALSTORAGE_VARIABLE);
         setIsLogged(false);
-    }
+    };
 
     return (
         <AuthContext.Provider value={{ isLogged, login, logout }}>
             {children}
         </AuthContext.Provider>
     );
-}
+};

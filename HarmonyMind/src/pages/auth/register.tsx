@@ -1,22 +1,46 @@
 import React, { useState } from "react";
-import { IonContent, IonGrid, IonPage, IonRow, IonCol, IonButton, IonInput, IonIcon, IonItem, IonLabel } from '@ionic/react';
+import { IonContent, IonGrid, IonPage, IonRow, IonCol, IonButton, IonInput, IonIcon, IonItem, IonLabel, IonModal } from '@ionic/react';
 import { personOutline, lockClosedOutline, atCircleOutline, eyeOutline, eyeOffOutline } from 'ionicons/icons';
 import { Redirect } from 'react-router-dom';
 import './register.css';
 
+interface RegisterFormState {
+    email: string;
+    username: string;
+    password: string;
+    confirmPassword: string;
+    error: string | null;
+    showPassword: boolean;
+}
+
 const Register: React.FC = () => {
-    const [email, setEmail] = useState('');
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
-    const [confirmPassword, setConfirmPassword] = useState('');
-    const [error, setError] = useState<string | null>(null);
+    const [formState, setFormState] = useState<RegisterFormState>({
+        email: '',
+        username: '',
+        password: '',
+        confirmPassword: '',
+        error: null,
+        showPassword: false,
+    });
+
+    const [showModal, setShowModal] = useState(false);
     const [redirectToLogin, setRedirectToLogin] = useState(false);
-    const [showPassword, setShowPassword] = useState(false);
+
+    const handleChange = (e: CustomEvent) => {
+        const { name, value } = (e.target as HTMLInputElement); // Obtener el nombre y valor del input
+        setFormState(prevState => ({ ...prevState, [name]: value }));
+    };
+
+    const handleTogglePasswordVisibility = () => {
+        setFormState(prevState => ({ ...prevState, showPassword: !prevState.showPassword }));
+    };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        const { email, username, password, confirmPassword } = formState;
+
         if (password.trim() !== confirmPassword.trim()) {
-            setError('Las contraseñas no coinciden');
+            setFormState(prevState => ({ ...prevState, error: 'Las contraseñas no coinciden' }));
             return;
         }
 
@@ -30,17 +54,20 @@ const Register: React.FC = () => {
             });
 
             if (response.ok) {
-                const data = await response.json();
-                localStorage.setItem('token', data.token);
-                setRedirectToLogin(true);
+                setShowModal(true);
             } else {
                 const data = await response.json();
-                setError(data.message || 'Error en el registro');
+                setFormState(prevState => ({ ...prevState, error: data.message || 'Error en el registro' }));
             }
         } catch (error) {
             console.error('Error al enviar solicitud:', error);
-            setError('Error al enviar solicitud');
+            setFormState(prevState => ({ ...prevState, error: 'Error al enviar solicitud' }));
         }
+    };
+
+    const handleModalDismiss = () => {
+        setShowModal(false);
+        setRedirectToLogin(true);
     };
 
     if (redirectToLogin) {
@@ -55,56 +82,60 @@ const Register: React.FC = () => {
                     <IonRow>
                         <IonCol size='12' size-md='7'>
                             <form onSubmit={handleSubmit} className='loginForm'>
-                                {error && (
+                                {formState.error && (
                                     <IonItem lines="none" className="error-message">
-                                        <IonLabel color="danger">{error}</IonLabel>
+                                        <IonLabel color="danger">{formState.error}</IonLabel>
                                     </IonItem>
                                 )}
-                                <IonInput
-                                    placeholder="Ingrese correo"
-                                    value={email}
-                                    onIonChange={(e) => setEmail(e.detail.value!)}
-                                    autofocus
-                                >
-                                    <div slot='start'>
-                                        <IonIcon icon={atCircleOutline}></IonIcon>
-                                    </div>
-                                </IonInput>
-                                <IonInput
-                                    placeholder="Ingrese nombre de Usuario"
-                                    value={username}
-                                    onIonChange={(e) => setUsername(e.detail.value!)}
-                                >
-                                    <div slot='start'>
-                                        <IonIcon icon={personOutline}></IonIcon>
-                                    </div>
-                                </IonInput>
-                                <IonInput
-                                    placeholder="Ingrese contraseña"
-                                    type={showPassword ? "text" : "password"}
-                                    value={password}
-                                    onIonChange={(e) => setPassword(e.detail.value!)}
-                                >
-                                    <div slot='start'>
-                                        <IonIcon icon={lockClosedOutline}></IonIcon>
-                                    </div>
-                                    <div slot='end' onClick={() => setShowPassword(!showPassword)}>
-                                        <IonIcon icon={showPassword ? eyeOutline : eyeOffOutline}></IonIcon>
-                                    </div>
-                                </IonInput>
-                                <IonInput
-                                  placeholder="Confirmar contraseña"
-                                  type={showPassword ? "text" : "password"}
-                                  value={confirmPassword}
-                                  onIonChange={(e) => setConfirmPassword(e.detail.value!)}
-                              >
-                                  <div slot='start'>
-                                      <IonIcon icon={lockClosedOutline}></IonIcon>
-                                  </div>
-                                  <div slot='end' onClick={() => setShowPassword(!showPassword)}>
-                                      <IonIcon icon={showPassword ? eyeOutline : eyeOffOutline}></IonIcon>
-                                  </div>
-                              </IonInput>
+                                <IonItem>
+                                    <IonIcon icon={atCircleOutline} slot="start" />
+                                    <IonInput
+                                        placeholder="Ingrese correo"
+                                        name="email"
+                                        value={formState.email}
+                                        onIonChange={handleChange}
+                                        autofocus
+                                    />
+                                </IonItem>
+                                <IonItem>
+                                    <IonIcon icon={personOutline} slot="start" />
+                                    <IonInput
+                                        placeholder="Ingrese nombre de Usuario"
+                                        name="username"
+                                        value={formState.username}
+                                        onIonChange={handleChange}
+                                    />
+                                </IonItem>
+                                <IonItem>
+                                    <IonIcon icon={lockClosedOutline} slot="start" />
+                                    <IonInput
+                                        placeholder="Ingrese contraseña"
+                                        name="password"
+                                        type={formState.showPassword ? "text" : "password"}
+                                        value={formState.password}
+                                        onIonChange={handleChange}
+                                    />
+                                    <IonIcon
+                                        icon={formState.showPassword ? eyeOutline : eyeOffOutline}
+                                        slot="end"
+                                        onClick={handleTogglePasswordVisibility}
+                                    />
+                                </IonItem>
+                                <IonItem>
+                                    <IonIcon icon={lockClosedOutline} slot="start" />
+                                    <IonInput
+                                        placeholder="Confirmar contraseña"
+                                        name="confirmPassword"
+                                        type={formState.showPassword ? "text" : "password"}
+                                        value={formState.confirmPassword}
+                                        onIonChange={handleChange}
+                                    />
+                                    <IonIcon
+                                        icon={formState.showPassword ? eyeOutline : eyeOffOutline}
+                                        slot="end"
+                                        onClick={handleTogglePasswordVisibility}
+                                    />
+                                </IonItem>
                                 <IonButton type='submit' shape='round' className='button' expand='full'>
                                     Registrarse
                                 </IonButton>
@@ -117,11 +148,16 @@ const Register: React.FC = () => {
                         </IonCol>
                     </IonRow>
                 </IonGrid>
+                <IonModal isOpen={showModal} onDidDismiss={handleModalDismiss}>
+                    <IonContent className='ion-padding'>
+                        <h2>Usuario creado exitosamente</h2>
+                        <IonButton expand="full" onClick={handleModalDismiss}>Aceptar</IonButton>
+                    </IonContent>
+                </IonModal>
             </IonContent>
         </IonPage>
     );
 };
 
 export default Register;
-
 

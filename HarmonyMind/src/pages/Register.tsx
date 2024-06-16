@@ -10,7 +10,6 @@ const Home: React.FC= () =>{
         <IonContent className='ion-padding'>
             <div className='circle1'>
             </div>
-            ionic is cool 
         </IonContent>
     </IonPage>
     

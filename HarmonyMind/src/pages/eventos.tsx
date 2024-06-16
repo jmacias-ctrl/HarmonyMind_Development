@@ -9,7 +9,7 @@ interface Evento {
     descripcion: string;
     fecha: string;
     organizador: string;
-    tipo: 'Charla' | 'Junta Amigable' | 'Reunión Psicológica';
+    tipo: string;
     categoria: string;
 }
 

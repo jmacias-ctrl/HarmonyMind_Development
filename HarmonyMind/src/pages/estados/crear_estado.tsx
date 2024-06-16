@@ -69,7 +69,7 @@ const crear_estado: React.FC = () => {
                 </IonToolbar>
             </IonHeader>
             <IonContent fullscreen>
-                <IonCard class="ion-padding">
+                <IonCard className="ion-padding">
                     <IonCardHeader>
                         <IonCardTitle>Expresa tus sentimientos y pensamientos que tengas en el momento aqui</IonCardTitle>
                     </IonCardHeader>
@@ -98,7 +98,7 @@ const crear_estado: React.FC = () => {
                         <h3 slot="end">10</h3>
                     </IonRange>
 
-                    <IonButton class="ion-margin-top" name="buttonCrear" id="button_crear" onClick={crear_publicacion}>Crear</IonButton>
+                    <IonButton className="ion-margin-top" name="buttonCrear" id="button_crear" onClick={crear_publicacion}>Crear</IonButton>
                 </IonCard>
             </IonContent>
         </IonPage>

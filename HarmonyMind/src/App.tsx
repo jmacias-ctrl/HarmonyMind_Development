@@ -8,7 +8,7 @@ import {
   IonTabButton,
   IonTabs,
   setupIonicReact,
-  IonButton
+  useIonViewDidEnter,
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import { ellipse, logOut, triangle } from 'ionicons/icons';
@@ -17,7 +17,7 @@ import Tab2 from './pages/Tab2';
 import Tab3 from './pages/Tab3';
 import Login from './pages/auth/login';
 import Register from './pages/auth/register';
-import { useState } from 'react'; // Importar useState
+import { useState, useEffect } from 'react'; // Importar useState y useEffect
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
 
@@ -40,8 +40,25 @@ import { useAuth } from './pages/auth/useAuth';
 import EventosComponents from './pages/eventos';
 
 setupIonicReact();
+
 const App: React.FC = () => {
   const { isLogged, logout } = useAuth();
+  const [redirectToLogin, setRedirectToLogin] = useState(false);
+
+  useEffect(() => {
+    if (!isLogged) {
+      setRedirectToLogin(true);
+    }
+  }, [isLogged]);
+
+  const handleLogout = () => {
+    logout();
+    setRedirectToLogin(true);
+  };
+
+  if (redirectToLogin) {
+    return <Redirect to="/login" />;
+  }
 
   return (
     <IonApp>
@@ -82,7 +99,7 @@ const App: React.FC = () => {
                     <IonIcon aria-hidden="true" icon={ellipse} />
                     <IonLabel>Eventos</IonLabel>
                   </IonTabButton>
-                  <IonTabButton onClick={logout}>
+                  <IonTabButton onClick={handleLogout}>
                     <IonIcon aria-hidden="true" icon={logOut} />
                     <IonLabel>Cerrar Sesión</IonLabel>
                   </IonTabButton>
