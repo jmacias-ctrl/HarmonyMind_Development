@@ -32,7 +32,7 @@ const crear_estado: React.FC = () => {
                 "method": "POST",
                 "headers": {
                     'Accept': 'application/json',
-                    'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiOGUzY2JjZGQ3YzBiOTYyZTEzZWVhOWNjNTg0NDIxZTQ3YWZlZWQ4NGQ2Mzk3MzJhNzg0ZTE4ZGUwYmIwNTExMTlhYmJlZWNjOTRjODEyMmQiLCJpYXQiOjE3MTcyODIwNzQuMTYzNjI3LCJuYmYiOjE3MTcyODIwNzQuMTYzNjMxLCJleHAiOjE3NDg4MTgwNzQuMDY2MzY3LCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.J_m8LTlYpAp-SEG8X19mqxjJZU0F0pHJlDy4A_DVZRDsiJClo95nZ4Ydzdq7Fwdn2n_8mtMplCtqdwjsBF1a4H7YtbqFBqis4DVWDrBQTTB1YZ0fo750ShyXk-MaZ0h_WzLFWv0SKQKuDoz8inWUYzQCZCiZnIbmWC9SA3cdWp3NR1eXrSUNpC3TI5ZY7OzzoXd15frTgOQcCA-K8jp4dvOSD_FsSc7ZlpcMPef_-If0tDolU8bS-n7LGckf-bXITI0O0q1YidWp-g6w9IXo3x9x2KcIzQi-hEpwoTSLXzkTZ10uhnQcLk367Fs1rHyAFYIjwYbDuBvM_WkvdUmqBCR0iFyP5tERksQfGDc1nFKKk-vwqQxDqRnGdHf5olsiZAxPXUYnySGYgGljVJUfanDy3h-L-RBMbZiS3yh2Xq8qKtC5l1e2eOk3qPaCsVqBCjiRLp2oLWobIa3qPTyHq4-glAh9XEr_X5LXxcWXZ8VFko3QXj--pqLMdHFo9Hy2GrGL41Cz39rPEpbx5NkJgXbBJI-WH-JCkJNALw-V4LpZy2jSsK3Y6WCJMzx5RKdnoXUEVszHy4ya_7AdIBboXfM0nMydF6oKtk3Zf0q2VLoLvXW8GKnuT7QjjYtArf_KVpxFVM3dfjKj9wpbpUwH115Jp71r0AIlNpIvUU1f38w',
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
                 }
             }
             ).then((response) => response.json())
@@ -79,7 +79,7 @@ const crear_estado: React.FC = () => {
                 </IonToolbar>
             </IonHeader>
             <IonContent fullscreen>
-                <IonCard class="ion-padding">
+                <IonCard className="ion-padding">
                     <IonCardHeader>
                         <IonCardTitle>Expresa tus sentimientos y pensamientos que tengas en el momento aqui</IonCardTitle>
                     </IonCardHeader>
@@ -104,8 +104,8 @@ const crear_estado: React.FC = () => {
                     <span>Indica del 1 al 10 tus emociones del momento:</span>
                     <IonGrid>
                         <IonRow>
-                            <IonCol class="ion-align-self-center" size="auto"><h6>Tristeza:</h6></IonCol>
-                            <IonCol class="ion-align-self-center">
+                            <IonCol className="ion-align-self-center" size="auto"><h6>Tristeza:</h6></IonCol>
+                            <IonCol className="ion-align-self-center">
                                 <IonRange id="tristeza" min={1} max={10} value={tristeza} pin={true} ticks={true} snaps={true} onIonChange={(e: any) => setTristeza(e.target.value)}>
                                     <h5 slot="start">1</h5>
                                     <h5 slot="end">10</h5>
@@ -113,8 +113,8 @@ const crear_estado: React.FC = () => {
                             </IonCol>
                         </IonRow>
                         <IonRow>
-                            <IonCol class="ion-align-self-center" size="auto"><h6>Felicidad:</h6></IonCol>
-                            <IonCol class="ion-align-self-center">
+                            <IonCol className="ion-align-self-center" size="auto"><h6>Felicidad:</h6></IonCol>
+                            <IonCol className="ion-align-self-center">
                                 <IonRange id="felicidad" min={1} max={10} value={felicidad} pin={true} ticks={true} snaps={true} onIonChange={(e: any) => setFelicidad(e.target.value)}>
                                     <h5 slot="start">1</h5>
                                     <h5 slot="end">10</h5>
@@ -122,8 +122,8 @@ const crear_estado: React.FC = () => {
                             </IonCol>
                         </IonRow>
                         <IonRow>
-                            <IonCol class="ion-align-self-center" size="auto"><h6>Disgusto:</h6></IonCol>
-                            <IonCol class="ion-align-self-center">
+                            <IonCol className="ion-align-self-center" size="auto"><h6>Disgusto:</h6></IonCol>
+                            <IonCol className="ion-align-self-center">
                                 <IonRange id="disgusto" min={1} max={10} value={disgusto} pin={true} ticks={true} snaps={true} onIonChange={(e: any) => setDisgusto(e.target.value)}>
                                     <h5 slot="start">1</h5>
                                     <h5 slot="end">10</h5>
@@ -131,8 +131,8 @@ const crear_estado: React.FC = () => {
                             </IonCol>
                         </IonRow>
                         <IonRow>
-                            <IonCol class="ion-align-self-center" size="auto"><h6>Ira:</h6></IonCol>
-                            <IonCol class="ion-align-self-center">
+                            <IonCol className="ion-align-self-center" size="auto"><h6>Ira:</h6></IonCol>
+                            <IonCol className="ion-align-self-center">
                                 <IonRange id="ira" min={1} max={10} value={ira} pin={true} ticks={true} snaps={true} onIonChange={(e: any) => setIra(e.target.value)}>
                                     <h5 slot="start">1</h5>
                                     <h5 slot="end">10</h5>
@@ -140,8 +140,8 @@ const crear_estado: React.FC = () => {
                             </IonCol>
                         </IonRow>
                         <IonRow>
-                            <IonCol class="ion-align-self-center" size="auto"><h6>Miedo:</h6></IonCol>
-                            <IonCol class="ion-align-self-center">
+                            <IonCol className="ion-align-self-center" size="auto"><h6>Miedo:</h6></IonCol>
+                            <IonCol className="ion-align-self-center">
                                 <IonRange id="miedo" min={1} max={10} value={miedo} pin={true} ticks={true} snaps={true} onIonChange={(e: any) => setMiedo(e.target.value)}>
                                     <h5 slot="start">1</h5>
                                     <h5 slot="end">10</h5>
@@ -149,8 +149,8 @@ const crear_estado: React.FC = () => {
                             </IonCol>
                         </IonRow>
                         <IonRow>
-                            <IonCol class="ion-align-self-center" size="auto"><h6>Sorpresa:</h6></IonCol>
-                            <IonCol class="ion-align-self-center">
+                            <IonCol className="ion-align-self-center" size="auto"><h6>Sorpresa:</h6></IonCol>
+                            <IonCol className="ion-align-self-center">
                                 <IonRange id="sorpresa" min={1} max={10} value={sorpresa} pin={true} ticks={true} snaps={true} onIonChange={(e: any) => setSorpresa(e.target.value)}>
                                     <h5 slot="start">1</h5>
                                     <h5 slot="end">10</h5>
@@ -158,7 +158,7 @@ const crear_estado: React.FC = () => {
                             </IonCol>
                         </IonRow>
                     </IonGrid>
-                    <IonButton class="ion-margin-top" name="buttonCrear" id="button_crear" onClick={crear_publicacion}>Crear</IonButton>
+                    <IonButton className="ion-margin-top" name="buttonCrear" id="button_crear" onClick={crear_publicacion}>Crear</IonButton>
                 </IonCard>
             </IonContent>
         </IonPage>

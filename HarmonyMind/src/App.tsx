@@ -11,7 +11,7 @@ import {
   useIonViewDidEnter,
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-import { ellipse, square, logOut, triangle } from 'ionicons/icons';
+import { home, create, logOut, calendar } from 'ionicons/icons';
 import Tab1 from './pages/Tab1';
 import Tab2 from './pages/Tab2';
 import Tab3 from './pages/Tab3';
@@ -59,45 +59,43 @@ const App: React.FC = () => {
           <Route exact path="/register">
             <Register />
           </Route>
+          <Route path="/logout" render={() => {
+            logout()
+            return <Redirect to="/login" />
+          }} exact={true} />
           <Route>
             {isLogged ? (
               <IonTabs>
                 <IonRouterOutlet>
-                  <Route path="/estado/crear" component={crear_estado} />
-                  <Route path="/estado/ver:status?" component={ver_estados} />
-                  <Route path="/estado/analisis" component={analisis_estado} />
-                  <Route path="/eventos/ver" component={eventos} />
-                  <Route path="/eventos/assist" component={eventos_asistidos} />
-                  <Route exact path="/tab1">
+                  <Route exact path="/estado/crear" component={crear_estado} />
+                  <Route exact path="/estado/ver:status?" component={ver_estados} />
+                  <Route exact path="/estado/analisis" component={analisis_estado} />
+                  <Route exact path="/eventos/ver" component={eventos} />
+                  <Route exact path="/eventos/assist" component={eventos_asistidos} />
+                  <Route exact path="/inicio">
                     <Tab1 />
                   </Route>
                   <Route exact path="/eventos">
                     <EventosComponents />
                   </Route>
-                  <Route exact path="/tab2">
-                    <Tab2 />
-                  </Route>
-                  <Route path="/tab3">
-                    <Tab3 />
-                  </Route>
                   <Route exact path="/">
-                    <Redirect to="/tab1" />
+                    <Redirect to="/inicio" />
                   </Route>
                 </IonRouterOutlet>
                 <IonTabBar slot="bottom">
                   <IonTabButton tab="inicio" href="/">
-                    <IonIcon aria-hidden="true" icon={square} />
+                    <IonIcon aria-hidden="true" icon={home} />
                     <IonLabel>Inicio</IonLabel>
                   </IonTabButton>
                   <IonTabButton tab="ver_estados" href="/estado/ver">
-                    <IonIcon aria-hidden="true" icon={triangle} />
+                    <IonIcon aria-hidden="true" icon={create} />
                     <IonLabel>Estados</IonLabel>
                   </IonTabButton>
                   <IonTabButton tab="ver_eventos" href="/eventos">
-                    <IonIcon aria-hidden="true" icon={ellipse} />
+                    <IonIcon aria-hidden="true" icon={calendar} />
                     <IonLabel>Eventos</IonLabel>
                   </IonTabButton>
-                  <IonTabButton onClick={logout}>
+                  <IonTabButton href="/logout">
                     <IonIcon aria-hidden="true" icon={logOut} />
                     <IonLabel>Cerrar Sesión</IonLabel>
                   </IonTabButton>
