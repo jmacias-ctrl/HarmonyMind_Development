@@ -12,9 +12,9 @@ import {
   useIonViewDidEnter,
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-import { ellipse, logOut, triangle } from 'ionicons/icons';
+import { bookOutline, ellipse, homeOutline, logOut, ticketOutline, triangle } from 'ionicons/icons';
 import Home from './pages/Home';
-import Tab2 from './pages/Tab2';
+import Learning from './pages/aprendizajeZone/aprendizajeIndex';
 import Tab3 from './pages/Tab3';
 import Login from './pages/auth/login';
 import Register from './pages/auth/register';
@@ -69,11 +69,8 @@ const App: React.FC = () => {
                   <Route exact path="/estados">
                     <VistaEstadosComponent />
                   </Route>
-                  <Route exact path="/tab2">
-                    <Tab2 />
-                  </Route>
-                  <Route path="/tab3">
-                    <Tab3 />
+                  <Route path="/aprendizajeIndex">
+                    <Learning/>
                   </Route>
                   <Route exact path="/">
                     <Redirect to="/tab1" />
@@ -81,16 +78,16 @@ const App: React.FC = () => {
                 </IonRouterOutlet>
                 <IonTabBar slot="bottom">
                   <IonTabButton tab="home" href="/home">
-                    <IonIcon aria-hidden="true" icon={triangle} />
+                    <IonIcon aria-hidden="true" icon={homeOutline} />
                     <IonLabel>Home</IonLabel>
                   </IonTabButton>
                   <IonTabButton tab="ver_eventos" href="/eventos">
-                    <IonIcon aria-hidden="true" icon={ellipse} />
+                    <IonIcon aria-hidden="true" icon={ticketOutline} />
                     <IonLabel>Eventos</IonLabel>
                   </IonTabButton>
-                  <IonTabButton tab="tab3" href="/tab3">
-                    <IonIcon aria-hidden="true" icon={ellipse} />
-                    <IonLabel>Cerrar Sesión</IonLabel>
+                  <IonTabButton tab="tab3" href="/aprendizajeIndex">
+                    <IonIcon aria-hidden="true" icon={bookOutline} />
+                    <IonLabel>Aprendizaje</IonLabel>
                   </IonTabButton>
                 </IonTabBar>
               </IonTabs>

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, useIonRouter } from '@ionic/react';
 import { IonCard, IonCardContent, IonButton, IonCardHeader, IonCardSubtitle, IonCardTitle, IonModal, IonButtons, IonThumbnail } from '@ionic/react';
 import { IonText, IonActionSheet, IonIcon, useIonLoading } from '@ionic/react';
+import LogoutButton from "./auth/Logout";
 
 interface Evento {
     id: string;
@@ -23,7 +24,6 @@ const eventosMock: Evento[] = [{
     categoria: "7"
 }]
 
-// APRENDE TYPESCRIPT
 
 const EventosComponents: React.FC = () => {
     const [eventos, setEventos] = useState<Evento[]>(eventosMock)
@@ -91,10 +91,12 @@ const EventosComponents: React.FC = () => {
             <IonHeader>
                 <IonToolbar>
                     <IonTitle>Eventos disponibles</IonTitle>
+                    <IonButtons slot="end">
+                    <LogoutButton />
+                    </IonButtons>
                 </IonToolbar>
             </IonHeader>
             <IonContent fullscreen>
-                <div>hola</div>
                 <IonButton size="default" routerLink="/eventos/assist">Mis Eventos</IonButton>
                 {eventos.map((post) => (
                     <IonCard className="ion-padding ion-margin-horizontal" key={post.id}>

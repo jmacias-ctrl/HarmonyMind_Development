@@ -18,7 +18,7 @@ class PublicacionEstadoController extends Controller
      */
     public function crear_publicacion(Request $request)
     {  
-        $rules = [
+                $rules = [
             'publicacion' => 'required|string',
             'estado_de_animo' => 'required',
         ];

@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, useIonRouter } from '@ionic/react';
-import { IonCard, IonProgressBar, IonButton, IonCardHeader, IonCardSubtitle, useIonViewWillEnter } from '@ionic/react';
+import { IonCard, IonProgressBar, IonButton,IonButtons, IonCardHeader, IonCardSubtitle, useIonViewWillEnter } from '@ionic/react';
 import { IonText, IonActionSheet, IonIcon, useIonLoading } from '@ionic/react';
 import { IonFab, IonGrid, IonRow, IonCol, IonFabButton, useIonToast } from '@ionic/react';
 import { add } from 'ionicons/icons';
 import { useParams } from 'react-router';
+import LogoutButton from "../auth/Logout";
 import { ellipsisVertical } from 'ionicons/icons';
 
 import './ver_estados.css';
@@ -86,39 +87,42 @@ const VistaEstadosComponent: React.FC = () => {
                 <IonToolbar>
                     <IonTitle>Tus Estados</IonTitle>
                     <IonProgressBar className={`${!isLoading && 'ion-hide'}`} type="indeterminate" id="progressBar"></IonProgressBar>
+                    <IonButtons slot="end">
+                    <LogoutButton />
+                    </IonButtons>
                 </IonToolbar>
             </IonHeader>
             <IonContent fullscreen>
                 <div className={`${hideText && 'ion-hide'}`}>
-                    <div class="ion-text-center">
+                    <div className="ion-text-center">
                         <h3>{textLoading}</h3>
                         {subtextLoading}
                     </div>
                 </div>
                 {posts.map((post) => (
-                    <IonCard class="estadosCard ion-padding ion-margin-horizontal " key={post.id}>
+                    <IonCard className="estadosCard ion-padding ion-margin-horizontal " key={post.id}>
                         <IonCardSubtitle>
                             <IonRow>
                                 <IonCol size="auto">
                                     <IonText color="dark">Estado N°{post.numero} </IonText>
                                 </IonCol>
                                 <IonCol>
-                                    <IonButton class="ion-float-right" id={"action_es_" + post.id} shape="round" size="small" fill="clear"><IonIcon icon={ellipsisVertical} slot="icon-only"></IonIcon></IonButton>
+                                    <IonButton className="ion-float-right" id={"action_es_" + post.id} shape="round" size="small" fill="clear"><IonIcon icon={ellipsisVertical} slot="icon-only"></IonIcon></IonButton>
                                 </IonCol>
                             </IonRow>
                         </IonCardSubtitle>
                         <IonGrid>
                             <IonRow>
                                 <IonCol size="auto">
-                                    <div class="fechaDiv">
-                                        <span class="textDiaMes">{post.dia}<br />{post.mes}</span> <br />
-                                        <span class="textAnio">{post.año}</span>
+                                    <div className="fechaDiv">
+                                        <span className="textDiaMes">{post.dia}<br />{post.mes}</span> <br />
+                                        <span className="textAnio">{post.año}</span>
                                     </div>
                                 </IonCol>
-                                <IonCol><p class="textPub">{post.publicacion}</p></IonCol>
+                                <IonCol><p className="textPub">{post.publicacion}</p></IonCol>
                             </IonRow>
                         </IonGrid>
-                        <div class="ion-text-center">
+                        <div className="ion-text-center">
                             <IonText color="dark">
                                 <h6>Estado de Animo</h6>
                             </IonText>
