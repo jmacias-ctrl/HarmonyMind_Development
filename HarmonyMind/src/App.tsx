@@ -11,7 +11,7 @@ import {
   useIonViewDidEnter,
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-import { home, create, logOut, calendar } from 'ionicons/icons';
+import { home, create, logOut, calendar, call, person } from 'ionicons/icons';
 import Tab1 from './pages/Tab1';
 import Tab2 from './pages/Tab2';
 import Tab3 from './pages/Tab3';
@@ -23,6 +23,8 @@ import analisis_estado from './pages/estados/analisis_estado';
 import Login from './pages/auth/login';
 import Register from './pages/auth/register';
 import { useState, useEffect } from 'react'; // Importar useState y useEffect
+import boton_panico from './pages/boton_panico';
+import perfil from './pages/perfil';
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
 
@@ -73,6 +75,8 @@ const App: React.FC = () => {
                   <Route exact path="/eventos/ver" component={eventos} />
                   <Route exact path="/eventos/assist" component={eventos_asistidos} />
                   <Route exact path="/inicio">
+                    <Route path="/button" component={boton_panico} />
+                    <Route path="/perfil" component={perfil} />
                     <Tab1 />
                   </Route>
                   <Route exact path="/eventos">
@@ -94,6 +98,14 @@ const App: React.FC = () => {
                   <IonTabButton tab="ver_eventos" href="/eventos">
                     <IonIcon aria-hidden="true" icon={calendar} />
                     <IonLabel>Eventos</IonLabel>
+                  </IonTabButton>
+                  <IonTabButton tab="boton_panico" href="/button">
+                    <IonIcon aria-hidden="true" icon={call} />
+                    <IonLabel>SOS</IonLabel>
+                  </IonTabButton>
+                  <IonTabButton tab="perfil" href="/perfil">
+                    <IonIcon aria-hidden="true" icon={person} />
+                    <IonLabel>Perfil</IonLabel>
                   </IonTabButton>
                   <IonTabButton href="/logout">
                     <IonIcon aria-hidden="true" icon={logOut} />

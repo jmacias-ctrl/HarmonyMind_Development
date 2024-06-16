@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\PostController;
 use App\Http\Controllers\Api\PublicacionEstadoController;
 use App\Http\Controllers\Api\RecomendacionesController;
 use App\Http\Controllers\Api\eventController;
+use App\Http\Controllers\Api\contactController;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,6 +37,16 @@ Route::prefix('evento')->group(function () {
         Route::post('assign', [eventController::class, 'assign'])->name('asignar.evento');
         Route::get('getassist', [eventController::class, 'index_assist'])->name('ver.eventos.registrados');
         Route::post('remove', [eventController::class, 'relation_remove'])->name('revomer.evento');
+        
+    });
+});
+
+Route::prefix('emergency_contact')->group(function () {
+    Route::middleware('auth:api')->group(function () {
+        Route::get('get', [contactController::class, 'get'])->name('ver.contacto');
+        Route::post('add', [contactController::class, 'add'])->name('agregar.contacto');
+        Route::post('delete', [contactController::class, 'delete'])->name('eliminar.contacto');
+        
         
     });
 });
