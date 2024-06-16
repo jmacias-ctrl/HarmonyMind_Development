@@ -26,7 +26,7 @@ const eventos_asistidos: React.FC = () => {
                 "method": "GET",
                 "headers": {
                     'Accept': 'application/json',
-                    'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiYjBjMTkzMWJjMDFjMWM0YWUxZjFkYjg3Y2VkMDc2MTI0YTkzM2EzNmE2ZjQ4MzY3NWEzNzA1MDU5MTRhMjljZDVlYmY4ZWFhMTg1MGYyNDciLCJpYXQiOjE3MTU2NDY4NzQuMzA4MjI3LCJuYmYiOjE3MTU2NDY4NzQuMzA4MjM1LCJleHAiOjE3NDcxODI4NzIuMTUyOTA3LCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.dI2a7iFnmCPrAke48JMdX7W8uG5TfkRtI7nEnFpsG8DxuH1dzGYq_CVklCuQBfBdHe6mYZ09N5zdPgnu-iZX_DbQgYG_1tbUtca31VtRk7g-VUhlMOpQ45nsiE3czNTCaEOiIXuA99Y313z2mM5_twfI3s99Ze4j85FRIMZ-5Ppo9S9aU8Z8Z95wXH-lRkS9eBRfywBIWLLpxL5UvD8bg8PmseByKznHlkgDl1cKpgYwTJLV1tBHfBGTXhzhgafdhDfyQ4w4tJzanMSCWdFzjj5YrzxFSO2E-_k7qtQ4YyeQPeoK_Bx7ekg9w-tRCrwVs73Abko5JPJzi5ex4j4m4URDsVuRk87z0MrzK-Kvxf5yV6NJ-JfTi3nQ6lEnX6eiFrE7n8RR35PjXhjMpBAY8iteZ62cp-XuIwAqbhj_nmfJXHE35a_zl5EuzCf_HOkKjBscMWww68Q63q1Z6aB00ozOSR_1KGGNMbL0BaRMijxSaVrpEcB4-5z4sTPyiPr3y3QkHLOjmQoo5MzfMRz7194tVZtgG2QWjt4Vf3l03wyY__2osujFakPjZ76BAHvq9YLIsbWN84s7-XgDAu1ACEu92eshe6CIuks8dsT3CzJjPr-onsHKxGHbTy6KYb_3PTEeKHRMRWY-Euz6krQ9okFJwEJEcBwBWNt_XrkZPUI',
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
                 }
             })
                 .then((res) => {
@@ -45,7 +45,7 @@ const eventos_asistidos: React.FC = () => {
                 "method": "POST",
                 "headers": {
                     'Accept': 'application/json',
-                    'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiYjBjMTkzMWJjMDFjMWM0YWUxZjFkYjg3Y2VkMDc2MTI0YTkzM2EzNmE2ZjQ4MzY3NWEzNzA1MDU5MTRhMjljZDVlYmY4ZWFhMTg1MGYyNDciLCJpYXQiOjE3MTU2NDY4NzQuMzA4MjI3LCJuYmYiOjE3MTU2NDY4NzQuMzA4MjM1LCJleHAiOjE3NDcxODI4NzIuMTUyOTA3LCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.dI2a7iFnmCPrAke48JMdX7W8uG5TfkRtI7nEnFpsG8DxuH1dzGYq_CVklCuQBfBdHe6mYZ09N5zdPgnu-iZX_DbQgYG_1tbUtca31VtRk7g-VUhlMOpQ45nsiE3czNTCaEOiIXuA99Y313z2mM5_twfI3s99Ze4j85FRIMZ-5Ppo9S9aU8Z8Z95wXH-lRkS9eBRfywBIWLLpxL5UvD8bg8PmseByKznHlkgDl1cKpgYwTJLV1tBHfBGTXhzhgafdhDfyQ4w4tJzanMSCWdFzjj5YrzxFSO2E-_k7qtQ4YyeQPeoK_Bx7ekg9w-tRCrwVs73Abko5JPJzi5ex4j4m4URDsVuRk87z0MrzK-Kvxf5yV6NJ-JfTi3nQ6lEnX6eiFrE7n8RR35PjXhjMpBAY8iteZ62cp-XuIwAqbhj_nmfJXHE35a_zl5EuzCf_HOkKjBscMWww68Q63q1Z6aB00ozOSR_1KGGNMbL0BaRMijxSaVrpEcB4-5z4sTPyiPr3y3QkHLOjmQoo5MzfMRz7194tVZtgG2QWjt4Vf3l03wyY__2osujFakPjZ76BAHvq9YLIsbWN84s7-XgDAu1ACEu92eshe6CIuks8dsT3CzJjPr-onsHKxGHbTy6KYb_3PTEeKHRMRWY-Euz6krQ9okFJwEJEcBwBWNt_XrkZPUI',
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
                 }
             })
                 .then((res) => {

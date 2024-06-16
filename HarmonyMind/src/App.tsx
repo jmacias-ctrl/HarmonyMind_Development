@@ -75,10 +75,10 @@ const App: React.FC = () => {
                   <Route exact path="/eventos/ver" component={eventos} />
                   <Route exact path="/eventos/assist" component={eventos_asistidos} />
                   <Route exact path="/inicio">
-                    <Route path="/button" component={boton_panico} />
-                    <Route path="/perfil" component={perfil} />
                     <Tab1 />
                   </Route>
+                  <Route path="/button" component={boton_panico} />
+                  <Route path="/perfil" component={perfil} />
                   <Route exact path="/eventos">
                     <EventosComponents />
                   </Route>

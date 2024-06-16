@@ -24,7 +24,7 @@ const perfil: React.FC = () => {
             "method": "GET",
             "headers": {
                 'Accept': 'application/json',
-                'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxMyIsImp0aSI6ImY2ZGY4NGIyMGQ1OGNmNTZmMjRjYWFiMTY3YmQxOTliOGZlMjFmYTNiYTc2ZTFhYWVkY2E3NDBhNTAxN2I5MTViMDE0NzFjYTYyNjE3M2U5IiwiaWF0IjoxNzE4MjMyMzA0LjMwNTMzLCJuYmYiOjE3MTgyMzIzMDQuMzA1MzM0LCJleHAiOjE3NDk3NjgzMDMuNDA5NDA4LCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.Mbg32oi0E4kpwprmcDY0Rx7PlHwEXS8vPThf1Q7TlfK2W8uPWmEChGiNlvRkwXBOlyXuAAwvXA4kOO1phYAvFoBWbA3RwX7AK-B8nb0_6wp79jJ3n2BaI-JMw909uDR0fgRr5uerTYBbn5ZQ0aXrYTuDQcQDce9wFa4702iGrczwbgt9Lnn4mLMHD8-OeuAbch5foV3Hp3TdbVc2bzfl5BP84u6KGUaJFLZPJkAcQRftq4zGnhea_mIlHZjvyGUOlo1c5o3to-avN0gAgjrYztNgy1BJkEWDXzl6FwS05cNGJyHSmKWPI0XWc-vYcmK0ErUqLg6ysflV7pcXfdh61EpSXcD60oj7njNF15G82KAc6S0pkV89nYDBy7Ld62kEZPXJZC8H-IaiOB4odNRNLhaH0giMu5vVH-kT-pqZJcC1ULjyF_x5JY6CRlN6h30wZaA4cnoAGLs0kuduE6tKXvnT9-GRKt_RVGtU1mB1NIAIV3bWQwsGU5Z1CBzBS__tWBZEX05s66Pk1N8esWj5xK4W-tMYb9CfFGVaSxFIYPuuDzNdufKQPxaPnm8B0SvThm0veoyKcTWlhbFJsbBr85lW_0wkgH9KCQ6_j6pHuF0a_OdcP4TGRD9m7SHwnnKyrf9dTs-Pou5fPtfzL4IeJmbcx7Y2Y8VZ0UGLj3G7Pi4',
+                'Authorization': `Bearer ${localStorage.getItem('token')}`,
             }
         })
             .then((res) => {
@@ -55,7 +55,7 @@ const perfil: React.FC = () => {
                 "method": "POST",
                 "headers": {
                     'Accept': 'application/json',
-                    'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxMyIsImp0aSI6ImY2ZGY4NGIyMGQ1OGNmNTZmMjRjYWFiMTY3YmQxOTliOGZlMjFmYTNiYTc2ZTFhYWVkY2E3NDBhNTAxN2I5MTViMDE0NzFjYTYyNjE3M2U5IiwiaWF0IjoxNzE4MjMyMzA0LjMwNTMzLCJuYmYiOjE3MTgyMzIzMDQuMzA1MzM0LCJleHAiOjE3NDk3NjgzMDMuNDA5NDA4LCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.Mbg32oi0E4kpwprmcDY0Rx7PlHwEXS8vPThf1Q7TlfK2W8uPWmEChGiNlvRkwXBOlyXuAAwvXA4kOO1phYAvFoBWbA3RwX7AK-B8nb0_6wp79jJ3n2BaI-JMw909uDR0fgRr5uerTYBbn5ZQ0aXrYTuDQcQDce9wFa4702iGrczwbgt9Lnn4mLMHD8-OeuAbch5foV3Hp3TdbVc2bzfl5BP84u6KGUaJFLZPJkAcQRftq4zGnhea_mIlHZjvyGUOlo1c5o3to-avN0gAgjrYztNgy1BJkEWDXzl6FwS05cNGJyHSmKWPI0XWc-vYcmK0ErUqLg6ysflV7pcXfdh61EpSXcD60oj7njNF15G82KAc6S0pkV89nYDBy7Ld62kEZPXJZC8H-IaiOB4odNRNLhaH0giMu5vVH-kT-pqZJcC1ULjyF_x5JY6CRlN6h30wZaA4cnoAGLs0kuduE6tKXvnT9-GRKt_RVGtU1mB1NIAIV3bWQwsGU5Z1CBzBS__tWBZEX05s66Pk1N8esWj5xK4W-tMYb9CfFGVaSxFIYPuuDzNdufKQPxaPnm8B0SvThm0veoyKcTWlhbFJsbBr85lW_0wkgH9KCQ6_j6pHuF0a_OdcP4TGRD9m7SHwnnKyrf9dTs-Pou5fPtfzL4IeJmbcx7Y2Y8VZ0UGLj3G7Pi4',
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
                 }
             })
                 .then((res) => {
@@ -77,7 +77,7 @@ const perfil: React.FC = () => {
                 "method": "POST",
                 "headers": {
                     'Accept': 'application/json',
-                    'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxMyIsImp0aSI6ImY2ZGY4NGIyMGQ1OGNmNTZmMjRjYWFiMTY3YmQxOTliOGZlMjFmYTNiYTc2ZTFhYWVkY2E3NDBhNTAxN2I5MTViMDE0NzFjYTYyNjE3M2U5IiwiaWF0IjoxNzE4MjMyMzA0LjMwNTMzLCJuYmYiOjE3MTgyMzIzMDQuMzA1MzM0LCJleHAiOjE3NDk3NjgzMDMuNDA5NDA4LCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.Mbg32oi0E4kpwprmcDY0Rx7PlHwEXS8vPThf1Q7TlfK2W8uPWmEChGiNlvRkwXBOlyXuAAwvXA4kOO1phYAvFoBWbA3RwX7AK-B8nb0_6wp79jJ3n2BaI-JMw909uDR0fgRr5uerTYBbn5ZQ0aXrYTuDQcQDce9wFa4702iGrczwbgt9Lnn4mLMHD8-OeuAbch5foV3Hp3TdbVc2bzfl5BP84u6KGUaJFLZPJkAcQRftq4zGnhea_mIlHZjvyGUOlo1c5o3to-avN0gAgjrYztNgy1BJkEWDXzl6FwS05cNGJyHSmKWPI0XWc-vYcmK0ErUqLg6ysflV7pcXfdh61EpSXcD60oj7njNF15G82KAc6S0pkV89nYDBy7Ld62kEZPXJZC8H-IaiOB4odNRNLhaH0giMu5vVH-kT-pqZJcC1ULjyF_x5JY6CRlN6h30wZaA4cnoAGLs0kuduE6tKXvnT9-GRKt_RVGtU1mB1NIAIV3bWQwsGU5Z1CBzBS__tWBZEX05s66Pk1N8esWj5xK4W-tMYb9CfFGVaSxFIYPuuDzNdufKQPxaPnm8B0SvThm0veoyKcTWlhbFJsbBr85lW_0wkgH9KCQ6_j6pHuF0a_OdcP4TGRD9m7SHwnnKyrf9dTs-Pou5fPtfzL4IeJmbcx7Y2Y8VZ0UGLj3G7Pi4',
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
                 }
             })
                 .then((res) => {
