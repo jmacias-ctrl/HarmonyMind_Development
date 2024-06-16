@@ -51,7 +51,7 @@ const perfil: React.FC = () => {
 
     function contactAdd(new_contact){
       console.log('start');
-      fetch(`http://127.0.0.1:8000/api/emergency_contact/add?number=%2b56${new_contact}`, {
+      fetch(`http://127.0.0.1:8000/api/emergency_contact/add?number=56${new_contact}`, {
                 "method": "POST",
                 "headers": {
                     'Accept': 'application/json',
@@ -133,7 +133,7 @@ const perfil: React.FC = () => {
               </IonItem>
                 {contacts.map((contact) => (
                     <IonItem>
-                    <IonLabel>{contact.number}</IonLabel>
+                    <IonLabel>+{contact.number}</IonLabel>
                     <IonButton slot="end" color="danger" onClick={() => contactDelete(contact.id)}><IonIcon icon={trash}></IonIcon></IonButton>
                   </IonItem>
                 ))}
