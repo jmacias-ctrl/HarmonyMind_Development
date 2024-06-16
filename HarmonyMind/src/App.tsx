@@ -1,6 +1,7 @@
 import { Redirect, Route } from 'react-router-dom';
 import {
   IonApp,
+  IonButton,
   IonIcon,
   IonLabel,
   IonRouterOutlet,
@@ -14,6 +15,9 @@ import { IonReactRouter } from '@ionic/react-router';
 import { home, create, logOut, calendar, call, person } from 'ionicons/icons';
 import Tab1 from './pages/Tab1';
 import Tab2 from './pages/Tab2';
+import { bookOutline, ellipse, homeOutline, ticketOutline, triangle } from 'ionicons/icons';
+import Home from './pages/Home';
+import Learning from './pages/aprendizajeZone/aprendizajeIndex';
 import Tab3 from './pages/Tab3';
 import eventos from './pages/eventos';
 import eventos_asistidos from './pages/eventos_asistidos';
@@ -45,6 +49,7 @@ import '@ionic/react/css/display.css';
 import './theme/variables.css';
 import { useAuth } from './pages/auth/useAuth';
 import EventosComponents from './pages/eventos';
+import VistaEstadosComponent from './pages/estados/ver_estados';
 
 setupIonicReact();
 
@@ -77,10 +82,19 @@ const App: React.FC = () => {
                   <Route exact path="/inicio">
                     <Tab1 />
                   </Route>
+                  <Route exact path="/home">
+                    <Home />
+                  </Route>
                   <Route path="/button" component={boton_panico} />
                   <Route path="/perfil" component={perfil} />
                   <Route exact path="/eventos">
                     <EventosComponents />
+                  </Route>
+                  <Route exact path="/estados">
+                    <VistaEstadosComponent />
+                  </Route>
+                  <Route path="/aprendizajeIndex">
+                    <Learning/>
                   </Route>
                   <Route exact path="/">
                     <Redirect to="/inicio" />
@@ -110,6 +124,14 @@ const App: React.FC = () => {
                   <IonTabButton href="/logout">
                     <IonIcon aria-hidden="true" icon={logOut} />
                     <IonLabel>Cerrar Sesión</IonLabel>
+                  </IonTabButton>
+                  <IonTabButton tab="home" href="/home">
+                    <IonIcon aria-hidden="true" icon={homeOutline} />
+                    <IonLabel>Home</IonLabel>
+                  </IonTabButton>
+                  <IonTabButton tab="tab3" href="/aprendizajeIndex">
+                    <IonIcon aria-hidden="true" icon={bookOutline} />
+                    <IonLabel>Aprendizaje</IonLabel>
                   </IonTabButton>
                 </IonTabBar>
               </IonTabs>
