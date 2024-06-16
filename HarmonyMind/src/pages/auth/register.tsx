@@ -140,7 +140,7 @@ const Register: React.FC = () => {
                                     Registrarse
                                 </IonButton>
                                 <p style={{ textAlign: 'center' }}>¿Ya tienes cuenta?
-                                    <a href="auth/login" className='button-reg'>
+                                    <a href="/login" className='button-reg'>
                                         Inicia Sesión
                                     </a>
                                 </p>

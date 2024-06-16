@@ -7,6 +7,7 @@ import { useAuth } from "./useAuth";
 
 interface LoginResponse {
     success: boolean;
+    message: string;
     data: {
         name: string;
         token: string;
@@ -38,16 +39,9 @@ const Login: React.FC = () => {
                 login(data.data.token); // Guardar el token en algún lugar, por ejemplo, en el contexto de autenticación
                 setRedirectToHome(true);
             } else {
-                const data = await response.json();
-                if (data.error === 'Unauthorised') {
-                    setError('Credenciales incorrectas');
-                } else if (data.error === 'Email not found') {
-                    setError('Email no encontrado');
-                } else if (data.error === 'Incorrect password') {
-                    setError('Contraseña incorrecta');
-                } else {
-                    setError('Error desconocido');
-                }
+                const responseJson = await response.json() as LoginResponse;
+
+                setError(responseJson.message)
             }
         } catch (error) {
             console.error('Error al enviar solicitud:', error);

@@ -43,22 +43,6 @@ setupIonicReact();
 
 const App: React.FC = () => {
   const { isLogged, logout } = useAuth();
-  const [redirectToLogin, setRedirectToLogin] = useState(false);
-
-  useEffect(() => {
-    if (!isLogged) {
-      setRedirectToLogin(true);
-    }
-  }, [isLogged]);
-
-  const handleLogout = () => {
-    logout();
-    setRedirectToLogin(true);
-  };
-
-  if (redirectToLogin) {
-    return <Redirect to="/login" />;
-  }
 
   return (
     <IonApp>
@@ -99,14 +83,14 @@ const App: React.FC = () => {
                     <IonIcon aria-hidden="true" icon={ellipse} />
                     <IonLabel>Eventos</IonLabel>
                   </IonTabButton>
-                  <IonTabButton onClick={handleLogout}>
+                  <IonTabButton onClick={logout}>
                     <IonIcon aria-hidden="true" icon={logOut} />
                     <IonLabel>Cerrar Sesión</IonLabel>
                   </IonTabButton>
                 </IonTabBar>
               </IonTabs>
             ) : (
-              <Redirect to="/login"/>
+              <Redirect to="/login" />
             )}
           </Route>
         </IonRouterOutlet>
