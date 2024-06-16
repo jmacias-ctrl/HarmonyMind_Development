@@ -38,6 +38,7 @@ import '@ionic/react/css/display.css';
 import './theme/variables.css';
 import { useAuth } from './pages/auth/useAuth';
 import EventosComponents from './pages/eventos';
+import VistaEstadosComponent from './pages/estados/ver_estados';
 
 setupIonicReact();
 
@@ -63,6 +64,9 @@ const App: React.FC = () => {
                   </Route>
                   <Route exact path="/eventos">
                     <EventosComponents />
+                  </Route>
+                  <Route exact path="/estados">
+                    <VistaEstadosComponent />
                   </Route>
                   <Route exact path="/tab2">
                     <Tab2 />

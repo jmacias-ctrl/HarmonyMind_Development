@@ -9,7 +9,8 @@ import { ellipsisVertical } from 'ionicons/icons';
 
 import './ver_estados.css';
 import ExploreContainer from '../../components/ExploreContainer';
-const crear_estado: React.FC = () => {
+
+const VistaEstadosComponent: React.FC = () => {
     const router = useIonRouter();
     const [present, dismiss] = useIonLoading();
     const [posts, setPosts] = useState([]);
@@ -160,4 +161,4 @@ const crear_estado: React.FC = () => {
     );
 };
 
-export default crear_estado;
+export default VistaEstadosComponent;

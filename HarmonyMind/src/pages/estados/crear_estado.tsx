@@ -6,7 +6,10 @@ import { snowOutline, sunnyOutline } from 'ionicons/icons';
 import { withRouter, useHistory } from "react-router";
 import { IonAlert } from '@ionic/react';
 import ExploreContainer from '../../components/ExploreContainer';
-const crear_estado: React.FC = () => {
+
+
+
+const CrearPublicacionComponent: React.FC = () => {
 
     const [contenido, setContenido] = useState('');
     const [estado_de_animo, setEstadodeAnimo] = useState(5);
@@ -105,4 +108,4 @@ const crear_estado: React.FC = () => {
     );
 };
 
-export default crear_estado;
+export default CrearPublicacionComponent;
