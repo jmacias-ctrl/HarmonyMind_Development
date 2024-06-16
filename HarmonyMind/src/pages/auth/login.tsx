@@ -50,7 +50,7 @@ const Login: React.FC = () => {
     };
 
     if (redirectToHome) {
-        return <Redirect to="/tab1" />;
+        return <Redirect to="/home" />;
     }
 
     return (
@@ -70,7 +70,7 @@ const Login: React.FC = () => {
                                     <IonIcon icon={atCircleOutline} slot="start" />
                                     <IonInput
                                         name="email"
-                                        placeholder="Email"
+                                        placeholder="correo@gmail.com"
                                         value={email}
                                         onIonChange={(e) => setEmail(e.detail.value!)}
                                         autofocus

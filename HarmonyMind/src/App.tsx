@@ -1,6 +1,7 @@
 import { Redirect, Route } from 'react-router-dom';
 import {
   IonApp,
+  IonButton,
   IonIcon,
   IonLabel,
   IonRouterOutlet,
@@ -12,7 +13,7 @@ import {
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import { ellipse, logOut, triangle } from 'ionicons/icons';
-import Tab1 from './pages/Tab1';
+import Home from './pages/Home';
 import Tab2 from './pages/Tab2';
 import Tab3 from './pages/Tab3';
 import Login from './pages/auth/login';
@@ -59,8 +60,8 @@ const App: React.FC = () => {
             {isLogged ? (
               <IonTabs>
                 <IonRouterOutlet>
-                  <Route exact path="/tab1">
-                    <Tab1 />
+                  <Route exact path="/home">
+                    <Home />
                   </Route>
                   <Route exact path="/eventos">
                     <EventosComponents />
@@ -79,16 +80,16 @@ const App: React.FC = () => {
                   </Route>
                 </IonRouterOutlet>
                 <IonTabBar slot="bottom">
-                  <IonTabButton tab="tab1" href="/tab1">
+                  <IonTabButton tab="home" href="/home">
                     <IonIcon aria-hidden="true" icon={triangle} />
-                    <IonLabel>Tab 1</IonLabel>
+                    <IonLabel>Home</IonLabel>
                   </IonTabButton>
                   <IonTabButton tab="ver_eventos" href="/eventos">
                     <IonIcon aria-hidden="true" icon={ellipse} />
                     <IonLabel>Eventos</IonLabel>
                   </IonTabButton>
-                  <IonTabButton onClick={logout}>
-                    <IonIcon aria-hidden="true" icon={logOut} />
+                  <IonTabButton tab="tab3" href="/tab3">
+                    <IonIcon aria-hidden="true" icon={ellipse} />
                     <IonLabel>Cerrar Sesión</IonLabel>
                   </IonTabButton>
                 </IonTabBar>

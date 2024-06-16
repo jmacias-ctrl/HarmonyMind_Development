@@ -7,9 +7,9 @@ const Tab1: React.FC = () => {
   const [username, setUsername] = useState<string | null>(null);
 
   useEffect(() => {
-    // Asumiendo que el nombre de usuario está guardado en localStorage
     const storedUsername = localStorage.getItem('username');
     setUsername(storedUsername);
+    
   }, []);
 
   return (

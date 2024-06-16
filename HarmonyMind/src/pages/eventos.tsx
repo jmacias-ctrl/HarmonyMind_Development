@@ -16,7 +16,7 @@ interface Evento {
 const eventosMock: Evento[] = [{
     id: "1",
     nombre: "soy un evento",
-    descripcion: "el david es seco",
+    descripcion: "descripcion evento",
     fecha: new Date().toLocaleDateString(),
     organizador: "dame calses",
     tipo: 'Reunión Psicológica',
