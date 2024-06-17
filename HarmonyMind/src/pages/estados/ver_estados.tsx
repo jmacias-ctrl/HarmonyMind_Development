@@ -155,16 +155,10 @@ const crear_estado: React.FC = () => {
                 {posts.map((post) => (
                     <IonCard className="estadosCard ion-padding ion-margin-horizontal" key={post.id}>
                         <IonCardSubtitle>
-                            <IonGrid>
-                                <IonRow>
-                                    <IonCol>
-                                        <IonText color="dark">Estado N°{post.numero} </IonText>
-                                    </IonCol>
-                                    <IonCol>
-                                        <IonButton className="ion-float-right" id={"action_es_" + post.id} shape="round" size="small" fill="clear" ><IonIcon icon={ellipsisVertical} slot="icon-only"></IonIcon></IonButton>
-                                    </IonCol>
-                                </IonRow>
-                            </IonGrid>
+
+                                        <IonButton className="ion-float-right" id={"action_es_" + post.id} size="small" fill="clear"><IonIcon icon={ellipsisVertical} slot="icon-only"></IonIcon></IonButton>
+
+                            <IonText color="dark">Estado N°{post.numero} </IonText>
                         </IonCardSubtitle>
                         <IonGrid>
                             <IonRow>
