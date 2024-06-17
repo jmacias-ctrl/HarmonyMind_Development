@@ -26,7 +26,7 @@ const Register: React.FC = () => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ email, name: username, password, password_confirmation: confirmPassword }),
+                body: JSON.stringify({ email, name: username, password }),
             });
 
             if (response.ok) {
