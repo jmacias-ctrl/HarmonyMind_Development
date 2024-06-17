@@ -6,6 +6,8 @@ import { IonFab, IonFabButton } from '@ionic/react';
 import { add } from 'ionicons/icons';
 import ExploreContainer from '../components/ExploreContainer';
 import { SMS } from "@awesome-cordova-plugins/sms/ngx";
+import LogoutButton from "./auth/Logout";
+import { Link } from 'react-router-dom';
 
 import './boton_panico.css';
 const boton_panico: React.FC = () => {
@@ -84,6 +86,9 @@ const boton_panico: React.FC = () => {
             <IonHeader>
                 <IonToolbar>
                     <IonTitle>Llamada de emergencia</IonTitle>
+                    <IonButtons slot="end">
+                        <LogoutButton />
+                    </IonButtons>
                 </IonToolbar>
             </IonHeader>
             <IonContent fullscreen>

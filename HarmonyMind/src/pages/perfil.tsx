@@ -5,6 +5,8 @@ import { IonText, IonActionSheet, IonIcon, useIonLoading, IonList, IonItem, IonL
 import { IonFab, IonFabButton } from '@ionic/react';
 import { add, trash } from 'ionicons/icons';
 import ExploreContainer from '../components/ExploreContainer';
+import LogoutButton from "./auth/Logout";
+import { Link } from 'react-router-dom';
 const perfil: React.FC = () => {
 
   const [contact, setContact] = useState(1);
@@ -107,6 +109,9 @@ const perfil: React.FC = () => {
             <IonHeader>
                 <IonToolbar>
                     <IonTitle>Perfil del usuario</IonTitle>
+                    <IonButtons slot="end">
+                        <LogoutButton />
+                    </IonButtons>
                 </IonToolbar>
             </IonHeader>
             <IonContent fullscreen>

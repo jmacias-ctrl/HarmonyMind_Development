@@ -4,6 +4,8 @@ import { IonCard, IonCardContent, IonButton, IonCardHeader, IonCardSubtitle, Ion
 import { IonText, IonActionSheet, IonIcon, useIonLoading } from '@ionic/react';
 import { IonFab, IonFabButton } from '@ionic/react';
 import { add } from 'ionicons/icons';
+import LogoutButton from "./auth/Logout";
+import { Link } from 'react-router-dom';
 import ExploreContainer from '../components/ExploreContainer';
 const eventos: React.FC = () => {
     const router = useIonRouter();
@@ -85,6 +87,9 @@ const eventos: React.FC = () => {
             <IonHeader>
                 <IonToolbar>
                     <IonTitle>Eventos disponibles</IonTitle>
+                    <IonButtons slot="end">
+                        <LogoutButton />
+                    </IonButtons>
                 </IonToolbar>
             </IonHeader>
             <IonContent fullscreen>

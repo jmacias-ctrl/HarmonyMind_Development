@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, useIonRouter } from '@ionic/react';
-import { IonCard, IonProgressBar, IonButton, IonSkeletonText, IonCardTitle, IonCardHeader, IonCardContent, IonCardSubtitle, useIonViewWillEnter } from '@ionic/react';
+import { IonCard, IonProgressBar, IonButton, IonSkeletonText, IonCardTitle, IonCardHeader, IonCardContent, IonCardSubtitle, useIonViewWillEnter, IonButtons } from '@ionic/react';
 import { IonText, IonActionSheet, IonIcon, useIonLoading } from '@ionic/react';
 import { IonFab, IonGrid, IonRow, IonCol, IonFabButton, useIonToast } from '@ionic/react';
 import { add } from 'ionicons/icons';
 import { useParams } from 'react-router';
 import { ellipsisVertical } from 'ionicons/icons';
-
+import LogoutButton from "../auth/Logout";
+import { Link } from 'react-router-dom';
 import './ver_estados.css';
 import './boxColor_Emotion.css';
 import ExploreContainer from '../../components/ExploreContainer';
@@ -97,6 +98,9 @@ const crear_estado: React.FC = () => {
             <IonHeader>
                 <IonToolbar>
                     <IonTitle>Tus Estados</IonTitle>
+                    <IonButtons slot="end">
+                        <LogoutButton />
+                    </IonButtons>
                     <IonProgressBar className={`${!isLoading && 'ion-hide'} `} type="indeterminate" id="progressBar"></IonProgressBar>
                 </IonToolbar>
             </IonHeader>
@@ -114,8 +118,6 @@ const crear_estado: React.FC = () => {
                             <IonGrid>
                                 <IonRow>
                                     <IonCol><h3>No has publicado estados en los ultimos 24 horas</h3></IonCol>
-                                </IonRow>
-                                <IonRow>
                                     <IonCol size="auto"><IonButton color="tertiary" onClick={() => { router.push('/estado/analisis'); }}>Ver Análisis</IonButton></IonCol>
                                 </IonRow>
                             </IonGrid>
@@ -151,16 +153,18 @@ const crear_estado: React.FC = () => {
                     )
                 }
                 {posts.map((post) => (
-                    <IonCard className="estadosCard ion-padding ion-margin-horizontal " key={post.id}>
+                    <IonCard className="estadosCard ion-padding ion-margin-horizontal" key={post.id}>
                         <IonCardSubtitle>
-                            <IonRow>
-                                <IonCol size="auto">
-                                    <IonText color="dark">Estado N°{post.numero} </IonText>
-                                </IonCol>
-                                <IonCol>
-                                    <IonButton className="ion-float-right" id={"action_es_" + post.id} shape="round" size="small" fill="clear"><IonIcon icon={ellipsisVertical} slot="icon-only"></IonIcon></IonButton>
-                                </IonCol>
-                            </IonRow>
+                            <IonGrid>
+                                <IonRow>
+                                    <IonCol>
+                                        <IonText color="dark">Estado N°{post.numero} </IonText>
+                                    </IonCol>
+                                    <IonCol>
+                                        <IonButton className="ion-float-right" id={"action_es_" + post.id} shape="round" size="small" fill="clear" ><IonIcon icon={ellipsisVertical} slot="icon-only"></IonIcon></IonButton>
+                                    </IonCol>
+                                </IonRow>
+                            </IonGrid>
                         </IonCardSubtitle>
                         <IonGrid>
                             <IonRow>

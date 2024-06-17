@@ -1,5 +1,6 @@
 import React, { useState, useRef } from "react";
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonList, IonLabel, IonItem, IonThumbnail } from '@ionic/react';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonList, IonLabel, IonItem, IonThumbnail, IonButtons } from '@ionic/react';
+import LogoutButton from "./auth/Logout";
 import { Link } from 'react-router-dom'; 
 import {
   useIonViewWillEnter,
@@ -47,6 +48,9 @@ const Tab1: React.FC = () => {
       <IonHeader>
         <IonToolbar>
           <IonTitle>HarmonyMind</IonTitle>
+          <IonButtons slot="end">
+            <LogoutButton />
+          </IonButtons>
         </IonToolbar>
       </IonHeader>
       <IonContent ref={contentRef} fullscreen>
@@ -62,22 +66,22 @@ const Tab1: React.FC = () => {
 
           <IonCardContent>HarmonyMind hace uso del estudio de las emociones realizado por el doctor Paul Ekman titulado "El Atlas de las emociones", para más información <a href="https://atlasofemotions.org/#introduction/">haz click aquí</a>. </IonCardContent>
         </IonCard>
-        <IonCard color={`${countEstados== 0? 'warning' : 'success'}`}>
+        <IonCard color={`${countEstados == 0 ? 'warning' : 'success'}`}>
           <IonCardContent>
-          {
-            countEstados == 0 && (
-              <p>No has publicado estados en las ultimas 24 horas</p>
-                
-            )
-            
-          }
-          {
-            countEstados > 0 && (
-              <p>Has publicado {countEstados} estados en las ultimas 24 horas</p>
-            )
-            
-          }
-          
+            {
+              countEstados == 0 && (
+                <p>No has publicado estados en las ultimas 24 horas</p>
+
+              )
+
+            }
+            {
+              countEstados > 0 && (
+                <p>Has publicado {countEstados} estados en las ultimas 24 horas</p>
+              )
+
+            }
+
           </IonCardContent>
         </IonCard>
         <IonCard className='ion-padding ion-margin-top'>

@@ -122,10 +122,6 @@ const App: React.FC = () => {
                     <IonIcon aria-hidden="true" icon={person} />
                     <IonLabel>Perfil</IonLabel>
                   </IonTabButton>
-                  <IonTabButton href="/logout">
-                    <IonIcon aria-hidden="true" icon={logOut} />
-                    <IonLabel>Cerrar Sesión</IonLabel>
-                  </IonTabButton>
                 </IonTabBar>
               </IonTabs>
             ) : (
