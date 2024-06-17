@@ -13,10 +13,11 @@
   },
   "dependencies": {
     "@awesome-cordova-plugins/sms": "^6.7.0",
-    "@capacitor/android": "6.0.0",
+    "@capacitor/android": "^6.0.0",
     "@capacitor/app": "6.0.0",
     "@capacitor/core": "6.0.0",
     "@capacitor/haptics": "6.0.0",
+    "@capacitor/ios": "6.0.0",
     "@capacitor/keyboard": "6.0.0",
     "@capacitor/status-bar": "6.0.0",
     "@ionic/react": "^7.0.0",

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Line, Bar } from 'react-chartjs-2';
+import { Line } from 'react-chartjs-2';
 import { CategoryScale } from "chart.js";
 import { Chart as ChartJS } from "chart.js/auto";
 import { IonContent, IonHeader, IonPage, IonTitle, IonBackButton, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonGrid, IonRow, IonCol } from '@ionic/react';
@@ -125,6 +125,7 @@ const analisis_estado: React.FC = () => {
         var sorpresa = new Array(daysAnalysis).fill(0);;
         var disgusto = new Array(daysAnalysis).fill(0);;
         var miedo = new Array(daysAnalysis).fill(0);
+        console.log(tristeza)
         var i=daysAnalysis-1
         for(var j=0; j<data['length']; j++){
             tristeza[i] = tristeza[i] + parseInt(data[j].tristeza);
@@ -135,6 +136,7 @@ const analisis_estado: React.FC = () => {
             miedo[i] = miedo[i] + parseInt(data[j].miedo);
             i-=1;
         }
+        console.log(tristeza)
         setLastXDays(LastXDays());
         setData({
             labels: lastXDays,
@@ -197,6 +199,7 @@ const analisis_estado: React.FC = () => {
         })
     }
     useIonViewWillLeave(() => {
+        console.log('test')
         ChartJS.unregister(CategoryScale);
     }, []);
 
@@ -213,7 +216,7 @@ const analisis_estado: React.FC = () => {
 
     function LastXDays () {
         var result = [];
-        for (var i=daysAnalysis; i>=0; i--) {
+        for (var i=daysAnalysis; i>0; i--) {
             var d = new Date();
             d.setDate(d.getDate() - i);
             result.push( formatDate(d) )
@@ -237,7 +240,7 @@ const analisis_estado: React.FC = () => {
                         <IonBackButton></IonBackButton>
                     </IonButtons>
                     <IonTitle>Análisis de Estados</IonTitle>
-                    <IonButton slot="end" id="open-picker">Fecha</IonButton>
+                    <IonButton slot="end" id="open-picker" className='ion-hide'>Fecha</IonButton>
                     <IonPicker
                         trigger="open-picker"
                         columns={[
@@ -296,7 +299,7 @@ const analisis_estado: React.FC = () => {
                         <IonText>
                             <h3>Gráfico de Emociones</h3>
                         </IonText>
-                        <Line id="chart_emociones" data={data} height={250} />
+                        <Line data={data} height={250} />
                     </IonCardContent>
                 </IonCard>
             </IonContent>

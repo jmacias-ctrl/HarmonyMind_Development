@@ -1,16 +1,22 @@
 import React, { useState, useEffect } from "react";
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, useIonRouter } from '@ionic/react';
+<<<<<<< HEAD
 import { IonCard, IonProgressBar, IonButton, IonSkeletonText, IonCardTitle, IonCardHeader, IonCardContent, IonCardSubtitle, useIonViewWillEnter } from '@ionic/react';
+=======
+import { IonCard, IonProgressBar, IonButton,IonButtons, IonCardHeader, IonCardSubtitle, useIonViewWillEnter } from '@ionic/react';
+>>>>>>> rayen
 import { IonText, IonActionSheet, IonIcon, useIonLoading } from '@ionic/react';
 import { IonFab, IonGrid, IonRow, IonCol, IonFabButton, useIonToast } from '@ionic/react';
 import { add } from 'ionicons/icons';
 import { useParams } from 'react-router';
+import LogoutButton from "../auth/Logout";
 import { ellipsisVertical } from 'ionicons/icons';
 
 import './ver_estados.css';
 import './boxColor_Emotion.css';
 import ExploreContainer from '../../components/ExploreContainer';
-const crear_estado: React.FC = () => {
+
+const VistaEstadosComponent: React.FC = () => {
     const router = useIonRouter();
     const [present, dismiss] = useIonLoading();
     const [posts, setPosts] = useState([]);
@@ -97,11 +103,22 @@ const crear_estado: React.FC = () => {
             <IonHeader>
                 <IonToolbar>
                     <IonTitle>Tus Estados</IonTitle>
+<<<<<<< HEAD
                     <IonProgressBar className={`${!isLoading && 'ion-hide'} `} type="indeterminate" id="progressBar"></IonProgressBar>
                 </IonToolbar>
             </IonHeader>
             <IonContent fullscreen>
                 <div className={`${!isLoading && 'ion-hide'}`}>
+=======
+                    <IonProgressBar className={`${!isLoading && 'ion-hide'}`} type="indeterminate" id="progressBar"></IonProgressBar>
+                    <IonButtons slot="end">
+                    <LogoutButton />
+                    </IonButtons>
+                </IonToolbar>
+            </IonHeader>
+            <IonContent fullscreen>
+                <div className={`${hideText && 'ion-hide'}`}>
+>>>>>>> rayen
                     <div className="ion-text-center">
                         <h3>{textLoading}</h3>
                         {subtextLoading}
@@ -174,7 +191,14 @@ const crear_estado: React.FC = () => {
                             </IonRow>
                         </IonGrid>
                         <div className="ion-text-center">
+<<<<<<< HEAD
                             <IonProgressBar value={1} className={`${post.estado_de_animo == "ira" && "anger"} ${post.estado_de_animo == "sorpresa" && "surprise"} ${post.estado_de_animo == "disgusto" && "disgust"} ${post.estado_de_animo == "felicidad" && "happiness"} ${post.estado_de_animo == "tristeza" && "sadness"} ${post.estado_de_animo == "miedo" && "fear"}`}></IonProgressBar>
+=======
+                            <IonText color="dark">
+                                <h6>Estado de Animo</h6>
+                            </IonText>
+                            <IonProgressBar value={post.estado_de_animo / 10}></IonProgressBar>
+>>>>>>> rayen
                         </div>
                         <IonActionSheet
                             trigger={"action_es_" + post.id}
@@ -213,4 +237,4 @@ const crear_estado: React.FC = () => {
     );
 };
 
-export default crear_estado;
+export default VistaEstadosComponent;

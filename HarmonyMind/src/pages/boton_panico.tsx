@@ -25,7 +25,7 @@ const boton_panico: React.FC = () => {
             "method": "GET",
             "headers": {
                 'Accept': 'application/json',
-                'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI3IiwianRpIjoiZThjOWVkMDkzZTZiNjNkNzAzNWU1YWQwZWY3NDVlNWY4ZjJlNTZlZDlhOTk5ZGI4ODMxZmNmYzI1MjhiYzlmYmJjNjhhNjFhYWM0MjZlMWUiLCJpYXQiOjE3MTc2MjUxNjMuMTA0MjI0LCJuYmYiOjE3MTc2MjUxNjMuMTA0MjI5LCJleHAiOjE3NDkxNjExNjAuMjgyNjM0LCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.LNXzXKQ6Q2lj-jVFKDpt_U25xx2Ji6vfnxoq9l-7LUcWazyN0LsmiIwOmcfmwmbLPrfUEcZAht-AhwdRJ03ldCyTK9b9FyvvWKRlsAN0P5IKjX4MNOehCJNRLyt7EeRQKKyqhCZeyfXEkAKohfdGiyMiZdPiNJFtaaLQpLGFzI1eNoINsBJOGTn4K_U_reoFs9SODJoGKKKoKJeoFOhcSGylp8UoxH3ATl0OjM47XQNYzFbelK6mjXuETCIgUdfM16cHpmNdpq_6MW_EhcBqn72Y0haFuHmb4l7D1t0kbdvP7eoklWzpcMIXXwUnWZdYpW_LC-zp0DOgo1yLYNh0GWNqUqE-c1StjbiaMDSX0eL6AharFgc_2a_QCvV6Ku9C-68FCm5YQO-ToObzr6p-uzG6SK-WpRqILRUCUL2jTEiXWK_G76RZEhQDRHlI6DnzONxM_IMi5Iny-mFd86gm7YrczivEu7n1FFnzj7lr3SIiAC7d73owkTybMLkETQSPDeuSY2gqibe37eVWtyhHi2ARPnBvA2yoctYFVXwtxGhJ2iIv-LWWDbYpwCDua6Rjp8Bt9rOIJUqrigj5K8ONig8KB24BsYMPfom2rRg5XzLhUpldJMzUR2OqgjjDzmh9i934UMSQot9RLbGLChM_jqJj_ZvBBl8CA53JNfE98fE',
+                'Authorization': `Bearer ${localStorage.getItem('token')}`,
             }
         })
             .then((res) => {

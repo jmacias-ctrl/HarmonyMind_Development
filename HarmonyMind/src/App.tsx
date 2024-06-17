@@ -79,11 +79,8 @@ const App: React.FC = () => {
                   <Route exact path="/estado/analisis" component={analisis_estado} />
                   <Route exact path="/eventos/ver" component={eventos} />
                   <Route exact path="/eventos/assist" component={eventos_asistidos} />
-                  <Route exact path="/inicio">
-                    <Tab1 />
-                  </Route>
                   <Route exact path="/home">
-                    <Home />
+                    <Tab1 />
                   </Route>
                   <Route path="/button" component={boton_panico} />
                   <Route path="/perfil" component={perfil} />
@@ -97,7 +94,7 @@ const App: React.FC = () => {
                     <Learning/>
                   </Route>
                   <Route exact path="/">
-                    <Redirect to="/inicio" />
+                    <Redirect to="/home" />
                   </Route>
                 </IonRouterOutlet>
                 <IonTabBar slot="bottom">
@@ -107,7 +104,7 @@ const App: React.FC = () => {
                   </IonTabButton>
                   <IonTabButton tab="ver_estados" href="/estado/ver">
                     <IonIcon aria-hidden="true" icon={create} />
-                    <IonLabel>Estados</IonLabel>
+                    <IonLabel>Bitacora</IonLabel>
                   </IonTabButton>
                   <IonTabButton tab="ver_eventos" href="/eventos">
                     <IonIcon aria-hidden="true" icon={calendar} />
@@ -117,6 +114,10 @@ const App: React.FC = () => {
                     <IonIcon aria-hidden="true" icon={call} />
                     <IonLabel>SOS</IonLabel>
                   </IonTabButton>
+                  <IonTabButton tab="tab3" href="/aprendizajeIndex">
+                    <IonIcon aria-hidden="true" icon={bookOutline} />
+                    <IonLabel>Aprendizaje</IonLabel>
+                  </IonTabButton>
                   <IonTabButton tab="perfil" href="/perfil">
                     <IonIcon aria-hidden="true" icon={person} />
                     <IonLabel>Perfil</IonLabel>
@@ -124,14 +125,6 @@ const App: React.FC = () => {
                   <IonTabButton href="/logout">
                     <IonIcon aria-hidden="true" icon={logOut} />
                     <IonLabel>Cerrar Sesión</IonLabel>
-                  </IonTabButton>
-                  <IonTabButton tab="home" href="/home">
-                    <IonIcon aria-hidden="true" icon={homeOutline} />
-                    <IonLabel>Home</IonLabel>
-                  </IonTabButton>
-                  <IonTabButton tab="tab3" href="/aprendizajeIndex">
-                    <IonIcon aria-hidden="true" icon={bookOutline} />
-                    <IonLabel>Aprendizaje</IonLabel>
                   </IonTabButton>
                 </IonTabBar>
               </IonTabs>

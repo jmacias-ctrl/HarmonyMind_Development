@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonList, IonLabel, IonItem, IonThumbnail } from '@ionic/react';
+import { Link } from 'react-router-dom'; 
 import {
   useIonViewWillEnter,
   useIonViewWillLeave,
@@ -7,6 +8,7 @@ import {
 import './Tab1.css';
 
 const Tab1: React.FC = () => {
+  const contentRef = useRef<HTMLIonContentElement>(null);
   const [isLoading, setLoading] = useState(true);
   const [textLoading, setTextLoading] = useState('Recuperando Estados')
   const [subtextLoading, setSubTextLoading] = useState('Esto puede tomar un tiempo')
@@ -47,7 +49,7 @@ const Tab1: React.FC = () => {
           <IonTitle>HarmonyMind</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent fullscreen>
+      <IonContent ref={contentRef} fullscreen>
         <IonHeader collapse="condense">
           <IonToolbar>
             <IonTitle size="large">Inicio</IonTitle>
@@ -58,43 +60,9 @@ const Tab1: React.FC = () => {
             <IonCardTitle>Aviso</IonCardTitle>
           </IonCardHeader>
 
-          <IonCardContent>Para la creación de HarmonyMind y el uso de las emociones, se baso en el estudio realizado por el doctor Paul Ekman titulado "El Atlas de las emociones", para más información <a href="https://atlasofemotions.org/#introduction/">haz click aquí</a>. </IonCardContent>
-        </IonCard>
-        <IonCard className='ion-padding ion-margin-top'>
-          <IonCardHeader>
-            <IonCardTitle>Bienvenido {username}</IonCardTitle>
-          </IonCardHeader>
-
-          <IonCardContent>¿Qué deseas hacer hoy?
-
-            <IonList>
-              <IonItem href="/estado/ver">
-                <IonThumbnail slot="start" >
-                  <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
-                </IonThumbnail>
-                <IonLabel>Ver y crear estados</IonLabel>
-              </IonItem>
-
-              <IonItem href="/eventos/ver">
-                <IonThumbnail slot="start">
-                  <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
-                </IonThumbnail>
-                <IonLabel>Ver Eventos</IonLabel>
-              </IonItem>
-
-              <IonItem href="#" >
-                <IonThumbnail slot="start">
-                  <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
-                </IonThumbnail>
-                <IonLabel>Aprendizaje</IonLabel>
-              </IonItem>
-            </IonList>
-          </IonCardContent>
+          <IonCardContent>HarmonyMind hace uso del estudio de las emociones realizado por el doctor Paul Ekman titulado "El Atlas de las emociones", para más información <a href="https://atlasofemotions.org/#introduction/">haz click aquí</a>. </IonCardContent>
         </IonCard>
         <IonCard color={`${countEstados== 0? 'warning' : 'success'}`}>
-          <IonCardHeader>
-            <IonCardTitle>Estado</IonCardTitle>
-          </IonCardHeader>
           <IonCardContent>
           {
             countEstados == 0 && (
@@ -111,6 +79,38 @@ const Tab1: React.FC = () => {
           }
           
           </IonCardContent>
+        </IonCard>
+        <IonCard className='ion-padding ion-margin-top'>
+          <IonCardHeader>
+            <IonCardTitle>Bienvenido {username}</IonCardTitle>
+          </IonCardHeader>
+
+          <IonCardContent>¿Qué deseas hacer hoy?
+
+            <IonList>
+              <IonItem href="/estado/ver">
+                <IonThumbnail slot="start" >
+                  <img alt="Bitácora" src="/assets/inicio_iconos/diario.jpg" />
+                </IonThumbnail>
+                <IonLabel>Ir a mi Bitácora</IonLabel>
+              </IonItem>
+
+              <IonItem href="/eventos/ver">
+                <IonThumbnail slot="start">
+                  <img alt="Eventos" src="/assets/inicio_iconos/eventos.png" />
+                </IonThumbnail>
+                <IonLabel>Ver Eventos</IonLabel>
+              </IonItem>
+
+              <IonItem href="/aprendizajeIndex" >
+                <IonThumbnail slot="start">
+                  <img alt="Aprendizaje" src="/assets/inicio_iconos/aprendizaje.png" />
+                </IonThumbnail>
+                <IonLabel>Ir a la Sección de Aprendizaje</IonLabel>
+              </IonItem>
+            </IonList>
+          </IonCardContent>
+          <img src="/assets/WelcomeImage.jpg" alt="" />
         </IonCard>
       </IonContent>
     </IonPage>
