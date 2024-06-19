@@ -9,7 +9,13 @@ use App\Models\Learning;
 use App\Models\CategoriaLearning;
 
 class LearningController extends Controller
-{
+{   
+    public function index()
+    {
+        $learnings = Learning::all();
+        return response()->json($learnings);
+    }
+
     public function create(Request $request)
     {
         $validator = Validator::make($request->all(), [

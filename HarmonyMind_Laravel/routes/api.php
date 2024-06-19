@@ -6,7 +6,7 @@ use App\Http\Controllers\Api\LoginController;
 use App\Http\Controllers\Api\PostController;
 use App\Http\Controllers\Api\PublicacionEstadoController;
 use App\Http\Controllers\Api\eventController;
-
+use App\Http\Controllers\Api\LearningController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -35,6 +35,18 @@ Route::prefix('evento')->group(function () {
         
     });
 });
+
+Route::prefix('learning')->group(function(){
+    Route::middleware('auth:api')->group(function(){
+        Route::get('learning', [LearningController::class, 'index']);
+        Route::get('/learnings/create', [LearningController::class, 'create']);
+        Route::post('/learnings', [LearningController::class, 'store']);
+        Route::get('/learnings/{id}', [LearningController::class, 'show']);
+        Route::get('/learnings/{id}/edit', [LearningController::class, 'edit']);
+        Route::delete('/learnings/{id}', [LearningController::class, 'destroy']);
+    });
+});
+
 
 Route::post('login', [LoginController::class, 'login']);
 Route::post('register', [LoginController::class, 'register']);
