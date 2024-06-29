@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\PublicacionEstadoController;
 use App\Http\Controllers\Api\RecomendacionesController;
 use App\Http\Controllers\Api\eventController;
 use App\Http\Controllers\Api\contactController;
+use App\Http\Controllers\Api\ExpertController;
 
 /*
 |--------------------------------------------------------------------------
@@ -46,6 +47,16 @@ Route::prefix('emergency_contact')->group(function () {
         Route::get('get', [contactController::class, 'get'])->name('ver.contacto');
         Route::post('add', [contactController::class, 'add'])->name('agregar.contacto');
         Route::post('delete', [contactController::class, 'delete'])->name('eliminar.contacto');
+        
+        
+    });
+});
+
+Route::prefix('expert_connection')->group(function () {
+    Route::middleware('auth:api')->group(function () {
+        Route::post('set_appointment', [ExpertController::class, 'createAppointment'])->name('crear.cita');
+        Route::get('get_appointments', [ExpertController::class, 'getAppointments'])->name('ver.citas');
+        //Route::post('delete', [contactController::class, 'delete'])->name('eliminar.contacto');
         
         
     });
