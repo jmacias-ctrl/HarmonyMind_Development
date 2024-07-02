@@ -56,8 +56,8 @@ Route::prefix('expert_connection')->group(function () {
     Route::middleware('auth:api')->group(function () {
         Route::post('set_appointment', [ExpertController::class, 'createAppointment'])->name('crear.cita');
         Route::get('get_appointments', [ExpertController::class, 'getAppointments'])->name('ver.citas');
-        //Route::post('delete', [contactController::class, 'delete'])->name('eliminar.contacto');
-        
+        Route::get('get_schedules', [ExpertController::class, 'showSchedule'])->name('ver.horario');
+        Route::get('get_experts', [ExpertController::class, 'showExperts'])->name('ver.expertos');
         
     });
 });

@@ -52,11 +52,11 @@ class ExpertController extends Controller
         ];
         $validator = Validator::make($request->all(), $rules, $message, $attribute);
         if ($validator->passes()) {
-            $expert = new appointment;
-                $expert->schedule_fk = $request->id_horario;
-                $expert->user_fk = Auth::user()->id;
-                $expert->fecha = Carbon::now();
-            $expert->save();
+            $appointment = new appointment;
+                $appointment->schedule_fk = $request->id_horario;
+                $appointment->user_fk = Auth::user()->id;
+                $appointment->fecha = Carbon::now();
+            $appointment->save();
 
             return response()->json(['success' => true], 200);
         }
@@ -69,9 +69,43 @@ class ExpertController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function showSchedule(Request $request)
     {
-        //
+        $rules = [
+            
+            'expert_id' => 'required',
+        ];
+        $attribute = [
+            'expert_id' => 'Id de experto',
+        ];
+        $message = [
+            'required' => ':attribute es obligatorio'
+        ];
+        $validator = Validator::make($request->all(), $rules, $message, $attribute);
+        if ($validator->passes()) {
+            $expert = expert::find($request->expert_id);
+            $schedules = DB::table('schedules')
+            ->select('schedules.*')
+            ->where('expert_fk', '=', $expert->id)
+            ->get();
+
+            foreach($schedules as $schedule){
+                $appointments = DB::table('appointments')
+                ->select('appointments.schedule_fk')
+                ->where('schedule_fk', '=', $schedule->id)
+                ->where('fecha', '=', Carbon::now()->toDateString())
+                ->first();
+                if($appointments == null){
+                    $schedule->ocupado= false;
+                }else{
+                    $schedule->ocupado= true;
+                }
+                
+            }
+
+            return response()->json(['success' => true, 'data'=>$schedules], 200);
+        }
+        return response()->json(['success' => false, 'validator'=>$validator->errors()], 200);
     }
 
     /**
@@ -81,9 +115,35 @@ class ExpertController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function showExperts()
     {
-        //
+        $experts = expert::all();
+        
+
+        foreach($experts as $expert){
+            $schedules = DB::table('schedules')
+            ->select('schedules.id')
+            ->where('expert_fk', '=', $expert->id)
+            ->get()->pluck('id');
+
+            $appointments = DB::table('appointments')
+            ->select('appointments.schedule_fk')
+            ->whereIn('schedule_fk', $schedules)
+            ->where('fecha', '=', Carbon::now()->toDateString())
+            ->get();
+
+            error_log($appointments->count());
+            error_log($schedules->count());
+            if($appointments->count() == $schedules->count()){
+                $expert->ocupado= true;
+            }else{
+                $expert->ocupado= false;
+            }
+                
+        }
+
+        
+        return response()->json(['success' => true, 'data'=>$experts], 200);
     }
 
     /**
