@@ -21,6 +21,9 @@ import Learning from './pages/aprendizajeZone/aprendizajeIndex';
 import Tab3 from './pages/Tab3';
 import eventos from './pages/eventos';
 import eventos_asistidos from './pages/eventos_asistidos';
+import conectar_expertos from './pages/expertos/conectar_expertos';
+import InformacionExperto from './pages/expertos/informacion_experto';
+import mis_citas from './pages/expertos/mis_citas';
 import crear_estado from './pages/estados/crear_estado';
 import ver_estados from './pages/estados/ver_estados';
 import analisis_estado from './pages/estados/analisis_estado';
@@ -79,6 +82,8 @@ const App: React.FC = () => {
                   <Route exact path="/estado/analisis" component={analisis_estado} />
                   <Route exact path="/eventos/ver" component={eventos} />
                   <Route exact path="/eventos/assist" component={eventos_asistidos} />
+                  <Route exact path="/expertos/conexion" component={conectar_expertos} />
+                  <Route exact path="/citas" component={mis_citas} />
                   <Route exact path="/home">
                     <Tab1 />
                   </Route>
@@ -87,6 +92,7 @@ const App: React.FC = () => {
                   <Route exact path="/eventos">
                     <EventosComponents />
                   </Route>
+                  <Route exact path="/expertos/informacion/:expertoId" component={InformacionExperto}></Route>
                   <Route exact path="/estados">
                     <VistaEstadosComponent />
                   </Route>

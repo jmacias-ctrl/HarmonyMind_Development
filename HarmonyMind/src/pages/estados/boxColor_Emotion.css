@@ -6,7 +6,7 @@
 }
 
 .colorPredominante.anger{
-    background: rgb(235, 19, 19);
+    background: #ff6c7b;
 }
 
 .colorPredominante.surprise{
@@ -14,19 +14,19 @@
 }
 
 .colorPredominante.disgust{
-    background: #64B726;
+    background: #99da67;
 }
 
 .colorPredominante.sadness{
-    background: #2771BF;
+    background: #317dcf;
 }
 
 .colorPredominante.happiness{
-    background: #F79C21;
+    background: #f8b865;
 }
 
 .colorPredominante.fear{
-    background: #5E2DCE;
+    background: #7241e5;
 }
 
 .surprise{
@@ -34,21 +34,21 @@
 }
 
 .anger{
-    --progress-background: #FF0202;
+    --progress-background: #f54658;
 }
 
 .disgust{
-    --progress-background: #64B726;
+    --progress-background: #99da67;
 }
 
 .sadness{
-    --progress-background: #2771BF;
+    --progress-background: #317dcf;
 }
 
 .happiness{
-    --progress-background: #F79C21;
+    --progress-background: #f8b865;
 }
 
 .fear{
-    --progress-background: #5E2DCE;
+    --progress-background: #7241e5;
 }
