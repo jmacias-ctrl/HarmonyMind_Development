@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, useIonRouter } from '@ionic/react';
 import { IonCard, IonProgressBar, IonButton, IonItem, IonList, IonThumbnail, IonGrid, IonCol, IonRow, IonCardContent, IonCardSubtitle, useIonViewWillEnter, IonButtons } from '@ionic/react';
-import { IonText, IonRadio, IonRadioGroup, useIonLoading } from '@ionic/react';
+import { IonText, IonRadio, IonAlert, IonRadioGroup, useIonLoading } from '@ionic/react';
 import { useParams } from 'react-router';
 import { personCircle } from 'ionicons/icons';
 import { RouteComponentProps } from "react-router-dom";
@@ -17,13 +17,16 @@ const informacion_experto: React.FC<UserDetailPageProps> = ({ match }) => {
     const router = useIonRouter();
     const contentRef = useRef<HTMLIonContentElement>(null);
     const [present, dismiss] = useIonLoading();
-    const [isLoading, setLoading] = useState(false)
-    const [textLoading, setTextLoading] = useState('Recuperando Estados')
+    const [isLoading, setLoading] = useState(true)
+    const [textLoading, setTextLoading] = useState('Recuperando información del experto')
     const [subtextLoading, setSubTextLoading] = useState('Esto puede tomar un tiempo')
+    const [expertoInfo, setExpertoInfo] = useState([])
+    const [horarios, setHorarios] = useState([])
+    const [horaEscogida, setHora] = useState(-1)
     const { articleId } = useParams<{ articleId: string }>();
     const fetch_posts = () => {
         if (isLoading == true) {
-            fetch(`http://127.0.0.1:8000/api/publicacion/get`, {
+            fetch(`http://127.0.0.1:8000/api/expert_connection/get_schedules?expert_id=${match.params.expertoId}`, {
                 "method": "GET",
                 "headers": {
                     'Accept': 'application/json',
@@ -34,10 +37,13 @@ const informacion_experto: React.FC<UserDetailPageProps> = ({ match }) => {
                     return res.json();
                 })
                 .catch(error => {
-                    setTextLoading('Error al recuperar estados')
+                    setTextLoading('Error')
                     setSubTextLoading('Hubo problemas al comunicarse con el servidor, por favor inténtelo denuevo más tarde.')
                 })
                 .then((posts) => {
+                    console.log(posts)
+                    setExpertoInfo(posts['data2'])
+                    setHorarios(posts['data'])
                     setLoading(false)
                 })
 
@@ -45,7 +51,7 @@ const informacion_experto: React.FC<UserDetailPageProps> = ({ match }) => {
     };
 
     useIonViewWillEnter(() => {
-        setLoading(false)
+        setLoading(true)
         fetch_posts();
     });
 
@@ -58,27 +64,9 @@ const informacion_experto: React.FC<UserDetailPageProps> = ({ match }) => {
         horario: string;
     }
 
-    const horarios: Horario[] = [
-        {
-            id: 1,
-            horario: '9:30pm',
-        },
-        {
-            id: 2,
-            horario: '10:30pm',
-        },
-        {
-            id: 3,
-            horario: '11:30pm',
-        },
-        {
-            id: 4,
-            horario: '12:30pm',
-        },
-    ];
 
-    const compareWith = (o1: Horario, o2: Horario) => {
-        return o1.id === o2.id;
+    const compareWith = (o1: Number, o2: Number) => {
+        return o1 === o2;
     };
 
     return (
@@ -115,17 +103,17 @@ const informacion_experto: React.FC<UserDetailPageProps> = ({ match }) => {
                                 <IonGrid className="ion-margin-start ion-justify-content-center ion-align-items-center ion-text-center">
                                     <IonRow>
                                         <IonCol><IonText>
-                                            <h1>Armando Casas</h1>
+                                            <h1>{expertoInfo.nombre}</h1>
                                         </IonText></IonCol>
                                     </IonRow>
                                     <IonRow>
                                         <IonCol><IonText>
-                                            <h1>12.293.830-9</h1>
+                                            <h1>{expertoInfo.rut}</h1>
                                         </IonText></IonCol>
                                     </IonRow>
                                     <IonRow>
                                         <IonCol><IonText>
-                                            <h1>Psicólogo</h1>
+                                            <h1>{expertoInfo.profesion}</h1>
                                         </IonText></IonCol>
                                     </IonRow>
                                 </IonGrid>
@@ -139,19 +127,61 @@ const informacion_experto: React.FC<UserDetailPageProps> = ({ match }) => {
                         <IonList className="ion-margin-bottom">
                             <IonRadioGroup
                                 compareWith={compareWith}
-                                onIonChange={(ev) => console.log('Current value:', JSON.stringify(ev.detail.value))}
+                                onIonChange={(ev) => setHora(ev.detail.value)}
                             >
                                 {horarios.map((horario) => (
+                                    horario.ocupado==false? (
                                     <IonItem>
-                                        <IonRadio key={horario.id} value={horario}>
-                                            {horario.horario}
+                                        <IonRadio key={horario.id} value={horario.id}>
+                                            {horario.hora}
                                         </IonRadio>
-                                    </IonItem>
+                                    </IonItem>):""
                                 ))}
                             </IonRadioGroup>
                         </IonList>
                         <IonText className="ion-margin-top"><h1>Modalidad: Online mediante zoom</h1></IonText>
-                        <IonButton expand="full">Reservar Hora</IonButton>
+                        <IonButton expand="full" id="present-alert">Reservar Hora</IonButton>
+                        {
+                            horaEscogida == -1 ? (<IonAlert
+                                header="Error: No has escogido una hora"
+                                trigger="present-alert"
+                                buttons={['Aceptar']}
+                                onDidDismiss={({ detail }) => console.log(`Dismissed with role: ${detail.role}`)}
+                            ></IonAlert>) : (<IonAlert
+                                header="¿Estas seguro de que quieres reservar una hora?"
+                                trigger="present-alert"
+                                buttons={[
+                                    {
+                                        text: 'Canelar',
+                                        role: 'cancel',
+                                    },
+                                    {
+                                        text: 'Confirmar',
+                                        role: 'confirm',
+                                        handler: () => {
+                                            fetch(`http://127.0.0.1:8000/api/expert_connection/set_appointment?id_horario=${horaEscogida}`, {
+                                                "method": "POST",
+                                                "headers": {
+                                                    'Accept': 'application/json',
+                                                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                                                }
+                                            })
+                                                .then((res) => {
+                                                    return res.json();
+                                                })
+                                                .catch(error => {
+                                                    setTextLoading('Error')
+                                                    setSubTextLoading('Hubo problemas al comunicarse con el servidor, por favor inténtelo denuevo más tarde.')
+                                                })
+                                                .then((posts) => {
+                                                    router.push('/citas', 'root', 'replace');
+                                                })
+                                        },
+                                    },
+                                ]}
+                            ></IonAlert>)
+                        }
+
                     </IonCardContent>
                 </IonCard>
             </IonContent>

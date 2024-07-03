@@ -25,12 +25,20 @@ class ExpertController extends Controller
         $appointments = DB::table('appointments')
         ->join('schedules', 'appointments.schedule_fk', '=', 'schedules.id')
         ->join('experts', 'schedules.expert_fk', '=', 'experts.id')
-        ->select('appointments.*', 'experts.nombre AS nombre_experto', 'schedules.hora AS hora')
+        ->select('appointments.*', 'experts.nombre AS nombre_experto', 'experts.rut as rut_experto', 'experts.modalidad','schedules.hora AS hora')
         ->where('user_fk', '=', Auth::user()->id)
         ->get();
         return response()->json(['success' => true, 'data'=>$appointments], 200);
     }
+    
 
+    public function get_expert(Request $request){
+        if($request->id){
+            $expert_info = Expert::where('id', '=', $request->id)->first();
+            return response()->json(['success' => true, 'data'=>$expert_info], 200);
+        }
+        return response()->json(['success' => false], 200); 
+    }
     /**
      * Store a newly created resource in storage.
      *
@@ -103,7 +111,7 @@ class ExpertController extends Controller
                 
             }
 
-            return response()->json(['success' => true, 'data'=>$schedules], 200);
+            return response()->json(['success' => true, 'data'=>$schedules, 'data2'=>$expert], 200);
         }
         return response()->json(['success' => false, 'validator'=>$validator->errors()], 200);
     }

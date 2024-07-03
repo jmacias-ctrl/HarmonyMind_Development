@@ -12,16 +12,17 @@ const conectar_expertos: React.FC = () => {
     const router = useIonRouter();
     const contentRef = useRef<HTMLIonContentElement>(null);
     const [present, dismiss] = useIonLoading();
-    const [isLoading, setLoading] = useState(false)
-    const [textLoading, setTextLoading] = useState('Recuperando Estados')
+    const [isLoading, setLoading] = useState(true)
+    const [textLoading, setTextLoading] = useState('Recuperando Expertos Disponibles')
     const [subtextLoading, setSubTextLoading] = useState('Esto puede tomar un tiempo')
+    const [posts, setPosts] = useState([]);
     const [hideText, setHideText] = useState(false)
     const [didCreate, setDidCreate] = useState(false)
     const [noDiary, setNoDiary] = useState(true);
     const { status } = useParams<{ status: string }>();
     const fetch_posts = () => {
         if (isLoading == true) {
-            fetch(`http://127.0.0.1:8000/api/publicacion/get`, {
+            fetch(`http://127.0.0.1:8000/api/expert_connection/get_experts`, {
                 "method": "GET",
                 "headers": {
                     'Accept': 'application/json',
@@ -32,25 +33,27 @@ const conectar_expertos: React.FC = () => {
                     return res.json();
                 })
                 .catch(error => {
-                    setTextLoading('Error al recuperar estados')
+                    setTextLoading('Error al recuperar expertos')
                     setSubTextLoading('Hubo problemas al comunicarse con el servidor, por favor inténtelo denuevo más tarde.')
                 })
                 .then((posts) => {
+                    setPosts(posts['data'])
                     setLoading(false)
+                    setHideText(false)
                 })
 
         }
     };
 
     useIonViewWillEnter(() => {
-        setLoading(false)
+        setLoading(true)
         setNoDiary(true)
-        setHideText(false)
+        setHideText(true)
         fetch_posts();
     });
 
     function actionSheet(id) {
-        console.log("hola")
+        router.push('/expertos/informacion/'+id)
     }
 
     return (
@@ -72,62 +75,44 @@ const conectar_expertos: React.FC = () => {
                         {subtextLoading}
                     </div>
                 </div>
-                <IonCard className={`${isLoading && 'ion-hide'} ion-padding ion-margin-bottom`} button onClick={()=>{actionSheet(1)}}>
-                    <IonCardContent>
-                        <IonList>
-                            <IonItem>
-                                <IonThumbnail>
-                                    <img alt="Silhouette of mountains" src="/assets/user.jpg" />
-                                </IonThumbnail>
-                                <IonGrid className="ion-margin-start">
-                                    <IonRow>
-                                        <IonCol><IonText>
-                                            <h1>Armando Casas</h1>
-                                        </IonText></IonCol>
-                                    </IonRow>
-                                    <IonRow>
-                                        <IonCol><IonText>
-                                            <h1>Psicólogo</h1>
-                                        </IonText></IonCol>
-                                    </IonRow>
-                                    <IonRow>
-                                        <IonCol><IonText color="success">
-                                            <h1>Disponible</h1>
-                                        </IonText></IonCol>
-                                    </IonRow>
-                                </IonGrid>
-                            </IonItem>
-                        </IonList>
-                    </IonCardContent>
-                </IonCard>
-                <IonCard className={`${isLoading && 'ion-hide'} ion-padding ion-margin-bottom`} button onClick={()=>{actionSheet(1)}}>
-                    <IonCardContent>
-                        <IonList>
-                            <IonItem>
-                                <IonThumbnail>
-                                    <img alt="Silhouette of mountains" src="/assets/user.jpg" />
-                                </IonThumbnail>
-                                <IonGrid className="ion-margin-start">
-                                    <IonRow>
-                                        <IonCol><IonText>
-                                            <h1>Ernesto Ramirez</h1>
-                                        </IonText></IonCol>
-                                    </IonRow>
-                                    <IonRow>
-                                        <IonCol><IonText>
-                                            <h1>Terapeuta</h1>
-                                        </IonText></IonCol>
-                                    </IonRow>
-                                    <IonRow>
-                                        <IonCol><IonText color="danger">
-                                            <h1>No Disponible</h1>
-                                        </IonText></IonCol>
-                                    </IonRow>
-                                </IonGrid>
-                            </IonItem>
-                        </IonList>
-                    </IonCardContent>
-                </IonCard>
+
+                {posts.map((post) => (
+                    <IonCard id={`experto_${post.id}`} key={post.id} className={`ion-padding ion-margin-bottom`} button={post.ocupado} onClick={() => { actionSheet(post.id) }}>
+                        <IonCardContent>
+                            <IonList>
+                                <IonItem>
+                                    <IonThumbnail>
+                                        <img alt="Silhouette of mountains" src="/assets/user.jpg" />
+                                    </IonThumbnail>
+                                    <IonGrid className="ion-margin-start">
+                                        <IonRow>
+                                            <IonCol><IonText>
+                                                <h1>{post.nombre}</h1>
+                                            </IonText></IonCol>
+                                        </IonRow>
+                                        <IonRow>
+                                            <IonCol><IonText>
+                                                <h1>{post.profesion}</h1>
+                                            </IonText></IonCol>
+                                        </IonRow>
+                                        <IonRow>
+                                            {!post.ocupado && (
+                                                <IonCol><IonText color="success">
+                                                    <h1>Disponible</h1>
+                                                </IonText></IonCol>
+                                            )}
+                                            {post.ocupado && (
+                                                <IonCol><IonText color="danger">
+                                                    <h1>Ocupado</h1>
+                                                </IonText></IonCol>
+                                            )}
+                                        </IonRow>
+                                    </IonGrid>
+                                </IonItem>
+                            </IonList>
+                        </IonCardContent>
+                    </IonCard>
+                ))}
             </IonContent>
 
         </IonPage>

@@ -58,7 +58,7 @@ Route::prefix('expert_connection')->group(function () {
         Route::get('get_appointments', [ExpertController::class, 'getAppointments'])->name('ver.citas');
         Route::get('get_schedules', [ExpertController::class, 'showSchedule'])->name('ver.horario');
         Route::get('get_experts', [ExpertController::class, 'showExperts'])->name('ver.expertos');
-        
+        Route::get('expert_info', [ExpertController::class, 'get_expert'])->name('info.experto');
     });
 });
 

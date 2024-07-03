@@ -12,16 +12,14 @@ const mis_citas: React.FC = () => {
     const router = useIonRouter();
     const contentRef = useRef<HTMLIonContentElement>(null);
     const [present, dismiss] = useIonLoading();
-    const [isLoading, setLoading] = useState(false)
-    const [textLoading, setTextLoading] = useState('Recuperando Estados')
+    const [isLoading, setLoading] = useState(true)
+    const [citas, setCitas] = useState([])
+    const [textLoading, setTextLoading] = useState('Recuperando Citas Reservadas')
     const [subtextLoading, setSubTextLoading] = useState('Esto puede tomar un tiempo')
-    const [hideText, setHideText] = useState(false)
-    const [didCreate, setDidCreate] = useState(false)
-    const [noDiary, setNoDiary] = useState(true);
     const { status } = useParams<{ status: string }>();
     const fetch_posts = () => {
         if (isLoading == true) {
-            fetch(`http://127.0.0.1:8000/api/publicacion/get`, {
+            fetch(`http://127.0.0.1:8000/api/expert_connection/get_appointments `, {
                 "method": "GET",
                 "headers": {
                     'Accept': 'application/json',
@@ -32,10 +30,11 @@ const mis_citas: React.FC = () => {
                     return res.json();
                 })
                 .catch(error => {
-                    setTextLoading('Error al recuperar estados')
+                    setTextLoading('Error al recuperar citas reservadas')
                     setSubTextLoading('Hubo problemas al comunicarse con el servidor, por favor inténtelo denuevo más tarde.')
                 })
                 .then((posts) => {
+                    setCitas(posts['data'])
                     setLoading(false)
                 })
 
@@ -43,9 +42,7 @@ const mis_citas: React.FC = () => {
     };
 
     useIonViewWillEnter(() => {
-        setLoading(false)
-        setNoDiary(true)
-        setHideText(false)
+        setLoading(true)
         fetch_posts();
     });
 
@@ -69,77 +66,45 @@ const mis_citas: React.FC = () => {
                         {subtextLoading}
                     </div>
                 </div>
-                <IonCard className={`${isLoading && 'ion-hide'} ion-padding ion-margin-bottom`}>
-                    <IonCardContent>
-                        <IonCardTitle>Cita N°2</IonCardTitle>
-                        <IonList>
-                            <IonItem>
-                                <IonThumbnail className="misCitasThumbnail">
-                                    <img alt="Silhouette of mountains" src="/assets/cita.png" />
-                                </IonThumbnail>
-                                <IonGrid className="ion-margin-start">
-                                    <IonRow>
-                                        <IonCol><IonText>
-                                            <h5>Armando Casas</h5>
-                                        </IonText></IonCol>
-                                    </IonRow>
-                                    <IonRow>
-                                        <IonCol><IonText>
-                                            <h5>12.345.678-9</h5>
-                                        </IonText></IonCol>
-                                    </IonRow>
-                                    <IonRow>
-                                        <IonCol><IonText>
-                                            <h5>Modalidad: Online (Zoom)</h5>
-                                        </IonText></IonCol>
-                                    </IonRow>
-                                    <IonRow>
-                                        <IonCol><IonText color="success">
-                                            <h5>Fecha y Hora: 29-06-2024 10:30am</h5>
-                                        </IonText></IonCol>
-                                    </IonRow>
-                                    <IonRow>
-                                        <IonCol><IonButton fill="outline" color="warning">Cancelar</IonButton></IonCol>
-                                    </IonRow>
-                                </IonGrid>
-                            </IonItem>
-                        </IonList>
-                    </IonCardContent>
-                </IonCard>
-                <IonCard className={`${isLoading && 'ion-hide'} ion-padding ion-margin-bottom`}>
-                    <IonCardContent>
-                        <IonCardTitle>Cita N°1</IonCardTitle>
-                        <IonList>
-                            <IonItem>
-                                <IonThumbnail className="misCitasThumbnail">
-                                    <img alt="Silhouette of mountains" src="/assets/cita.png" />
-                                </IonThumbnail>
-                                <IonGrid className="ion-margin-start">
-                                    <IonRow>
-                                        <IonCol><IonText>
-                                            <h5>Ernesto Ramirez</h5>
-                                        </IonText></IonCol>
-                                    </IonRow>
-                                    <IonRow>
-                                        <IonCol><IonText>
-                                            <h5>10.431.981-K</h5>
-                                        </IonText></IonCol>
-                                    </IonRow>
-                                    <IonRow>
-                                        <IonCol><IonText>
-                                            <h5>Modalidad: Online (Zoom)</h5>
-                                        </IonText></IonCol>
-                                    </IonRow>
-                                    <IonRow>
-                                        <IonCol><IonText color="danger">
-                                            <h5>Fecha y Hora: 28-06-2024 10:30am</h5>
-                                        </IonText></IonCol>
-                                    </IonRow>
-                                </IonGrid>
-                            </IonItem>
-                        </IonList>
-                    </IonCardContent>
-                </IonCard>
+                {citas.map((cita) => (
+                    <IonCard key={cita.id} className={`ion-padding ion-margin-bottom`}>
+                        <IonCardContent>
+                            <IonCardTitle>Cita N°{cita.id}</IonCardTitle>
+                            <IonList>
+                                <IonItem>
+                                    <IonThumbnail className="misCitasThumbnail">
+                                        <img alt="Silhouette of mountains" src="/assets/cita.png" />
+                                    </IonThumbnail>
+                                    <IonGrid className="ion-margin-start">
+                                        <IonRow>
+                                            <IonCol><IonText>
+                                                <h5>{cita.nombre_experto}</h5>
+                                            </IonText></IonCol>
+                                        </IonRow>
+                                        <IonRow>
+                                            <IonCol><IonText>
+                                                <h5>{cita.rut_experto}</h5>
+                                            </IonText></IonCol>
+                                        </IonRow>
+                                        <IonRow>
+                                            <IonCol><IonText>
+                                                <h5>Modalidad: {cita.modalidad}</h5>
+                                            </IonText></IonCol>
+                                        </IonRow>
+                                        <IonRow>
+                                            <IonCol><IonText color="success">
+                                                <h5>Fecha y Hora: {cita.fecha} {cita.hora}</h5>
+                                            </IonText></IonCol>
+                                        </IonRow>
+                                        <IonRow>
+                                            <IonCol><IonButton fill="outline" color="warning">Cancelar</IonButton></IonCol>
+                                        </IonRow>
+                                    </IonGrid>
+                                </IonItem>
+                            </IonList>
+                        </IonCardContent>
+                    </IonCard>
+                ))}
             </IonContent>
 
         </IonPage>

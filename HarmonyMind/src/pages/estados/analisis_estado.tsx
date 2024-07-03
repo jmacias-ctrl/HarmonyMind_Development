@@ -23,7 +23,7 @@ const analisis_estado: React.FC = () => {
     const [daysAnalysis, setDaysAnalysis] = useState(7);
     const [estado_de_animo, setEstadoDeAnimo] = useState('tristeza');
     const [value, setValue] = useState<string | number | undefined>('javascript');
-    const [textLoading, setTextLoading] = useState('Recuperando Estados')
+    const [textLoading, setTextLoading] = useState('Obteniendo Análisis')
     const [subtextLoading, setSubTextLoading] = useState('Esto puede tomar un tiempo')
     const [countEstados, setCountEstados] = useState(0);
     const [lastXDays, setLastXDays] = useState(LastXDays())
@@ -101,7 +101,7 @@ const analisis_estado: React.FC = () => {
                 })
                 .catch(error => {
                     setTextLoading('Error al recuperar estados')
-                    setSubTextLoading('Hubo problemas al comunicarse con el servidor, por favor intentelo denuevo más tarde.')
+                    setSubTextLoading('Hubo problemas al comunicarse con el servidor, por favor inténtelo denuevo más tarde.')
                 })
                 .then((posts) => {
                     console.log(posts['data'])
