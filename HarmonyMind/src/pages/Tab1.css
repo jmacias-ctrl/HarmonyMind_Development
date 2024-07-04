@@ -25,3 +25,7 @@
 .IonButton{
    --background: #1ADBC3;
 }
+
+ion-thumbnail{
+    border-radius: 0px;
+}

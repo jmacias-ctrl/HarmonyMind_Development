@@ -98,7 +98,12 @@ const Tab1: React.FC = () => {
                 </IonThumbnail>
                 <IonLabel>Ir a mi Bitácora</IonLabel>
               </IonItem>
-
+              <IonItem href="/expertos/conexion">
+                <IonThumbnail slot="start">
+                  <img alt="Profesional" src="/assets/user.jpg" />
+                </IonThumbnail>
+                <IonLabel>Agendar con Expertos</IonLabel>
+              </IonItem>
               <IonItem href="/eventos/ver">
                 <IonThumbnail slot="start">
                   <img alt="Eventos" src="/assets/inicio_iconos/eventos.png" />
