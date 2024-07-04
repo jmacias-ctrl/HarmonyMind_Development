@@ -67,9 +67,14 @@ Route::prefix('expert_connection')->group(function () {
 Route::post('login', [LoginController::class, 'login']);
 Route::post('register', [LoginController::class, 'register']);
 
+
 Route::prefix('learning')->group(function () {
+    // Esta ruta no requiere autenticación
+    Route::get('/', [LearningController::class, 'index'])->name('learning.index');
+    
+    Route::get('learning/{id}', 'App\Http\Controllers\Api\LearningController@show');
+    // Esta ruta requiere autenticación para crear, actualizar y eliminar
     Route::middleware('auth:api')->group(function () {
-        Route::get('/', [LearningController::class, 'index'])->name('learning.index');
         Route::post('/', [LearningController::class, 'create'])->name('learning.create');
         Route::put('/{id}', [LearningController::class, 'update'])->name('learning.update');
         Route::delete('/{id}', [LearningController::class, 'delete'])->name('learning.delete');
@@ -77,10 +82,13 @@ Route::prefix('learning')->group(function () {
 });
 
 Route::prefix('categoria_learning')->group(function () {
+    // Esta ruta no requiere autenticación
+    Route::get('/', [CategoriaLearningController::class, 'index'])->name('categoria_learning.index');
+    // Esta ruta requiere autenticación para crear, actualizar y eliminar
     Route::middleware('auth:api')->group(function () {
-        Route::get('/', [CategoriaLearningController::class, 'index'])->name('categoria_learning.index');
         Route::post('/', [CategoriaLearningController::class, 'create'])->name('categoria_learning.create');
         Route::put('/{id}', [CategoriaLearningController::class, 'update'])->name('categoria_learning.update');
         Route::delete('/{id}', [CategoriaLearningController::class, 'delete'])->name('categoria_learning.delete');
     });
 });
+

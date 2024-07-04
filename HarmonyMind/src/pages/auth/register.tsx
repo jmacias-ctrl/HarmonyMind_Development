@@ -71,7 +71,7 @@ const Register: React.FC = () => {
     };
 
     if (redirectToLogin) {
-        return <Redirect to="/auth/login" />;
+        return <Redirect to="/login" />;
     }
 
     return (

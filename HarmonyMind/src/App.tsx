@@ -17,7 +17,7 @@ import Tab1 from './pages/Tab1';
 import Tab2 from './pages/Tab2';
 import { bookOutline, ellipse, homeOutline, ticketOutline, triangle } from 'ionicons/icons';
 import Home from './pages/Home';
-import Learning from './pages/aprendizajeZone/aprendizajeIndex';
+import Learning from './pages/aprendizajeZone/aprendizaje-list';
 import Tab3 from './pages/Tab3';
 import eventos from './pages/eventos';
 import eventos_asistidos from './pages/eventos_asistidos';
@@ -32,6 +32,7 @@ import Register from './pages/auth/register';
 import { useState, useEffect } from 'react'; // Importar useState y useEffect
 import boton_panico from './pages/boton_panico';
 import perfil from './pages/perfil';
+import LearningDetail from './pages/aprendizajeZone/learning-detail';
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
 
@@ -84,6 +85,8 @@ const App: React.FC = () => {
                   <Route exact path="/eventos/assist" component={eventos_asistidos} />
                   <Route exact path="/expertos/conexion" component={conectar_expertos} />
                   <Route exact path="/citas" component={mis_citas} />
+                  <Route path="/learning-detail/:id" component={LearningDetail} exact />
+                  <Route path="/aprendizaje-list" component={Learning} exact />
                   <Route exact path="/home">
                     <Tab1 />
                   </Route>
@@ -96,7 +99,7 @@ const App: React.FC = () => {
                   <Route exact path="/estados">
                     <VistaEstadosComponent />
                   </Route>
-                  <Route path="/aprendizajeIndex">
+                  <Route path="/aprendizaje-list">
                     <Learning/>
                   </Route>
                   <Route exact path="/">
@@ -120,7 +123,7 @@ const App: React.FC = () => {
                     <IonIcon aria-hidden="true" icon={call} />
                     <IonLabel>SOS</IonLabel>
                   </IonTabButton>
-                  <IonTabButton tab="tab3" href="/aprendizajeIndex">
+                  <IonTabButton tab="tab3" href="/aprendizaje-list">
                     <IonIcon aria-hidden="true" icon={bookOutline} />
                     <IonLabel>Aprendizaje</IonLabel>
                   </IonTabButton>
