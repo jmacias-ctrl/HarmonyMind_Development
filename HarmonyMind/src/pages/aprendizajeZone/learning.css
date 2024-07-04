@@ -1,0 +1,24 @@
+.blueCard {
+  background-color: #a6d4fa; /* Azul pastel */
+  margin-bottom: 16px; /* Espacio entre tarjetas */
+}
+
+.greenCard {
+  background-color: #bdecb6; /* Verde pastel */
+  margin-bottom: 16px; /* Espacio entre tarjetas */
+}
+
+.yellowCard {
+  background-color: #ffc8fa; /* Amarillo pastel */
+  margin-bottom: 16px; /* Espacio entre tarjetas */
+}
+
+.learningCard {
+  margin: 16px;
+}
+
+.cardList {
+  background-color: white; /* Hereda el color de fondo de su tarjeta padre */
+  color: inherit; /* Hereda el color de texto de su tarjeta padre */
+  padding-inline-start: 0; /* Elimina el padding izquierdo por defecto de IonList */
+}

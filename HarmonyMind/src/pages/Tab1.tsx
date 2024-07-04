@@ -106,7 +106,7 @@ const Tab1: React.FC = () => {
                 <IonLabel>Ver Eventos</IonLabel>
               </IonItem>
 
-              <IonItem href="/aprendizajeIndex" >
+              <IonItem href="/aprendizaje-list" >
                 <IonThumbnail slot="start">
                   <img alt="Aprendizaje" src="/assets/inicio_iconos/aprendizaje.png" />
                 </IonThumbnail>
