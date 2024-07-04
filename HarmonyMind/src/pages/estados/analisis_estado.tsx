@@ -1,7 +1,5 @@
 import React, { useState } from "react";
-import { Line } from 'react-chartjs-2';
-import { CategoryScale } from "chart.js";
-import { Chart as ChartJS } from "chart.js/auto";
+
 import { IonContent, IonHeader, IonPage, IonTitle, IonBackButton, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonGrid, IonRow, IonCol } from '@ionic/react';
 import {
     IonModal,

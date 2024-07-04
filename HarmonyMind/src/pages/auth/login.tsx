@@ -29,19 +29,20 @@ const Login: React.FC = () => {
             const response = await fetch('http://kender.duckdns.org:180/api/login', {
                 method: 'POST',
                 headers: {
+                    'Accept': 'application/json',
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({ email, password }),
             });
+            console.log('response', response);
 
             if (response.ok) {
                 const data = await response.json() as LoginResponse;
-                login(data.data.token); // Guardar el token en algún lugar, por ejemplo, en el contexto de autenticación
+                login(data.data.token); 
                 setRedirectToHome(true);
             } else {
                 const responseJson = await response.json() as LoginResponse;
-
-                setError(responseJson.message)
+                setError(responseJson.message);
             }
         } catch (error) {
             console.error('Error al enviar solicitud:', error);
@@ -50,7 +51,7 @@ const Login: React.FC = () => {
     };
 
     if (redirectToHome) {
-        return <Redirect to="/home" />;
+        return <Redirect to="/home"/>;
     }
 
     return (
