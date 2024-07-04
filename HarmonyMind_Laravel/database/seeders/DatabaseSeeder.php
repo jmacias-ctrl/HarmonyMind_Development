@@ -19,6 +19,8 @@ class DatabaseSeeder extends Seeder
             adminSeeder::class,
             CategoriaLearningSeeder::class,
             LearningSeeder::class,
+            RecomendacionesSeeder::class,
+            ExpertoSeeder::class,
         ]);
     }
 }

@@ -20,7 +20,7 @@ const eventos: React.FC = () => {
     const fetch_posts = () => {
         if (isLoaded == false) {
             console.log('hola')
-            fetch(`http://kender.duckdns.org:180/api/evento/get`, {
+            fetch(`http://192.168.1.6:8000/api/evento/get`, {
                 "method": "GET",
                 "headers": {
                     'Accept': 'application/json',
@@ -39,7 +39,7 @@ const eventos: React.FC = () => {
 
     function actionSheet(get_detail) {
         if (get_detail['role'] != 'backdrop') {
-            fetch(`http://kender.duckdns.org:180/api/evento/assign?id_evento=${get_detail['data'].id}`, {
+            fetch(`http://192.168.1.6:8000/api/evento/assign?id_evento=${get_detail['data'].id}`, {
                 "method": "POST",
                 "headers": {
                     'Accept': 'application/json',

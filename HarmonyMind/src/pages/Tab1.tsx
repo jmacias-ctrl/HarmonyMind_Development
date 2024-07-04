@@ -17,7 +17,7 @@ const Tab1: React.FC = () => {
   const [username, setUsername] = useState('none');
   const fetch_posts = () => {
     if (isLoading == true) {
-      fetch(`http://kender.duckdns.org:180/api/inicio`, {
+      fetch(`http://192.168.1.6:8000/api/inicio`, {
         "method": "GET",
         "headers": {
           'Accept': 'application/json',

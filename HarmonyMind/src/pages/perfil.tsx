@@ -22,7 +22,7 @@ const perfil: React.FC = () => {
       if (isLoaded == false) {
         console.log('hola')
         
-        fetch(`http://kender.duckdns.org:180/api/emergency_contact/get`, {
+        fetch(`http://192.168.1.6:8000/api/emergency_contact/get`, {
             "method": "GET",
             "headers": {
                 'Accept': 'application/json',
@@ -53,7 +53,7 @@ const perfil: React.FC = () => {
 
     function contactAdd(new_contact){
       console.log('start');
-      fetch(`http://kender.duckdns.org:180/api/emergency_contact/add?number=56${new_contact}`, {
+      fetch(`http://192.168.1.6:8000/api/emergency_contact/add?number=56${new_contact}`, {
                 "method": "POST",
                 "headers": {
                     'Accept': 'application/json',
@@ -75,7 +75,7 @@ const perfil: React.FC = () => {
 
     function contactDelete(new_contact){
       console.log(new_contact);
-      fetch(`http://kender.duckdns.org:180/api/emergency_contact/delete?id=${new_contact}`, {
+      fetch(`http://192.168.1.6:8000/api/emergency_contact/delete?id=${new_contact}`, {
                 "method": "POST",
                 "headers": {
                     'Accept': 'application/json',

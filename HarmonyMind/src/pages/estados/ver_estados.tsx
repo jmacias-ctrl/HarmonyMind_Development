@@ -28,7 +28,7 @@ const crear_estado: React.FC = () => {
     const { status } = useParams<{ status: string }>();
     const fetch_posts = () => {
         if (isLoading == true) {
-            fetch(`http://kender.duckdns.org:180/api/publicacion/get`, {
+            fetch(`http://192.168.1.6:8000/api/publicacion/get`, {
                 "method": "GET",
                 "headers": {
                     'Accept': 'application/json',
@@ -73,7 +73,7 @@ const crear_estado: React.FC = () => {
 
     function actionSheet(get_detail) {
         if (get_detail['role'] != 'backdrop') {
-            fetch(`http://kender.duckdns.org:180/api/publicacion/delete?id_publicacion=${get_detail['data'].id}`, {
+            fetch(`http://192.168.1.6:8000/api/publicacion/delete?id_publicacion=${get_detail['data'].id}`, {
                 "method": "POST",
                 "headers": {
                     'Accept': 'application/json',

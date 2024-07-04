@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, useIonRouter } from '@ionic/react';
 import { IonCard, IonCardContent, IonButton, IonCardHeader, IonCardSubtitle, IonCardTitle, IonModal, IonButtons, IonThumbnail } from '@ionic/react';
 import { IonText, IonActionSheet, IonIcon, useIonLoading, IonList, IonItem, IonSelect, IonSelectOption, IonRow, IonImg, IonAlert } from '@ionic/react';
@@ -11,7 +11,7 @@ import { Link } from 'react-router-dom';
 
 import './boton_panico.css';
 const boton_panico: React.FC = () => {
-
+  const contentRef = useRef<HTMLIonContentElement>(null);
   const [contact, setContact] = useState(1);
   const [posts, setPosts] = useState({});
   const [isLoaded, setLoaded] = useState(false);
@@ -23,7 +23,7 @@ const boton_panico: React.FC = () => {
     const fetch_posts = () => {
       if (isLoaded == false) {
         console.log('hola')
-        fetch(`http://kender.duckdns.org:180/api/emergency_contact/get`, {
+        fetch(`http://192.168.1.6:8000/api/emergency_contact/get`, {
             "method": "GET",
             "headers": {
                 'Accept': 'application/json',
@@ -97,7 +97,7 @@ const boton_panico: React.FC = () => {
               
               <a href={message} target="_blank">
               <IonImg class="panicButton"
-                src="https://play-lh.googleusercontent.com/ibGrsOSIungUGH69-cD0PAxoOi2rdYGKd8LDhanme4iGyh2aAXukKXpdpSFbehEk38M"
+                src="/assets/inicio_iconos/sos.png"
                 alt="boton de pánico"
               ></IonImg></a>
 

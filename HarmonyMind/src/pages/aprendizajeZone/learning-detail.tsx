@@ -12,7 +12,7 @@ const LearningDetail: React.FC = () => {
   }, [id]);
 
   const fetchLearningDetails = (id: string) => {
-    fetch(`http://localhost:8000/api/learning/${id}`, {
+    fetch(`http://192.168.1.6:8000/api/learning/learning/${id}`, {
       method: 'GET',
       headers: {
         'Accept': 'application/json',
