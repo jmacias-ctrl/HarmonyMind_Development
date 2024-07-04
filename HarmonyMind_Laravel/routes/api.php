@@ -71,7 +71,8 @@ Route::post('register', [LoginController::class, 'register']);
 Route::prefix('learning')->group(function () {
     // Esta ruta no requiere autenticación
     Route::get('/', [LearningController::class, 'index'])->name('learning.index');
-    Route::get('/learning/{id}', [LearningController::class, 'show'])->name('learning.show');
+    
+    Route::get('learning/{id}', 'App\Http\Controllers\Api\LearningController@show');
     // Esta ruta requiere autenticación para crear, actualizar y eliminar
     Route::middleware('auth:api')->group(function () {
         Route::post('/', [LearningController::class, 'create'])->name('learning.create');
