@@ -4,11 +4,13 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\LoginController;
 use App\Http\Controllers\Api\PostController;
+use App\Http\Controllers\Api\LearningController;
 use App\Http\Controllers\Api\PublicacionEstadoController;
 use App\Http\Controllers\Api\RecomendacionesController;
 use App\Http\Controllers\Api\eventController;
 use App\Http\Controllers\Api\contactController;
 use App\Http\Controllers\Api\ExpertController;
+use App\Http\Controllers\Api\CategoriaLearningController;
 
 /*
 |--------------------------------------------------------------------------
@@ -65,3 +67,20 @@ Route::prefix('expert_connection')->group(function () {
 Route::post('login', [LoginController::class, 'login']);
 Route::post('register', [LoginController::class, 'register']);
 
+Route::prefix('learning')->group(function () {
+    Route::middleware('auth:api')->group(function () {
+        Route::get('/', [LearningController::class, 'index'])->name('learning.index');
+        Route::post('/', [LearningController::class, 'create'])->name('learning.create');
+        Route::put('/{id}', [LearningController::class, 'update'])->name('learning.update');
+        Route::delete('/{id}', [LearningController::class, 'delete'])->name('learning.delete');
+    });
+});
+
+Route::prefix('categoria_learning')->group(function () {
+    Route::middleware('auth:api')->group(function () {
+        Route::get('/', [CategoriaLearningController::class, 'index'])->name('categoria_learning.index');
+        Route::post('/', [CategoriaLearningController::class, 'create'])->name('categoria_learning.create');
+        Route::put('/{id}', [CategoriaLearningController::class, 'update'])->name('categoria_learning.update');
+        Route::delete('/{id}', [CategoriaLearningController::class, 'delete'])->name('categoria_learning.delete');
+    });
+});
