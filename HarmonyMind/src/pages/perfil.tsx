@@ -117,11 +117,11 @@ const perfil: React.FC = () => {
             <IonContent fullscreen>
             <IonList lines="full">
               <IonItem>
-                <IonLabel>Nombre: {name}</IonLabel>
+                <IonInput label="Nombre: " value={name} labelPlacement="stacked" readonly={true}></IonInput>
               </IonItem>
 
               <IonItem>
-                <IonLabel>Email: {email}</IonLabel>
+                <IonInput label="Email: " value={email} labelPlacement="stacked" readonly={true}></IonInput>
               </IonItem>
 
               <IonItem>
@@ -133,7 +133,7 @@ const perfil: React.FC = () => {
 
                 <IonList lines="full">
                 <IonItem>
-                <IonInput slot="start" label="Nuevo contacto: (+56)"  type="tel" minlength={9} maxlength={9} placeholder="Ingrese aquí" onIonChange={(e: any) => setNumber(e.target.value)}></IonInput>
+                <IonInput slot="start" labelPlacement="stacked" label="Nuevo contacto: (+56)"  type="tel" minlength={9} maxlength={9} placeholder="Ingrese aquí" onIonChange={(e: any) => setNumber(e.target.value)}></IonInput>
                 <IonButton slot="start" color="success" disabled={buttonState} onClick={() => contactAdd(number)}><IonIcon icon={add}></IonIcon></IonButton>
               </IonItem>
                 {contacts.map((contact) => (
