@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, useIonRouter } from '@ionic/react';
-import { IonCard, IonProgressBar, IonButton,IonButtons, IonCardHeader, IonCardSubtitle, useIonViewWillEnter } from '@ionic/react';
+import { IonCard, IonProgressBar, IonButton, IonSkeletonText, IonCardTitle, IonCardHeader, IonCardContent, IonCardSubtitle, useIonViewWillEnter, IonButtons } from '@ionic/react';
 import { IonText, IonActionSheet, IonIcon, useIonLoading } from '@ionic/react';
 import { IonFab, IonGrid, IonRow, IonCol, IonFabButton, useIonToast } from '@ionic/react';
 import { add } from 'ionicons/icons';
 import { useParams } from 'react-router';
-import LogoutButton from "../auth/Logout";
 import { ellipsisVertical } from 'ionicons/icons';
-
+import LogoutButton from "../auth/Logout";
+import { Link } from 'react-router-dom';
 import './ver_estados.css';
+import './boxColor_Emotion.css';
 import ExploreContainer from '../../components/ExploreContainer';
-
-const VistaEstadosComponent: React.FC = () => {
+const crear_estado: React.FC = () => {
     const router = useIonRouter();
     const [present, dismiss] = useIonLoading();
     const [posts, setPosts] = useState([]);
@@ -20,7 +20,11 @@ const VistaEstadosComponent: React.FC = () => {
     const [subtextLoading, setSubTextLoading] = useState('Esto puede tomar un tiempo')
     const [hideText, setHideText] = useState(false)
     const [didCreate, setDidCreate] = useState(false)
+    const [recomendacion, setRecomendacion] = useState('none')
     const [toastCreate] = useIonToast();
+    const [estado_de_animo, setEstadoDeAnimo] = useState("")
+    const [noDiary, setNoDiary] = useState(true);
+    const [numEstados, setNumEstados] = useState(0);
     const { status } = useParams<{ status: string }>();
     const fetch_posts = () => {
         if (isLoading == true) {
@@ -28,7 +32,7 @@ const VistaEstadosComponent: React.FC = () => {
                 "method": "GET",
                 "headers": {
                     'Accept': 'application/json',
-                    'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiYWQyNGQ4MjBlMTcwMzYwNDdlMzc4NjUxZTFmNWM2M2M2Y2MwM2E1MjNkZDE1ZjQzYTFlZTZlMmNkMmUzMjg2NTBkMGI2MDI1MzI2ZWIxOGQiLCJpYXQiOjE3MTUyMjYzMTUuNzg5NDcxLCJuYmYiOjE3MTUyMjYzMTUuNzg5NDc1LCJleHAiOjE3NDY3NjIzMTUuNjczMTQ5LCJzdWIiOiIzIiwic2NvcGVzIjpbXX0.Akf3M1EiIxRmVTpMdFk4-97ogH1b-Rrmwvq1-K60k2zBzJ4A8A6g-5cyb7T3udpOOKAnxFuCtNii-l-0iMZmJFRl2gz15ha1ipYHSLqFljoH_eKg53G4T31-hy1gSvUS3SbLmLRNqFwwXPHm_qZMrCkGDxL0Gon8zw1RpI_-pKZNcPel5XO0jaG31cRK2Ga-g-7fnSTG07NyD7sYJvS8b5TVUbrDBf5fD2wJg1MbFP45L1I_lreur-KtslsaUu2GOFRy9BD92Qj17YqibXvQ_zwHwBCZFE3XWs3G3e2QnNvNCaVB4NgN6yHo0DBaT87sQvz3GD9Z0Y2GC6X--WXi6O3Tq809T3md3T03pJjrzCukMvdUAN7IpZhQ8PfBDx8NpqY15pODSiZwZwVHdygRUnha2SOvEhck-b1C6cGc-aRF3U76NdlNUR36g0Ci1p1Ls0pHZkAoWG318ucYfzF1QJVN2pQLHwsK_waoKrDWV2LM77FnEphfe6ST1q2DCpeY5TuY42bppQJwAwLUBQKeGeYlrIVbxvKfwEYgVo-gHj25BT85uZe2_eIvEFuv4eDuBFRFLnx2XKJxyZVMDlJwaBJyDQ6FJ9Q4JrJlZ19fNrx3SIOx0TfACXsfoCeBa7dUEihDGHkUWm1AzvIRrC3lZyFBTKM7SU5ko6p5EF-T_sw',
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
                 }
             })
                 .then((res) => {
@@ -40,6 +44,13 @@ const VistaEstadosComponent: React.FC = () => {
                     setSubTextLoading('Hubo problemas al comunicarse con el servidor, por favor intentelo denuevo más tarde.')
                 })
                 .then((posts) => {
+                    setNumEstados(posts['count'])
+                    if (parseInt(posts['count']) > 0) {
+                        var max_emotion = Object.keys(posts['emociones']).reduce(function (a, b) { return posts['emociones'][a] > posts['emociones'][b] ? a : b })
+                        setNoDiary(false)
+                        setEstadoDeAnimo(max_emotion)
+                        setRecomendacion(posts['recomendacion'])
+                    }
                     if (posts['data'].length == 0) {
                         setTextLoading('No tienes estados creados')
                         setSubTextLoading('Haz click en el boton + y crea un estado con tus pensamientos del momento')
@@ -55,17 +66,18 @@ const VistaEstadosComponent: React.FC = () => {
 
     useIonViewWillEnter(() => {
         setLoading(true)
+        setNoDiary(true)
         setHideText(false)
         fetch_posts();
     });
 
     function actionSheet(get_detail) {
         if (get_detail['role'] != 'backdrop') {
-            fetch(`http://127.0.0.1:8000/api/publicacion/delete?id_publicacion=${get_detail['data'].id}`, {
+            fetch(`http://192.168.56.1:8000/api/publicacion/delete?id_publicacion=${get_detail['data'].id}`, {
                 "method": "POST",
                 "headers": {
                     'Accept': 'application/json',
-                    'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiYWQyNGQ4MjBlMTcwMzYwNDdlMzc4NjUxZTFmNWM2M2M2Y2MwM2E1MjNkZDE1ZjQzYTFlZTZlMmNkMmUzMjg2NTBkMGI2MDI1MzI2ZWIxOGQiLCJpYXQiOjE3MTUyMjYzMTUuNzg5NDcxLCJuYmYiOjE3MTUyMjYzMTUuNzg5NDc1LCJleHAiOjE3NDY3NjIzMTUuNjczMTQ5LCJzdWIiOiIzIiwic2NvcGVzIjpbXX0.Akf3M1EiIxRmVTpMdFk4-97ogH1b-Rrmwvq1-K60k2zBzJ4A8A6g-5cyb7T3udpOOKAnxFuCtNii-l-0iMZmJFRl2gz15ha1ipYHSLqFljoH_eKg53G4T31-hy1gSvUS3SbLmLRNqFwwXPHm_qZMrCkGDxL0Gon8zw1RpI_-pKZNcPel5XO0jaG31cRK2Ga-g-7fnSTG07NyD7sYJvS8b5TVUbrDBf5fD2wJg1MbFP45L1I_lreur-KtslsaUu2GOFRy9BD92Qj17YqibXvQ_zwHwBCZFE3XWs3G3e2QnNvNCaVB4NgN6yHo0DBaT87sQvz3GD9Z0Y2GC6X--WXi6O3Tq809T3md3T03pJjrzCukMvdUAN7IpZhQ8PfBDx8NpqY15pODSiZwZwVHdygRUnha2SOvEhck-b1C6cGc-aRF3U76NdlNUR36g0Ci1p1Ls0pHZkAoWG318ucYfzF1QJVN2pQLHwsK_waoKrDWV2LM77FnEphfe6ST1q2DCpeY5TuY42bppQJwAwLUBQKeGeYlrIVbxvKfwEYgVo-gHj25BT85uZe2_eIvEFuv4eDuBFRFLnx2XKJxyZVMDlJwaBJyDQ6FJ9Q4JrJlZ19fNrx3SIOx0TfACXsfoCeBa7dUEihDGHkUWm1AzvIRrC3lZyFBTKM7SU5ko6p5EF-T_sw',
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
                 }
             })
                 .then((res) => {
@@ -86,30 +98,67 @@ const VistaEstadosComponent: React.FC = () => {
             <IonHeader>
                 <IonToolbar>
                     <IonTitle>Tus Estados</IonTitle>
-                    <IonProgressBar className={`${!isLoading && 'ion-hide'}`} type="indeterminate" id="progressBar"></IonProgressBar>
                     <IonButtons slot="end">
-                    <LogoutButton />
+                        <LogoutButton />
                     </IonButtons>
+                    <IonProgressBar className={`${!isLoading && 'ion-hide'} `} type="indeterminate" id="progressBar"></IonProgressBar>
                 </IonToolbar>
             </IonHeader>
             <IonContent fullscreen>
-                <div className={`${hideText && 'ion-hide'}`}>
+                <div className={`${!isLoading && 'ion-hide'}`}>
                     <div className="ion-text-center">
                         <h3>{textLoading}</h3>
                         {subtextLoading}
                     </div>
                 </div>
+                <IonCard className={`${isLoading && 'ion-hide'} ion-padding`}>
+                    {noDiary && (
+                        <IonCardContent>
+
+                            <IonGrid>
+                                <IonRow>
+                                    <IonCol><h3>No has publicado estados en los ultimos 24 horas</h3></IonCol>
+                                    <IonCol size="auto"><IonButton color="tertiary" onClick={() => { router.push('/estado/analisis'); }}>Ver Análisis</IonButton></IonCol>
+                                </IonRow>
+                            </IonGrid>
+                        </IonCardContent>
+                    )}
+                    {!noDiary && (
+                        <IonCardContent>
+                            <IonGrid>
+                                <IonRow>
+                                    <IonCol><h3>Has publicado {numEstados} estados en los ultimos 24 horas</h3></IonCol>
+                                </IonRow>
+                                <IonRow>
+                                    <IonCol size="auto"><h4>Color Predominante:</h4></IonCol>
+                                    <IonCol><div className={`colorPredominante ${estado_de_animo == "ira" && "anger"} ${estado_de_animo == "sorpresa" && "surprise"} ${estado_de_animo == "disgusto" && "disgust"} ${estado_de_animo == "felicidad" && "happiness"} ${estado_de_animo == "tristeza" && "sadness"} ${estado_de_animo == "miedo" && "fear"}`}></div></IonCol>
+                                </IonRow>
+                            </IonGrid>
+                            <IonButton color="tertiary" onClick={() => { router.push('/estado/analisis'); }}>Ver Análisis</IonButton>
+                        </IonCardContent>
+
+                    )}
+                </IonCard>
+                {
+                    !noDiary && (
+                        <IonCard>
+                            <IonCardHeader>
+                                <h4>Consejos y Motivaciones</h4>
+                            </IonCardHeader>
+                            <IonCardContent>
+                                <h5>{recomendacion}</h5>
+                            </IonCardContent>
+                        </IonCard>
+
+                    )
+                }
                 {posts.map((post) => (
-                    <IonCard className="estadosCard ion-padding ion-margin-horizontal " key={post.id}>
+                    <IonCard className="estadosCard ion-padding ion-margin-horizontal" key={post.id}>
                         <IonCardSubtitle>
-                            <IonRow>
-                                <IonCol size="auto">
-                                    <IonText color="dark">Estado N°{post.numero} </IonText>
-                                </IonCol>
-                                <IonCol>
-                                    <IonButton className="ion-float-right" id={"action_es_" + post.id} shape="round" size="small" fill="clear"><IonIcon icon={ellipsisVertical} slot="icon-only"></IonIcon></IonButton>
-                                </IonCol>
-                            </IonRow>
+
+                                        <IonButton className="ion-float-right" id={"action_es_" + post.id} size="small" fill="clear"><IonIcon icon={ellipsisVertical} slot="icon-only"></IonIcon></IonButton>
+
+                            <IonText color="dark">Estado N°{post.numero} </IonText>
                         </IonCardSubtitle>
                         <IonGrid>
                             <IonRow>
@@ -123,10 +172,7 @@ const VistaEstadosComponent: React.FC = () => {
                             </IonRow>
                         </IonGrid>
                         <div className="ion-text-center">
-                            <IonText color="dark">
-                                <h6>Estado de Animo</h6>
-                            </IonText>
-                            <IonProgressBar value={post.estado_de_animo / 10}></IonProgressBar>
+                            <IonProgressBar value={1} className={`${post.estado_de_animo == "ira" && "anger"} ${post.estado_de_animo == "sorpresa" && "surprise"} ${post.estado_de_animo == "disgusto" && "disgust"} ${post.estado_de_animo == "felicidad" && "happiness"} ${post.estado_de_animo == "tristeza" && "sadness"} ${post.estado_de_animo == "miedo" && "fear"}`}></IonProgressBar>
                         </div>
                         <IonActionSheet
                             trigger={"action_es_" + post.id}
@@ -165,4 +211,4 @@ const VistaEstadosComponent: React.FC = () => {
     );
 };
 
-export default VistaEstadosComponent;
+export default crear_estado;

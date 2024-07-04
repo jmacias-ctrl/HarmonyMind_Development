@@ -17,7 +17,13 @@ class CreatePublicacionEstadosTable extends Migration
             $table->id();
             $table->unsignedBigInteger('id_user');
             $table->string('publicacion');
-            $table->integer('estado_de_animo');
+            $table->integer('tristeza');
+            $table->integer('felicidad');
+            $table->integer('disgusto');
+            $table->integer('ira');
+            $table->integer('miedo');
+            $table->integer('sorpresa');
+            $table->enum('estado_de_animo', ['miedo', 'ira', 'sorpresa', 'felicidad', 'tristeza', 'asco']);
             $table->timestamps();
         });
     }

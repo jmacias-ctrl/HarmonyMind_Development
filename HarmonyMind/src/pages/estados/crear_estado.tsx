@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, useIonRouter } from '@ionic/react';
-import { IonCard, IonBackButton, IonButton, IonCardHeader, IonCardSubtitle, IonCardTitle } from '@ionic/react';
+import { IonCard, IonBackButton, IonButton, IonCardHeader, IonGrid, IonCol, IonRow, IonCardTitle } from '@ionic/react';
 import { IonTextarea, IonButtons, IonRange, IonItem, IonList, useIonToast } from '@ionic/react';
 import { snowOutline, sunnyOutline } from 'ionicons/icons';
 import { withRouter, useHistory } from "react-router";
@@ -12,7 +12,12 @@ import ExploreContainer from '../../components/ExploreContainer';
 const CrearPublicacionComponent: React.FC = () => {
 
     const [contenido, setContenido] = useState('');
-    const [estado_de_animo, setEstadodeAnimo] = useState(5);
+    const [tristeza, setTristeza] = useState(0);
+    const [felicidad, setFelicidad] = useState(0);
+    const [disgusto, setDisgusto] = useState(0);
+    const [ira, setIra] = useState(0);
+    const [miedo, setMiedo] = useState(0);
+    const [sorpresa, setSorpresa] = useState(0);
     const history = useHistory();
     const [isTouched, setIsTouched] = useState(false);
     const [isValid, setIsValid] = useState<boolean>(true);
@@ -26,18 +31,23 @@ const CrearPublicacionComponent: React.FC = () => {
 
         if (contenido.length > 0) {
             setIsValid(true)
-            fetch(`http://127.0.0.1:8000/api/publicacion/create?publicacion=${contenido}&estado_de_animo=${estado_de_animo}`, {
+            fetch(`http://127.0.0.1:8000/api/publicacion/create?publicacion=${contenido}&tristeza=${tristeza}&felicidad=${felicidad}&disgusto=${disgusto}&ira=${ira}&miedo=${miedo}&sorpresa=${sorpresa}`, {
                 "method": "POST",
                 "headers": {
                     'Accept': 'application/json',
-                    'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiYWQyNGQ4MjBlMTcwMzYwNDdlMzc4NjUxZTFmNWM2M2M2Y2MwM2E1MjNkZDE1ZjQzYTFlZTZlMmNkMmUzMjg2NTBkMGI2MDI1MzI2ZWIxOGQiLCJpYXQiOjE3MTUyMjYzMTUuNzg5NDcxLCJuYmYiOjE3MTUyMjYzMTUuNzg5NDc1LCJleHAiOjE3NDY3NjIzMTUuNjczMTQ5LCJzdWIiOiIzIiwic2NvcGVzIjpbXX0.Akf3M1EiIxRmVTpMdFk4-97ogH1b-Rrmwvq1-K60k2zBzJ4A8A6g-5cyb7T3udpOOKAnxFuCtNii-l-0iMZmJFRl2gz15ha1ipYHSLqFljoH_eKg53G4T31-hy1gSvUS3SbLmLRNqFwwXPHm_qZMrCkGDxL0Gon8zw1RpI_-pKZNcPel5XO0jaG31cRK2Ga-g-7fnSTG07NyD7sYJvS8b5TVUbrDBf5fD2wJg1MbFP45L1I_lreur-KtslsaUu2GOFRy9BD92Qj17YqibXvQ_zwHwBCZFE3XWs3G3e2QnNvNCaVB4NgN6yHo0DBaT87sQvz3GD9Z0Y2GC6X--WXi6O3Tq809T3md3T03pJjrzCukMvdUAN7IpZhQ8PfBDx8NpqY15pODSiZwZwVHdygRUnha2SOvEhck-b1C6cGc-aRF3U76NdlNUR36g0Ci1p1Ls0pHZkAoWG318ucYfzF1QJVN2pQLHwsK_waoKrDWV2LM77FnEphfe6ST1q2DCpeY5TuY42bppQJwAwLUBQKeGeYlrIVbxvKfwEYgVo-gHj25BT85uZe2_eIvEFuv4eDuBFRFLnx2XKJxyZVMDlJwaBJyDQ6FJ9Q4JrJlZ19fNrx3SIOx0TfACXsfoCeBa7dUEihDGHkUWm1AzvIRrC3lZyFBTKM7SU5ko6p5EF-T_sw',
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
                 }
             }
             ).then((response) => response.json())
                 .then((publicacion) => {
                     if (publicacion['success'] == true) {
                         setContenido("");
-                        setEstadodeAnimo(5);
+                        setTristeza(0);
+                        setFelicidad(0);
+                        setDisgusto(0);
+                        setIra(0);
+                        setMiedo(0);
+                        setSorpresa(0);
                         toastCreate({
                             message: '¡Estado creado de manera correcta!',
                             duration: 1500,
@@ -53,13 +63,13 @@ const CrearPublicacionComponent: React.FC = () => {
                     }
 
                 });
-        }else{
+        } else {
             setIsValid(false)
         }
 
-        
+
     };
-    
+
     return (
 
         <IonPage>
@@ -93,14 +103,64 @@ const CrearPublicacionComponent: React.FC = () => {
                                 onIonChange={(e: any) => setContenido(e.target.value)}></IonTextarea>
                         </IonItem>
                     </IonList>
-
-                    <h5>Estado de Animo:</h5>
-                    <p>Indica del 1 al 10 tu actual estado de animo</p>
-                    <IonRange aria-label="Temperature" id="estado_de_animo" min={1} max={10} value={estado_de_animo} pin={true} ticks={true} snaps={true} onIonChange={(e: any) => setEstadodeAnimo(e.target.value)}>
-                        <h3 slot="start">1</h3>
-                        <h3 slot="end">10</h3>
-                    </IonRange>
-
+                    <h3>Emociones:</h3>
+                    <span>Indica del 1 al 10 tus emociones del momento:</span>
+                    <IonGrid>
+                        <IonRow>
+                            <IonCol className="ion-align-self-center" size="auto"><h6>Tristeza:</h6></IonCol>
+                            <IonCol className="ion-align-self-center">
+                                <IonRange id="tristeza" min={1} max={10} value={tristeza} pin={true} ticks={true} snaps={true} onIonChange={(e: any) => setTristeza(e.target.value)}>
+                                    <h5 slot="start">1</h5>
+                                    <h5 slot="end">10</h5>
+                                </IonRange>
+                            </IonCol>
+                        </IonRow>
+                        <IonRow>
+                            <IonCol className="ion-align-self-center" size="auto"><h6>Felicidad:</h6></IonCol>
+                            <IonCol className="ion-align-self-center">
+                                <IonRange id="felicidad" min={1} max={10} value={felicidad} pin={true} ticks={true} snaps={true} onIonChange={(e: any) => setFelicidad(e.target.value)}>
+                                    <h5 slot="start">1</h5>
+                                    <h5 slot="end">10</h5>
+                                </IonRange>
+                            </IonCol>
+                        </IonRow>
+                        <IonRow>
+                            <IonCol className="ion-align-self-center" size="auto"><h6>Disgusto:</h6></IonCol>
+                            <IonCol className="ion-align-self-center">
+                                <IonRange id="disgusto" min={1} max={10} value={disgusto} pin={true} ticks={true} snaps={true} onIonChange={(e: any) => setDisgusto(e.target.value)}>
+                                    <h5 slot="start">1</h5>
+                                    <h5 slot="end">10</h5>
+                                </IonRange>
+                            </IonCol>
+                        </IonRow>
+                        <IonRow>
+                            <IonCol className="ion-align-self-center" size="auto"><h6>Ira:</h6></IonCol>
+                            <IonCol className="ion-align-self-center">
+                                <IonRange id="ira" min={1} max={10} value={ira} pin={true} ticks={true} snaps={true} onIonChange={(e: any) => setIra(e.target.value)}>
+                                    <h5 slot="start">1</h5>
+                                    <h5 slot="end">10</h5>
+                                </IonRange>
+                            </IonCol>
+                        </IonRow>
+                        <IonRow>
+                            <IonCol className="ion-align-self-center" size="auto"><h6>Miedo:</h6></IonCol>
+                            <IonCol className="ion-align-self-center">
+                                <IonRange id="miedo" min={1} max={10} value={miedo} pin={true} ticks={true} snaps={true} onIonChange={(e: any) => setMiedo(e.target.value)}>
+                                    <h5 slot="start">1</h5>
+                                    <h5 slot="end">10</h5>
+                                </IonRange>
+                            </IonCol>
+                        </IonRow>
+                        <IonRow>
+                            <IonCol className="ion-align-self-center" size="auto"><h6>Sorpresa:</h6></IonCol>
+                            <IonCol className="ion-align-self-center">
+                                <IonRange id="sorpresa" min={1} max={10} value={sorpresa} pin={true} ticks={true} snaps={true} onIonChange={(e: any) => setSorpresa(e.target.value)}>
+                                    <h5 slot="start">1</h5>
+                                    <h5 slot="end">10</h5>
+                                </IonRange>
+                            </IonCol>
+                        </IonRow>
+                    </IonGrid>
                     <IonButton className="ion-margin-top" name="buttonCrear" id="button_crear" onClick={crear_publicacion}>Crear</IonButton>
                 </IonCard>
             </IonContent>
