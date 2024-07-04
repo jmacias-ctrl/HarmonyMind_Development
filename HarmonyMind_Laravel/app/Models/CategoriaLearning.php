@@ -9,6 +9,8 @@ class CategoriaLearning extends Model
 {
     use HasFactory;
 
+    protected $table = 'categoria_learning'; 
+    
     protected $fillable = [
         'nombre_categoria',
     ];

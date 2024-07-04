@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonList, IonItem, IonLabel } from '@ionic/react';
-import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 
 const LearningList: React.FC = () => {
@@ -8,14 +7,30 @@ const LearningList: React.FC = () => {
   const history = useHistory();
 
   useEffect(() => {
-    axios.get('http://localhost:8000/api/learning')
+    fetchLearnings();
+  }, []);
+
+  const fetchLearnings = () => {
+    fetch('http://localhost:8000/api/learning', {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+      }
+    })
       .then(response => {
-        setLearnings(response.data);
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(data => {
+        setLearnings(data);
       })
       .catch(error => {
         console.error('There was an error fetching the learnings!', error);
       });
-  }, []);
+  };
 
   const handleItemClick = (id: number) => {
     history.push(`/learning-detail/${id}`);
@@ -42,3 +57,4 @@ const LearningList: React.FC = () => {
 };
 
 export default LearningList;
+
