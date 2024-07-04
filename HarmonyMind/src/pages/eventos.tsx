@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, useIonRouter } from '@ionic/react';
-import { IonCard, IonCardContent, IonButton, IonCardHeader, IonCardSubtitle, IonCardTitle, IonModal, IonButtons, IonThumbnail } from '@ionic/react';
+import { IonCard, IonCardContent, IonButton, IonList, IonGrid, IonItem, IonCol, IonRow, IonCardTitle, IonModal, IonButtons, IonThumbnail } from '@ionic/react';
 import { IonText, IonActionSheet, IonIcon, useIonLoading } from '@ionic/react';
 import { IonFab, IonFabButton } from '@ionic/react';
 import { add } from 'ionicons/icons';
 import LogoutButton from "./auth/Logout";
 import { Link } from 'react-router-dom';
-import ExploreContainer from '../components/ExploreContainer';
+import './eventos.css';
 const eventos: React.FC = () => {
     const router = useIonRouter();
     const [present, dismiss] = useIonLoading();
@@ -14,17 +14,13 @@ const eventos: React.FC = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [isLoaded, setLoaded] = useState(false);
     // variables de evento
-    const [event, setEvent] = useState('');
-    const [desc, setDesc] = useState('');
-    const [date, setDate] = useState('');
-    const [org, setOrg] = useState('');
-    const [type, setType] = useState('');
+    const [evento, setEvento] = useState([]);
     const [category, setCategory] = useState('');
 
     const fetch_posts = () => {
         if (isLoaded == false) {
             console.log('hola')
-            fetch(`http://127.0.0.1:8000/api/evento/get`, {
+            fetch(`http://kender.duckdns.org:180/api/evento/get`, {
                 "method": "GET",
                 "headers": {
                     'Accept': 'application/json',
@@ -43,7 +39,7 @@ const eventos: React.FC = () => {
 
     function actionSheet(get_detail) {
         if (get_detail['role'] != 'backdrop') {
-            fetch(`http://127.0.0.1:8000/api/evento/assign?id_evento=${get_detail['data'].id}`, {
+            fetch(`http://kender.duckdns.org:180/api/evento/assign?id_evento=${get_detail['data'].id}`, {
                 "method": "POST",
                 "headers": {
                     'Accept': 'application/json',
@@ -64,17 +60,8 @@ const eventos: React.FC = () => {
     }
 
     function modalControl(info) {
-        if (isOpen == false) {
-            setEvent(info.nombre);
-            setDesc(info.descripcion);
-            setDate(info.fecha);
-            setOrg(info.organizador);
-            setType(info.tipo);
-            setCategory(info.categoria);
-            setIsOpen(true);
-        } else {
-            setIsOpen(false);
-        }
+        setEvento(info)
+        setIsOpen(!isOpen);
     }
 
     useEffect(() => {
@@ -93,65 +80,74 @@ const eventos: React.FC = () => {
                 </IonToolbar>
             </IonHeader>
             <IonContent fullscreen>
-                <IonButton size="default" routerLink="/eventos/assist">Mis Eventos</IonButton>
-                {posts.map((post) => (
-                    <IonCard class="ion-padding ion-margin-horizontal" key={post.id}>
-                        <IonThumbnail>
-                            <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
-                        </IonThumbnail>
-                        <IonCardSubtitle><IonText color="dark">{post.nombre} </IonText></IonCardSubtitle>
-                        <IonText color="dark">
-                            <h3>Fecha: {post.fecha}</h3>
-                        </IonText>
-                        <IonButton onClick={() => modalControl(post)}> Detalles</IonButton>
-
-
-                        <IonButton color="success" id={"action_" + post.id}>Asistir</IonButton>
-                        <IonActionSheet
-                            trigger={"action_" + post.id}
-                            header={"¿Deseas asistir a este evento?"}
-                            buttons={[
-                                {
-                                    text: 'Asistir',
-                                    role: 'destructive',
-                                    data: {
-                                        action: 'delete',
-                                        id: post.id
-                                    },
-                                },
-                                {
-                                    text: 'Cancelar',
-                                    role: 'cancel',
-                                    data: {
-                                        action: 'cancel',
-                                    },
-                                },
-                            ]} onDidDismiss={({ detail }) => actionSheet(detail)}
-                        ></IonActionSheet>
-
-                    </IonCard>
-                ))}
-
                 <IonModal isOpen={isOpen}>
                     <IonHeader>
                         <IonToolbar>
-                            <IonTitle>{event}</IonTitle>
+                            <IonTitle>{evento.nombre}</IonTitle>
                             <IonButtons slot="end">
                                 <IonButton onClick={() => setIsOpen(false)}>Cerrar</IonButton>
                             </IonButtons>
                         </IonToolbar>
                     </IonHeader>
-                    <IonContent className="ion-padding">
-
-                        <p>
-                            {desc}
-                        </p>
-                        <h3>Fecha: {date}</h3>
-                        <h3>Organiza: {org}</h3>
-                        <h3>Tipo: {type}</h3>
-                        <h3>Categoría: {category}</h3>
+                    <IonContent id="modalContent" className="ion-padding">
+                        <IonText><h3>Text</h3></IonText>
                     </IonContent>
                 </IonModal>
+
+                <IonButton size="default" routerLink="/eventos/assist">Mis Eventos</IonButton>
+                {posts.map((post) => (
+                    <IonCard key={post.id} className={`ion-padding ion-margin-bottom`}>
+                        <IonCardContent>
+                            <IonCardTitle>Evento N°{post.id}</IonCardTitle>
+                            <IonList>
+                                <IonItem>
+                                    <IonThumbnail>
+                                        <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
+                                    </IonThumbnail>
+                                    <IonGrid className="ion-margin-start">
+                                        <IonRow>
+                                            <IonCol><IonText>
+                                                <h3>{post.nombre}</h3>
+                                            </IonText></IonCol>
+                                        </IonRow>
+                                        <IonRow>
+                                            <IonCol><IonText color="primary">
+                                                <h4>Fecha y Hora:</h4> {post.fecha}
+                                            </IonText></IonCol>
+                                        </IonRow>
+                                        <IonRow>
+                                            <IonCol size="auto"><IonButton id={`open_modal_${post.id}`} onClick={() => modalControl(post)}> Detalles</IonButton></IonCol>
+                                            <IonCol size="auto"><IonButton color="success" id={"action_" + post.id}>Asistir</IonButton></IonCol>
+                                            <IonActionSheet
+                                                trigger={"action_" + post.id}
+                                                header={"¿Deseas asistir a este evento?"}
+                                                buttons={[
+                                                    {
+                                                        text: 'Asistir',
+                                                        role: 'destructive',
+                                                        data: {
+                                                            action: 'delete',
+                                                            id: post.id
+                                                        },
+                                                    },
+                                                    {
+                                                        text: 'Cancelar',
+                                                        role: 'cancel',
+                                                        data: {
+                                                            action: 'cancel',
+                                                        },
+                                                    },
+                                                ]} onDidDismiss={({ detail }) => actionSheet(detail)}
+                                            ></IonActionSheet>
+                                        </IonRow>
+                                    </IonGrid>
+                                </IonItem>
+                            </IonList>
+                        </IonCardContent>
+
+                    </IonCard>
+
+                ))}
 
 
             </IonContent>

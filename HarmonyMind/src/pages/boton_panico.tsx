@@ -23,7 +23,7 @@ const boton_panico: React.FC = () => {
     const fetch_posts = () => {
       if (isLoaded == false) {
         console.log('hola')
-        fetch(`http://127.0.0.1:8000/api/emergency_contact/get`, {
+        fetch(`http://kender.duckdns.org:180/api/emergency_contact/get`, {
             "method": "GET",
             "headers": {
                 'Accept': 'application/json',

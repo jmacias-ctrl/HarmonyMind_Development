@@ -31,7 +31,7 @@ const CrearPublicacionComponent: React.FC = () => {
 
         if (contenido.length > 0) {
             setIsValid(true)
-            fetch(`http://127.0.0.1:8000/api/publicacion/create?publicacion=${contenido}&tristeza=${tristeza}&felicidad=${felicidad}&disgusto=${disgusto}&ira=${ira}&miedo=${miedo}&sorpresa=${sorpresa}`, {
+            fetch(`http://kender.duckdns.org:180/api/publicacion/create?publicacion=${contenido}&tristeza=${tristeza}&felicidad=${felicidad}&disgusto=${disgusto}&ira=${ira}&miedo=${miedo}&sorpresa=${sorpresa}`, {
                 "method": "POST",
                 "headers": {
                     'Accept': 'application/json',

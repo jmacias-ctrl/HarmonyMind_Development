@@ -26,7 +26,7 @@ const informacion_experto: React.FC<UserDetailPageProps> = ({ match }) => {
     const { articleId } = useParams<{ articleId: string }>();
     const fetch_posts = () => {
         if (isLoading == true) {
-            fetch(`http://127.0.0.1:8000/api/expert_connection/get_schedules?expert_id=${match.params.expertoId}`, {
+            fetch(`http://kender.duckdns.org:180/api/expert_connection/get_schedules?expert_id=${match.params.expertoId}`, {
                 "method": "GET",
                 "headers": {
                     'Accept': 'application/json',
@@ -159,7 +159,7 @@ const informacion_experto: React.FC<UserDetailPageProps> = ({ match }) => {
                                         text: 'Confirmar',
                                         role: 'confirm',
                                         handler: () => {
-                                            fetch(`http://127.0.0.1:8000/api/expert_connection/set_appointment?id_horario=${horaEscogida}`, {
+                                            fetch(`http://kender.duckdns.org:180/api/expert_connection/set_appointment?id_horario=${horaEscogida}`, {
                                                 "method": "POST",
                                                 "headers": {
                                                     'Accept': 'application/json',

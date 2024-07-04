@@ -22,7 +22,7 @@ const eventos_asistidos: React.FC = () => {
     const fetch_posts = () => {
         if (isLoaded == false) {
             console.log('hola')
-            fetch(`http://127.0.0.1:8000/api/evento/getassist`, {
+            fetch(`http://kender.duckdns.org:180/api/evento/getassist`, {
                 "method": "GET",
                 "headers": {
                     'Accept': 'application/json',
@@ -41,7 +41,7 @@ const eventos_asistidos: React.FC = () => {
 
     function actionSheet(get_detail) {
         if (get_detail['role'] != 'backdrop') {
-            fetch(`http://127.0.0.1:8000/api/evento/remove?id_evento=${get_detail['data'].id}`, {
+            fetch(`http://kender.duckdns.org:180/api/evento/remove?id_evento=${get_detail['data'].id}`, {
                 "method": "POST",
                 "headers": {
                     'Accept': 'application/json',

@@ -19,7 +19,7 @@ const mis_citas: React.FC = () => {
     const { status } = useParams<{ status: string }>();
     const fetch_posts = () => {
         if (isLoading == true) {
-            fetch(`http://127.0.0.1:8000/api/expert_connection/get_appointments `, {
+            fetch(`http://kender.duckdns.org:180/api/expert_connection/get_appointments `, {
                 "method": "GET",
                 "headers": {
                     'Accept': 'application/json',

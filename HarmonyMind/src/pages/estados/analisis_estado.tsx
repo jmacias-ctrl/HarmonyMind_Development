@@ -89,7 +89,7 @@ const analisis_estado: React.FC = () => {
     })
     const fetch_posts = () => {
         if (isLoading == true) {
-            fetch(`http://127.0.0.1:8000/api/publicacion/analisis?dias=${daysAnalysis}`, {
+            fetch(`http://kender.duckdns.org:180/api/publicacion/analisis?dias=${daysAnalysis}`, {
                 "method": "GET",
                 "headers": {
                     'Accept': 'application/json',
